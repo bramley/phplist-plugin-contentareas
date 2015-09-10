@@ -1,0 +1,28 @@
+<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+<script>
+function openDialog(url, title) {
+    $("#dialog").dialog({
+        height: "auto",
+        minHeight: 50,
+        width: 600,
+        modal: false,
+        position: {my: "left top", at: "left top", of: $(this)},
+        draggable: true,
+        title: title
+    });
+    $("#dialog").load(url);
+    $(".ui-widget-overlay").click(function() {
+        $("#dialog").dialog('close');
+    });
+}
+$(document).ready(function(){
+    $(".opendialog").click(function() {
+        openDialog(this.href, this.title);
+        return false;
+    });
+    $(".closedialog").click(function() {
+        $("#dialog").dialog('close');
+    });
+})
+</script>
