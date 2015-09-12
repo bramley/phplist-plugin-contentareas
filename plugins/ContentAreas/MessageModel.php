@@ -5,7 +5,6 @@ namespace phpList\plugin\ContentAreas;
 class MessageModel
 {
     private $name = 'ContentAreas';
-    private $prefix = 'ContentAreas_';
     private $dao;
     private $messageId;
     private $messageAreas = array();

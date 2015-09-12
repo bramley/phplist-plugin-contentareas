@@ -173,14 +173,45 @@ END;
         return $tm->isTemplate();
     }
 
-/*
- *  Called from sendemaillib.php
- */
     public static function mergeTemplate($templateBody, $messageId, $edit = false)
     {
         $dao = new DAO(new DB());
         $mm = new MessageModel($messageId, $dao);
         $tm = new self($templateBody);
         return $tm->merge($mm->messageAreas(), $edit);
+    }
+
+/*
+ *  Called from sendemaillib.php
+ */
+    public static function mergeIfTemplate($templateBody, $messageId)
+    {
+        $tm = new self($templateBody);
+
+        if ($tm->isTemplate()) {
+            $dao = new DAO(new DB());
+            $mm = new MessageModel($messageId, $dao);
+            return $tm->merge($mm->messageAreas());
+        } else {
+            return false;
+        }
+    }
+
+/*
+ *  Called from message.php for phplist <= 3.0.12
+ */
+    public static function previewIfTemplate($templateId, $messageId)
+    {
+        global $plugins;
+
+        $dao = new DAO(new DB());
+        $templateBody = $dao->templateBody($templateId);
+
+        if (self::isTemplateBody($templateBody)) {
+            $result = $plugins['ContentAreas']->iframe('preview', $messageId);
+        } else {
+            $result = false;
+        }
+        return $result;
     }
 }

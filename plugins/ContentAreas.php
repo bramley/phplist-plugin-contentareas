@@ -49,19 +49,6 @@ class ContentAreas extends phplistPlugin
     /*
      * Private functions
      */
-    private function iframe($action, $messageId)
-    {
-        $iframe = htmlspecialchars(new PageURL(
-            'message_page', array('pi' => __CLASS__, 'action' => $action, 'id' => $messageId)
-        ));
-        $width = getConfig('contentareas_iframe_width');
-        $height = getConfig('contentareas_iframe_height');
-        return <<<END
-<iframe src="$iframe" width="$width" height="$height">
-</iframe>
-END;
-    }
-
     private function viewUrl($messageid, $uid)
     {
         global $public_scheme, $pageroot;
@@ -143,7 +130,7 @@ END;
 
     public function sendMessageTabTitle($messageid = 0)
     {
-        return s('Edit areas');
+        return s('Edit Areas');
     }
 
     public function viewMessage($messageId, array $data)
@@ -160,6 +147,19 @@ END;
         }
         $iframe = $this->iframe('preview', $messageId);
         return array('Message', $iframe);
+    }
+
+    public function iframe($action, $messageId)
+    {
+        $iframe = htmlspecialchars(new PageURL(
+            'message_page', array('pi' => __CLASS__, 'action' => $action, 'id' => $messageId)
+        ));
+        $width = getConfig('contentareas_iframe_width');
+        $height = getConfig('contentareas_iframe_height');
+        return <<<END
+<iframe src="$iframe" width="$width" height="$height">
+</iframe>
+END;
     }
 
     /*
