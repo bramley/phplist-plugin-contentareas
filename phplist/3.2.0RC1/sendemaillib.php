@@ -277,14 +277,10 @@ function sendEmail ($messageid,$email,$hash,$htmlpref = 0,$rssitems = array(),$f
     output('merge into template start');
   }
 
-  if ($cached[$messageid]["template"]) {
+  if ($cached[$messageid]["template"])
     # template used
-    if ($cached[$messageid]["contentareas_message"]) {
-      $htmlmessage = $htmlcontent;
-    } else {
-      $htmlmessage = str_replace("[CONTENT]",$htmlcontent,$cached[$messageid]["template"]);
-    }
-  } else {
+    $htmlmessage = str_replace("[CONTENT]",$htmlcontent,$cached[$messageid]["template"]);
+  else {
     # no template used
     $htmlmessage = $htmlcontent;
     $adddefaultstyle = 1;
@@ -1421,15 +1417,7 @@ function precacheMessage($messageid,$forwardContent = 0) {
     $req = Sql_Fetch_Row_Query("select template from {$GLOBALS["tables"]["template"]} where id = {$message["template"]}");
     $cached[$messageid]["template"] = stripslashes($req[0]);
     $cached[$messageid]["templateid"] = $message["template"];
-
-    if (phpList\plugin\ContentAreas\TemplateModel::isTemplateBody($cached[$messageid]['template'])) {
-        $cached[$messageid]["contentareas_message"] = true;
-        $cached[$messageid]["content"] = phpList\plugin\ContentAreas\TemplateModel::mergeTemplate($cached[$messageid]['template'], $messageid);
-        $cached[$messageid]["htmlformatted"] = true;
-    } else {
-        $cached[$messageid]["contentareas_message"] = false;
-    }
-  #   dbg("TEMPLATE: ".$req[0]);
+ #   dbg("TEMPLATE: ".$req[0]);
   } else {
     $cached[$messageid]["template"] = '';
     $cached[$messageid]["templateid"] = 0;
