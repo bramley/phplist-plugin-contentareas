@@ -69,4 +69,5 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.0.1+20150916  Fix #2, incorrect plain text email
     1.0.0+20150912  Release to GitHub

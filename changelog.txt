@@ -1,2 +1,6 @@
+version 1.0.1+20150916
+      Put the merged template and content areas into the message content instead of replacing the template.
+      Also, replace the CONTENT placeholder. Fixes #2
+
 version 1.0.0+20150912
       Released to GitHub

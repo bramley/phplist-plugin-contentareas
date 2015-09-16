@@ -1417,7 +1417,8 @@ function precacheMessage($messageid,$forwardContent = 0) {
     $cached[$messageid]["templateid"] = $message["template"];
 
     if ($merged = phpList\plugin\ContentAreas\TemplateModel::mergeIfTemplate($cached[$messageid]['template'], $messageid)) {
-        $cached[$messageid]["template"] = $merged;
+        $cached[$messageid]["content"] = str_ireplace("[CONTENT]", $cached[$messageid]["content"], $merged);
+        $cached[$messageid]["template"] = '';
         $cached[$messageid]["htmlformatted"] = true;
     }
 #   dbg("TEMPLATE: ".$req[0]);
