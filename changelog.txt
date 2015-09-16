@@ -1,3 +1,6 @@
+version 1.0.2+20150916
+      Add modified file from core phplist release 3.2.0
+
 version 1.0.1+20150916
       Put the merged template and content areas into the message content instead of replacing the template.
       Also, replace the CONTENT placeholder. Fixes #2

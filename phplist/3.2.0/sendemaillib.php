@@ -1417,6 +1417,12 @@ function precacheMessage($messageid,$forwardContent = 0) {
     $req = Sql_Fetch_Row_Query("select template from {$GLOBALS["tables"]["template"]} where id = {$message["template"]}");
     $cached[$messageid]["template"] = stripslashes($req[0]);
     $cached[$messageid]["templateid"] = $message["template"];
+
+    if ($merged = phpList\plugin\ContentAreas\TemplateModel::mergeIfTemplate($cached[$messageid]['template'], $messageid)) {
+        $cached[$messageid]["content"] = str_ireplace("[CONTENT]", $cached[$messageid]["content"], $merged);
+        $cached[$messageid]["template"] = '';
+        $cached[$messageid]["htmlformatted"] = true;
+    }
  #   dbg("TEMPLATE: ".$req[0]);
   } else {
     $cached[$messageid]["template"] = '';
