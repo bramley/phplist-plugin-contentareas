@@ -17,6 +17,7 @@ class ContentAreaImage extends ContentAreaBase
         $provider = EditorProvider::createEditorProvider();
         $function = 'openFileManager';
         $browser = $provider->createImageBrowser($function);
+        $size = 40;
 
         return <<<END
 <script type='text/javascript'>
@@ -28,7 +29,7 @@ window.$name.callBack = function(url) {
 </script>
 $browser
 <button class="button" onclick="javascript:$function(window.$name.callBack); return false;">Browse</button>
-<input type="text" id="$name" name="content" value="$value" />
+<input type="text" id="$name" name="content" value="$value" size="$size"/>
 <img class="block" id="$imgName" src="$value" width="150"/>
 END;
     }

@@ -142,6 +142,7 @@ END
     <input type="hidden" name="field" value="$ref" />
     <div>$html</div>
     <button type="submit" name="submit" value="save" formenctype="multipart/form-data">Save</button>
+    <button type="submit" name="submit" value="cancel" formenctype="multipart/form-data">Cancel</button>
 </form>
 END;
     }
