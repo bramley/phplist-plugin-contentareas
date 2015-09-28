@@ -23,25 +23,29 @@ class ContentAreas extends phplistPlugin
     public $description = 'Provides multiple content areas for campaigns';
     public $settings = array(
         'contentareas_inline_css' => array (
-          'value' => true,
-          'description' => 'Automatically inline css',
-          'type' => 'boolean',
-          'allowempty' => 1,
-          'category'=> 'Content Areas',
+            'value' => true,
+            'description' => 'Automatically inline css',
+            'type' => 'boolean',
+            'allowempty' => 1,
+            'category'=> 'Content Areas',
         ),
         'contentareas_iframe_height' => array (
-          'value' => 800,
-          'description' => 'Height in px of the iframe',
-          'type' => 'integer',
-          'allowempty' => false,
-          'category'=> 'Content Areas',
+            'value' => 800,
+            'min' => 500,
+            'max' => 1000,
+            'description' => 'Height in px of the iframe',
+            'type' => 'integer',
+            'allowempty' => false,
+            'category'=> 'Content Areas',
         ),
         'contentareas_iframe_width' => array (
-          'value' => 660,
-          'description' => 'Width in px of the iframe',
-          'type' => 'integer',
-          'allowempty' => false,
-          'category'=> 'Content Areas',
+            'value' => 660,
+            'min' => 500,
+            'max' => 800,
+            'description' => 'Width in px of the iframe',
+            'type' => 'integer',
+            'allowempty' => false,
+            'category'=> 'Content Areas',
         )
     );
     public $publicPages = array(self::VIEW_PAGE);
@@ -190,5 +194,19 @@ END;
             array("$this->linkText $url", $url),
             $content
         );
+    }
+
+    /*
+     *  Merge template with the content areas
+     *
+     */
+    public function processPrecachedCampaign($messageId, array &$message)
+    {
+        if ($message['template']
+            && ($merged = TemplateModel::mergeIfTemplate($message['template'], $messageId))){
+            $message['content'] = str_ireplace('[CONTENT]', $message['content'], $merged);
+            $message['template'] = '';
+            $message['htmlformatted'] = true;
+        }
     }
 }

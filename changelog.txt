@@ -1,3 +1,7 @@
+version 1.0.4+20150930
+      Add method to process cached message
+      Corrected iframe width and height settings
+
 version 1.0.3+20150927
       Add Cancel button when editing a field
       Increase size of image input field
