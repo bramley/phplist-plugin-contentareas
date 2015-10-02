@@ -74,6 +74,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.1.0+20151002  Reposition at the original field after making change
     1.0.4+20150930  Corrected iframe width and height settings
     1.0.3+20150927  Minor improvements to presentation
     1.0.2+20150916  Add modified file from core phplist release 3.2.0

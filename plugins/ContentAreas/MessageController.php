@@ -58,6 +58,7 @@ END;
             $mm = new MessageModel($_GET['id'], $this->dao);
             $messageAreas = $mm->messageAreas();
             $ref = Reference::decode(stripslashes($_REQUEST['field']));
+            $idRef = clone $ref;
 
             switch ($_POST['submit']) {
                 case 'save':
@@ -78,12 +79,14 @@ END;
                     }
                     array_splice($messageAreas[$ref->repeat], $ref->instance + 1, 0, array(array()));
                     $mm->replaceMessageAreas($messageAreas);
+                    $idRef->instance +=1;
                     break;
                 case 'delete':
                     if (isset($messageAreas[$ref->repeat][$ref->instance])) {
                         unset($messageAreas[$ref->repeat][$ref->instance]);
                         $messageAreas[$ref->repeat] = array_values($messageAreas[$ref->repeat]);
                         $mm->replaceMessageAreas($messageAreas);
+                        $idRef->instance = $idRef->instance > 0 ? --$idRef->instance : $idRef->instance;
                     }
                     break;
                 case 'up':
@@ -92,6 +95,7 @@ END;
                         $messageAreas[$ref->repeat][$ref->instance - 1] = $messageAreas[$ref->repeat][$ref->instance];
                         $messageAreas[$ref->repeat][$ref->instance] = $temp;
                         $mm->replaceMessageAreas($messageAreas);
+                        $idRef->instance -= 1;
                     }
                     break;
                 case 'down':
@@ -100,6 +104,7 @@ END;
                         $messageAreas[$ref->repeat][$ref->instance + 1] = $messageAreas[$ref->repeat][$ref->instance];
                         $messageAreas[$ref->repeat][$ref->instance] = $temp;
                         $mm->replaceMessageAreas($messageAreas);
+                        $idRef->instance += 1;
                     }
                     break;
                 case 'hide':
@@ -114,7 +119,7 @@ END;
             }
             $query = $_GET;
             unset($query['field']);
-            $redirect = new Common\PageURL('message_page', $query);
+            $redirect = new Common\PageURL('message_page', $query, $idRef->toId());
             header('Location: ' . $redirect);
             exit;
         }

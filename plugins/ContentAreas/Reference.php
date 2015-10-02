@@ -72,6 +72,20 @@ class Reference
     }
 
     /**
+     * Convert the reference to a value to be used as an html id by removing invalid
+     * characters
+     *
+     * @access  public
+     * @param   none
+     * @returns string  id value
+     * @return  none
+     */
+    public function toId()
+    {
+        return preg_replace('/[^0-9A-Za-z\-_:.]/', '', $this);
+    }
+
+    /**
      * Deserialise the reference
      *
      * @access  public

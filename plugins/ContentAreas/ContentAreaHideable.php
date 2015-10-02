@@ -18,8 +18,9 @@ class ContentAreaHideable extends ContentAreaBase
         );
         $text = $isHidden ?  'Unhide' : 'Hide';
         $value = $isHidden ? 'unhide' : 'hide';
+        $id = htmlspecialchars($this->reference->toId());
         $this->addButtonHtml($this->node, <<<END
-<form method="post">
+<form method="post" id="$id">
 <button formaction="$url" name="submit" value="$value">$text</button>
 </form>
 END

@@ -15,9 +15,10 @@ class ContentAreaRepeat extends ContentAreaBase
 {
     private function addRepeatButtons($node, $i, $size)
     {
+        $reference = new Reference($this->name, $i);
         $url = new Common\PageURL(
             null,
-            array('field' => (string)new Reference($this->name, $i)) + $_GET
+            array('field' => (string)$reference) + $_GET
         );
         $addButton = CHtml::htmlButton(
             new Common\ImageTag('add.png', 'Add repeat'),
@@ -50,8 +51,9 @@ class ContentAreaRepeat extends ContentAreaBase
         } else {
             $downButton = '';
         }
+        $id = htmlspecialchars($reference->toId());
         $this->addButtonHtml($node, <<<END
-<form method="post">
+<form method="post" id="$id">
     $addButton
     $deleteButton
     $upButton

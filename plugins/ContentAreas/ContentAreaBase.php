@@ -56,8 +56,9 @@ abstract class ContentAreaBase
             new PageURL(null, array('field' => (string) $this->reference, 'action' => 'edit') + $_GET)
         );
         $image = new ImageTag('pencil.png', 'Edit');
+        $id = htmlspecialchars($this->reference->toId());
         $this->addButtonHtml($this->node, <<<END
-<a class="opendialog" href="$url" title="$this->reference">$image</a>
+<a class="opendialog" href="$url" title="$this->reference" id="$id">$image</a>
 END
         );
         $this->addClass('editable');

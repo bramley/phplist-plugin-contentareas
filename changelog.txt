@@ -1,3 +1,7 @@
+version 1.1.0+20151002
+      Reposition at the original field after making change
+      Handle 0-length template
+
 version 1.0.4+20150930
       Add method to process cached message
       Corrected iframe width and height settings

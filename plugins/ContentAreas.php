@@ -115,7 +115,7 @@ class ContentAreas extends phplistPlugin
         $dao = new DAO(new DB());
         $templateBody = $dao->templateBody($data['template']);
 
-        if (!TemplateModel::isTemplateBody($templateBody)) {
+        if (!($templateBody && TemplateModel::isTemplateBody($templateBody))) {
             return '';
         }
 
@@ -146,7 +146,7 @@ END;
         $dao = new DAO(new DB());
         $templateBody = $dao->templateBody($data['template']);
 
-        if (!TemplateModel::isTemplateBody($templateBody)) {
+        if (!($templateBody && TemplateModel::isTemplateBody($templateBody))) {
             return '';
         }
         $iframe = $this->iframe('preview', $messageId);
