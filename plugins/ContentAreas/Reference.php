@@ -60,8 +60,7 @@ class Reference
      *
      * @access  public
      * @param   none
-     * @returns string  Either the name or the concatenation of repeat, instance and name
-     * @return  none
+     * @return  string  Either the name or the concatenation of repeat, instance and name
      */
     public function __toString()
     {
@@ -77,8 +76,7 @@ class Reference
      *
      * @access  public
      * @param   none
-     * @returns string  id value
-     * @return  none
+     * @return  string  id value
      */
     public function toId()
     {
@@ -90,8 +88,7 @@ class Reference
      *
      * @access  public
      * @param   string  $p  The stringified reference
-     * @returns Reference
-     * @return  none
+     * @return  Reference
      */
     public static function decode($p)
     {
