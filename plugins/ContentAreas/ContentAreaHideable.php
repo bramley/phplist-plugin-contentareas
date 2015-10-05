@@ -28,14 +28,23 @@ END
         );
     }
 
-    public function merge($messageArea)
+    /**
+     * If area is hidden and not editing then remove the area
+     * Otherwise merge the content area
+     *
+     * @access  public
+     * @param   array   $contentArea the content areas for the current level
+     * @param   Merger  $merger object to do the merging
+     * @return  void
+     */
+    public function merge($contentArea, Merger $merger = null)
     {
-        if (is_null($messageArea)) {
-            $messageArea = array();
-        } elseif (isset($messageArea[0])) {
-            $messageArea = $messageArea[0];
+        if (is_null($contentArea)) {
+            $contentArea = array();
+        } elseif (isset($contentArea[0])) {
+            $contentArea = $contentArea[0];
         }
-        $isHidden = isset($messageArea['_hidden']) && $messageArea['_hidden'];
+        $isHidden = isset($contentArea['_hidden']) && $contentArea['_hidden'];
 
         if ($isHidden && !$this->edit) {
             $this->node->parentNode->removeChild($this->node);
@@ -45,21 +54,7 @@ END
         $this->node->parentNode->insertBefore(
             new DOMComment("Start of hideable area $this->name"), $this->node
         );
-        $xpath = new DOMXPath($this->ownerDocument);
-
-        $children = $xpath->query(TemplateModel::XPATH_CHILD_EDIT, $this->node);
-
-        foreach ($children as $child) {
-            $area = ContentAreaBase::createContentArea($child);
-            $area->edit = !$isHidden && $this->edit;
-            $area->reference = new Reference($this->name, 0, $area->name);
-
-            if (isset($messageArea[$area->name])) {
-                $area->merge($messageArea[$area->name]);
-            } else {
-                $area->merge(null);
-            }
-        }
+        $merger->mergeOneLevel($this->node, $contentArea, !$isHidden && $this->edit, $this->name, 0);
         $this->node->parentNode->insertBefore(
             new DOMComment("End of hideable area"), $this->node->nextSibling
         );

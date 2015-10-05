@@ -64,47 +64,34 @@ END
     }
 
     /**
-     * For each repeat instance create a copy of the repeat node and populate
-     * with the repeat instance data
+     * For each repeat instance create a copy of the repeatable node and merge
+     * the instance's content areas
      *
-     * @access  public
-     * @param   array $messageArea  set of repeat instances
+     * @param   array   $contentArea the content areas for the current level
+     * @param   Merger  $merger object to do the merging
      * @return  void
      */
-    public function merge($messageArea)
+    public function merge($contentArea, Merger $merger = null)
     {
-        if (is_null($messageArea)) {
-            $messageArea = array();
+        if (is_null($contentArea)) {
+            $contentArea = array();
         }
 
-        if ($this->edit && count($messageArea) == 0) {
-            $messageArea = array(array());
+        if ($this->edit && count($contentArea) == 0) {
+            $contentArea = array(array());
         }
 
-        foreach ($messageArea as $i => $repeatInstance) {
+        foreach ($contentArea as $i => $repeatInstance) {
             $this->node->parentNode->insertBefore(
                 new DOMComment("Start of repeat instance $i"), $this->node
             );
             $copyNode = $this->node->cloneNode(true);
             $this->node->parentNode->insertBefore($copyNode, $this->node);
 
-            $xpath = new DOMXPath($this->ownerDocument);
-            $children = $xpath->query(TemplateModel::XPATH_CHILD_EDIT, $copyNode);
-
-            foreach ($children as $child) {
-                $area = ContentAreaBase::createContentArea($child);
-                $area->edit = $this->edit;
-                $area->reference = new Reference($this->name, $i, $area->name);
-
-                if (isset($repeatInstance[$area->name])) {
-                    $area->merge($repeatInstance[$area->name]);
-                } else {
-                    $area->merge(null);
-                }
-            }
+            $merger->mergeOneLevel($copyNode, $repeatInstance, $this->edit, $this->name, $i);
 
             if ($this->edit) {
-                $this->addRepeatButtons($copyNode, $i, count($messageArea));
+                $this->addRepeatButtons($copyNode, $i, count($contentArea));
             }
             $this->node->parentNode->insertBefore(
                 new DOMComment("End of repeat instance $i"), $this->node

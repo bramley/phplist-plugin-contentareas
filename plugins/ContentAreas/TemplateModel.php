@@ -4,17 +4,21 @@ namespace phpList\plugin\ContentAreas;
 
 use phpList\plugin\Common\DB;
 use DOMDocument;
-use XSLTProcessor;
+use DOMNode;
 use DOMXPath;
+use XSLTProcessor;
 
 class TemplateModel
 {
-    const XPATH_ALL =
-        '//*[(@data-edit and not(ancestor::*[@data-repeatable]) and not(ancestor::*[@data-hideable])) or @data-repeatable or @data-hideable]';
+    const XPATH_ALL_AT_DEPTH =
+        './/*[
+            (@data-edit|@data-repeatable|@data-hideable)
+            and count(ancestor::*[@data-repeatable|@data-hideable]) = %d
+            ]';
     const XPATH_CHILD_EDIT = './/*[@data-edit]';
     const XPATH_ANY_EDIT = 'descendant::*[@data-edit][1]';
     const XPATH_SINGLE = "//*[@data-edit='%1\$s' or @data-repeatable='%1\$s' or @data-hideable='%1\$s']";
-    const XPATH_All_ATTRIBUTES = '@data-edit | @data-type | @data-repeatable | @data-hideable | @data-toc';
+    const XPATH_ALL_ATTRIBUTES = '@data-edit | @data-type | @data-repeatable | @data-hideable | @data-toc';
     const EDIT_ATTRIBUTE = 'data-edit';
     const TYPE_ATTRIBUTE = 'data-type';
     const REPEATABLE_ATTRIBUTE = 'data-repeatable';
@@ -22,7 +26,6 @@ class TemplateModel
 
     private $dom;
     private $xpath;
-    private $contentNodes;
 
     /*
      *  Private methods
@@ -87,8 +90,8 @@ END;
 
     private function removeAttributes(DOMDocument $doc)
     {
-        $xsl = new DOMDocument;
-        $any = self::XPATH_All_ATTRIBUTES;
+        $xsl = new DOMDocument();
+        $any = self::XPATH_ALL_ATTRIBUTES;
         $ss = <<<END
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -174,7 +177,6 @@ END;
         $this->dom->loadHTML($html);
         $this->dom->formatOutput = true;
         $this->xpath = new DOMXPath($this->dom);
-        $this->contentNodes = $this->xpath->query(self::XPATH_ALL);
     }
 
     public function load($file)
@@ -187,22 +189,24 @@ END;
         return $this->dom->saveHTML();
     }
 
-    public function merge(array $messageAreas, $edit = false)
+    /**
+     * Merge the template with the content areas
+     * The first level is processed here, further levels will be processed
+     * recursively
+     * Optionally inline css
+     *
+     * @access  public
+     * @param   array   $contentAreas the content areas
+     * @param   boolean $edit whether the merge should include edit buttons
+     * @return  string  the generated HTML
+     */
+    public function merge(array $contentAreas, $edit = false)
     {
         if ($edit) {
             $this->addStyles();
         }
-
-        foreach ($this->contentNodes as $node) {
-            $area = ContentAreaBase::createContentArea($node);
-            $area->edit = $edit;
-
-            if (isset($messageAreas[$area->name])) {
-                $area->merge($messageAreas[$area->name]);
-            } else {
-                $area->merge(null);
-            }
-        }
+        $merger = new Merger($this->xpath);
+        $merger->mergeOneLevel($this->dom->documentElement, $contentAreas, $edit);
         $this->createToc();
         $html = $this->saveAsHtml($this->removeAttributes($this->dom));
 
