@@ -1,3 +1,6 @@
+version 1.1.1+20151005
+      Fix fckeditor namespace and javascript problems
+
 version 1.1.0+20151002
       Reposition at the original field after making change
       Handle 0-length template

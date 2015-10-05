@@ -2,6 +2,8 @@
 
 namespace phpList\plugin\ContentAreas;
 
+use FCKeditor;
+
 class UnknownEditorException extends \Exception
 {
 }
@@ -79,7 +81,7 @@ class EditorProviderFck extends EditorProvider
         $connector = '../../connectors/phplist/connector.php';
         $url = getConfig('fckeditor_path')
             . 'editor/filemanager/browser/default/browser.html?'
-            . htmlspecialchars(http_build_query(array('Type' => 'Image', 'Connector' => $connector), '', '&'));
+            . http_build_query(array('Type' => 'Image', 'Connector' => $connector), '', '&');
         $html = <<<END
 <script type='text/javascript'>
 $function = function(callback) {
