@@ -14,7 +14,7 @@ class TemplateModel
     const XPATH_CHILD_EDIT = './/*[@data-edit]';
     const XPATH_ANY_EDIT = 'descendant::*[@data-edit][1]';
     const XPATH_SINGLE = "//*[@data-edit='%s']";
-    const XPATH_All_ATTRIBUTES = '@data-edit | @data-type | @data-repeatable | @data-hideable';
+    const XPATH_All_ATTRIBUTES = '@data-edit | @data-type | @data-repeatable | @data-hideable | @data-toc';
     const EDIT_ATTRIBUTE = 'data-edit';
     const TYPE_ATTRIBUTE = 'data-type';
     const REPEATABLE_ATTRIBUTE = 'data-repeatable';
@@ -27,6 +27,64 @@ class TemplateModel
     /*
      *  Private methods
      */
+    private function createToc()
+    {
+        $nl = $this->xpath->query("//@data-toc");
+
+        if ($nl->length == 0) {
+            return;
+        }
+        $tocEntry = $nl->item(0)->value;
+
+        if ($tocEntry == '') {
+            return;
+        }
+        $xsl = new DOMDocument;
+        $ss = <<<END
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+
+    <!-- rule for the toc element -->
+    <xsl:template match="*[@data-toc]">
+        <xsl:copy-of select="." />
+        <xsl:for-each select="//$tocEntry">
+            <xsl:choose>
+                <xsl:when test="@id">
+                    <p><a href="#{@id}">
+                   <xsl:value-of select="."/></a></p>
+                </xsl:when>
+                <xsl:otherwise>
+                    <p><a href="#{generate-id(.)}">
+                   <xsl:value-of select="."/></a></p>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:template>
+
+    <!-- rule for each element where id does not exist -->
+    <xsl:template match="{$tocEntry}[not(@id)]">
+        <xsl:copy>
+            <xsl:attribute name="id">
+                <xsl:value-of select="generate-id()"/>
+            </xsl:attribute>
+            <xsl:apply-templates select="@*|node()" />
+        </xsl:copy>
+    </xsl:template>
+
+    <!-- identity transformation -->
+    <xsl:template match="@*|node()">
+        <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+        </xsl:copy>
+    </xsl:template>
+
+</xsl:stylesheet>
+END;
+        $xsl->loadXML($ss);
+        $proc = new XSLTProcessor;
+        $proc->importStylesheet($xsl);
+        $this->dom = $proc->transformToDoc($this->dom);
+    }
+
     private function removeAttributes(DOMDocument $doc)
     {
         $xsl = new DOMDocument;
@@ -145,6 +203,7 @@ END;
                 $area->merge(null);
             }
         }
+        $this->createToc();
         $html = $this->saveAsHtml($this->removeAttributes($this->dom));
 
         if (getConfig('contentareas_inline_css') && !$edit) {

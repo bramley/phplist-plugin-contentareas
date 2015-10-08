@@ -1,3 +1,7 @@
+version 1.2.0+20151008
+      Add data-toc attribute for table of contents
+      Add class map file
+
 version 1.1.1+20151005
       Fix fckeditor namespace and javascript problems
 

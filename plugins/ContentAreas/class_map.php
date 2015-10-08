@@ -1,0 +1,23 @@
+<?php
+return array(
+    'phpList\plugin\ContentAreas\ContentAreaBase' => $base . 'ContentAreaBase.php',
+    'phpList\plugin\ContentAreas\ContentAreaEditor' => $base . 'ContentAreaEditor.php',
+    'phpList\plugin\ContentAreas\ContentAreaHideable' => $base . 'ContentAreaHideable.php',
+    'phpList\plugin\ContentAreas\ContentAreaImage' => $base . 'ContentAreaImage.php',
+    'phpList\plugin\ContentAreas\ContentAreaRepeat' => $base . 'ContentAreaRepeat.php',
+    'phpList\plugin\ContentAreas\ContentAreaText' => $base . 'ContentAreaText.php',
+    'phpList\plugin\ContentAreas\ContentAreaTextArea' => $base . 'ContentAreaTextArea.php',
+    'phpList\plugin\ContentAreas\ControllerFactory' => $base . 'ControllerFactory.php',
+    'phpList\plugin\ContentAreas\ConvertHtmlEntities' => $base . 'ConvertHtmlEntities.php',
+    'phpList\plugin\ContentAreas\DAO' => $base . 'DAO.php',
+    'phpList\plugin\ContentAreas\EditorProvider' => $base . 'EditorProvider.php',
+    'phpList\plugin\ContentAreas\EditorProviderCK' => $base . 'EditorProvider.php',
+    'phpList\plugin\ContentAreas\EditorProviderFck' => $base . 'EditorProvider.php',
+    'phpList\plugin\ContentAreas\EditorProviderTiny' => $base . 'EditorProvider.php',
+    'phpList\plugin\ContentAreas\MessageController' => $base . 'MessageController.php',
+    'phpList\plugin\ContentAreas\MessageModel' => $base . 'MessageModel.php',
+    'phpList\plugin\ContentAreas\MethodNotImplementedException' => $base . 'EditorProvider.php',
+    'phpList\plugin\ContentAreas\Reference' => $base . 'Reference.php',
+    'phpList\plugin\ContentAreas\TemplateModel' => $base . 'TemplateModel.php',
+    'phpList\plugin\ContentAreas\UnknownEditorException' => $base . 'EditorProvider.php',
+);

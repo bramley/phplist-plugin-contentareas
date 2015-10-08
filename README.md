@@ -74,6 +74,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.2.0+20151008  Add support for table of contents
     1.1.1+20151005  Fix problems with using fckeditor
     1.1.0+20151002  Reposition at the original field after making change
     1.0.4+20150930  Corrected iframe width and height settings
