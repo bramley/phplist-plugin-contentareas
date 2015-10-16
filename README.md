@@ -18,6 +18,10 @@ Requires phplist release 3.0.12 or release 3.2.0 or later.
 
 Requires the Common Plugin version 3 to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
+Requires version 2.2.0 or later of the View in Browser plugin if you want to use that plugin to create a link that displays the
+campaign in a browser. You should install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-viewbrowser>.
+
+
 ### Set the plugin directory ###
 The default plugin directory is `plugins` within the admin directory.
 
@@ -27,7 +31,7 @@ The benefit of this is that plugins will not be affected when you upgrade phplis
 ### Install through phplist ###
 Install on the Plugins page (menu Config > Plugins) using the package URL `https://github.com/bramley/phplist-plugin-contentareas/archive/master.zip`
 
-Then click the small orange icon to enable the plugin.
+Then click the button to enable the plugin.
 
 ### Install manually ###
 Download the plugin zip file from <https://github.com/bramley/phplist-plugin-contentareas/archive/master.zip>
@@ -38,7 +42,7 @@ This should contain
 * the file ContentAreas.php
 * the directory ContentAreas
 
-Then click the small orange icon to enable the plugin.
+Then click the button to enable the plugin.
 ### Replace phplist files ###
 
 **This step is needed only for phplist releases 3.0.12 and 3.2.0. It is not needed for 3.2.1 and later releases.**
@@ -74,6 +78,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.2.1+20151018  Internal change to work with the latest View in Browser plugin
     1.2.0+20151008  Add support for table of contents
     1.1.1+20151005  Fix problems with using fckeditor
     1.1.0+20151002  Reposition at the original field after making change
