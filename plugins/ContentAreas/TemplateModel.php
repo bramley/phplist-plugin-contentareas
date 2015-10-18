@@ -13,7 +13,7 @@ class TemplateModel
         '//*[(@data-edit and not(ancestor::*[@data-repeatable]) and not(ancestor::*[@data-hideable])) or @data-repeatable or @data-hideable]';
     const XPATH_CHILD_EDIT = './/*[@data-edit]';
     const XPATH_ANY_EDIT = 'descendant::*[@data-edit][1]';
-    const XPATH_SINGLE = "//*[@data-edit='%s']";
+    const XPATH_SINGLE = "//*[@data-edit='%1\$s' or @data-repeatable='%1\$s' or @data-hideable='%1\$s']";
     const XPATH_All_ATTRIBUTES = '@data-edit | @data-type | @data-repeatable | @data-hideable | @data-toc';
     const EDIT_ATTRIBUTE = 'data-edit';
     const TYPE_ATTRIBUTE = 'data-type';
@@ -231,23 +231,18 @@ END;
         return $tm->isTemplate();
     }
 
-    public static function mergeTemplate($templateBody, $messageId, $edit = false)
-    {
-        $dao = new DAO(new DB());
-        $mm = new MessageModel($messageId, $dao);
-        $tm = new self($templateBody);
-        return $tm->merge($mm->messageAreas(), $edit);
-    }
-
 /*
  *  Called from sendemaillib.php
  */
-    public static function mergeIfTemplate($templateBody, $messageId)
+    public static function mergeIfTemplate($templateBody, $messageId, DAO $dao = null)
     {
         $tm = new self($templateBody);
 
         if ($tm->isTemplate()) {
-            $dao = new DAO(new DB());
+            if ($dao === null) {
+                $dao = new DAO(new DB());
+            }
+
             $mm = new MessageModel($messageId, $dao);
             return $tm->merge($mm->messageAreas());
         } else {
@@ -258,11 +253,14 @@ END;
 /*
  *  Called from message.php for phplist <= 3.0.12
  */
-    public static function previewIfTemplate($templateId, $messageId)
+    public static function previewIfTemplate($templateId, $messageId, DAO $dao = null)
     {
         global $plugins;
 
-        $dao = new DAO(new DB());
+        if ($dao === null) {
+            $dao = new DAO(new DB());
+        }
+
         $templateBody = $dao->templateBody($templateId);
 
         if (self::isTemplateBody($templateBody)) {

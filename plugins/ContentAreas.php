@@ -1,10 +1,11 @@
 <?php
 
 use phpList\plugin\ContentAreas\DAO;
+use phpList\plugin\ContentAreas\MessageModel;
 use phpList\plugin\ContentAreas\TemplateModel;
 use phpList\plugin\Common\DB;
-use phpList\plugin\Common\PageURL;
 use phpList\plugin\Common\PageLink;
+use phpList\plugin\Common\PageURL;
 
 class ContentAreas extends phplistPlugin
 {
@@ -13,6 +14,7 @@ class ContentAreas extends phplistPlugin
     const PLUGIN = 'ContentAreas';
 
     private $linkText;
+    private $dao;
 
     /*
      *  Inherited variables
@@ -109,6 +111,28 @@ class ContentAreas extends phplistPlugin
         return array();
     }
 
+    /**
+     * Use this hook to create the dao
+     * 
+     * @return null
+     */
+    public function sendFormats()
+    {
+        global $plugins;
+
+        require_once $plugins['CommonPlugin']->coderoot . 'Autoloader.php';
+        $this->dao = new DAO(new DB());
+        return null;
+    }
+
+    /**
+     * Create the content for the Send Campaign tab
+     * 
+     * @param int $messageId the message id
+     * @param array $data the message data
+     * 
+     * @return string
+     */
     public function sendMessageTab($messageId = 0, $data = array())
     {
         $level = error_reporting(E_ALL | E_STRICT);
@@ -117,13 +141,11 @@ class ContentAreas extends phplistPlugin
         if ($data['template'] == 0) {
             return '';
         }
-        $dao = new DAO(new DB());
-        $templateBody = $dao->templateBody($data['template']);
+        $templateBody = $this->dao->templateBody($data['template']);
 
         if (!($templateBody && TemplateModel::isTemplateBody($templateBody))) {
             return '';
         }
-
         $preview = new PageLink(
             new PageURL('message_page', array('pi' => __CLASS__, 'action' => 'preview', 'id' => $messageId)),
             'Preview',
@@ -142,38 +164,38 @@ END;
         return s('Edit Areas');
     }
 
+    /**
+     * Create the content, an iframe, for the view message page
+     * 
+     * @param int $messageId the message id
+     * @param array $data the message data
+     * 
+     * @return array|false the caption and content or false if the message
+     *  does not use content areas
+     */
     public function viewMessage($messageId, array $data)
     {
         if ($data['template'] == 0) {
-            return null;
+            return false;
         }
-
-        $dao = new DAO(new DB());
-        $templateBody = $dao->templateBody($data['template']);
+        $templateBody = $this->dao->templateBody($data['template']);
 
         if (!($templateBody && TemplateModel::isTemplateBody($templateBody))) {
-            return '';
+            return false;
         }
         $iframe = $this->iframe('preview', $messageId);
         return array('Message', $iframe);
     }
 
-    public function iframe($action, $messageId)
-    {
-        $iframe = htmlspecialchars(new PageURL(
-            'message_page', array('pi' => __CLASS__, 'action' => $action, 'id' => $messageId)
-        ));
-        $width = getConfig('contentareas_iframe_width');
-        $height = getConfig('contentareas_iframe_height');
-        return <<<END
-<iframe src="$iframe" width="$width" height="$height">
-</iframe>
-END;
-    }
-
-    /*
-     *  Replace placeholders in html message
-     *
+    /**
+     * Replace placeholders
+     * 
+     * @param int $messageid the message id
+     * @param string $content the message content
+     * @param string $destination the destination email address
+     * @param array $userdata the user data
+     * 
+     * @return string
      */
     public function parseOutgoingHTMLMessage($messageid, $content, $destination, $userdata = null)
     {
@@ -186,9 +208,15 @@ END;
         );
     }
 
-    /*
-     *  Replace placeholders in text message
-     *
+    /**
+     * Replace placeholders
+     * 
+     * @param int $messageid the message id
+     * @param string $content the message content
+     * @param string $destination the destination email address
+     * @param array $userdata the user data
+     * 
+     * @return string
      */
     public function parseOutgoingTextMessage($messageid, $content, $destination, $userdata = null)
     {
@@ -201,17 +229,59 @@ END;
         );
     }
 
-    /*
-     *  Merge template with the content areas
-     *
+    /**
+     * Merge the template with content areas. This is done just once for the campaign.
+     * 
+     * @param int $messageId the message id
+     * @param array &$message the message data
+     * 
+     * @return void
      */
     public function processPrecachedCampaign($messageId, array &$message)
     {
-        if ($message['template']
-            && ($merged = TemplateModel::mergeIfTemplate($message['template'], $messageId))) {
-            $message['content'] = str_ireplace('[CONTENT]', $message['content'], $merged);
-            $message['template'] = '';
-            $message['htmlformatted'] = true;
+        if ($message['template']) {
+            $tm = new TemplateModel($message['template']);
+
+            if ($tm->isTemplate()) {
+                $mm = new MessageModel($messageId, $this->dao);
+                $merged = $tm->merge($mm->messageAreas());
+                $message['content'] = str_ireplace('[CONTENT]', $message['content'], $merged);
+                $message['template'] = '';
+                $message['htmlformatted'] = true;
+            }
         }
+    }
+
+    /**
+     * Create an iframe element that will display the campaign
+     * 
+     * @param string $action value for the action query parameter
+     * @param int $messageId the message id
+     * 
+     * @return string
+     */
+    public function iframe($action, $messageId)
+    {
+        $url = htmlspecialchars(new PageURL(
+            'message_page', array('pi' => __CLASS__, 'action' => $action, 'id' => $messageId)
+        ));
+        $width = getConfig('contentareas_iframe_width');
+        $height = getConfig('contentareas_iframe_height');
+        return <<<END
+<iframe src="$url" width="$width" height="$height">
+</iframe>
+END;
+    }
+
+    /**
+     * Setter to allow injecting a dao
+     * 
+     * @param phpList\plugin\ContentAreas\DAO $dao
+     * 
+     * @return void
+     */
+    public function setDao(DAO $dao)
+    {
+        $this->dao = $dao;
     }
 }

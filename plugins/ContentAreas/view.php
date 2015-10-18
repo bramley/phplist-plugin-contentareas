@@ -1,4 +1,8 @@
 <?php
+use phpList\plugin\Common\DB;
+use phpList\plugin\ContentAreas\TemplateModel;
+use phpList\plugin\ContentAreas\MessageModel;
+use phpList\plugin\ContentAreas\DAO;
 
 if (!extension_loaded('xsl')) {
     echo s('The xsl extension must be installed');
@@ -40,6 +44,8 @@ echo $creator->createContent(
     $_GET['m'],
     $uid,
     function ($templateBody, $message) {
-        return phpList\plugin\ContentAreas\TemplateModel::mergeTemplate($templateBody, $_GET['m']);
+        $tm = new TemplateModel($templateBody);
+        $mm = new MessageModel($_GET['m'], new DAO(new DB));
+        return $tm->merge($mm->messageAreas());
     }
 );
