@@ -8,7 +8,7 @@ class DAO extends Common\DAO\Message
 {
     public function templateBody($id)
     {
-        $sql = 
+        $sql =
             "SELECT template
             FROM {$this->tables['template']}
             WHERE id = $id";
@@ -18,7 +18,7 @@ class DAO extends Common\DAO\Message
 
     public function messageData($messageId, $name)
     {
-        $sql = 
+        $sql =
             "SELECT data
             FROM {$this->tables['messagedata']} m
             WHERE id = $messageId AND name = '$name'";

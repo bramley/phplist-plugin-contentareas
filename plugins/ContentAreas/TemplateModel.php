@@ -217,7 +217,6 @@ END;
     {
         $nodeList = $this->xpath->query(sprintf(self::XPATH_SINGLE, $name));
         return $nodeList->item(0);
-    
     }
 
     public function isTemplate()

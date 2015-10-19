@@ -5,6 +5,7 @@ namespace phpList\plugin\ContentAreas;
 use DOMComment;
 use DOMXPath;
 use phpList\plugin\Common;
+
 /**
  * Subclass to generate HTML for a hideable area
  * 

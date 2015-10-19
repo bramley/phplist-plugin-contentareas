@@ -6,18 +6,8 @@ use phpList\plugin\Common;
 
 class MessageController extends Common\Controller
 {
-/*
- *  Private variables
- */
+    /** @var phpList\plugin\ContentAreas\DAO Instance of dao */
     private $dao;
-
-/*
- *  Private functions
- */
-
-/*
- *  Protected functions
- */
 
     protected function actionDefault()
     {

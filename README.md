@@ -78,6 +78,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.2.2+20151023  Internal changes
     1.2.1+20151018  Internal change to work with the latest View in Browser plugin
     1.2.0+20151008  Add support for table of contents
     1.1.1+20151005  Fix problems with using fckeditor

@@ -8,16 +8,14 @@ namespace phpList\plugin\ContentAreas;
  */
 class Reference
 {
-/*
- *  Public variables
- */
+    /** @var string name of the repeat */
     public $repeat = null;
-    public $instance = null;
-    public $name = null;
 
-/*
- *  Private functions
- */
+    /** @var int instance of the repeat */
+    public $instance = null;
+
+    /** @var string name of the content area */
+    public $name = null;
 
     /**
      * Assign object properties. The method has three signatures:
@@ -45,9 +43,6 @@ class Reference
         }
     }
 
-/*
- *  Public functions
- */
     public function __construct()
     {
         if (func_num_args() > 0) {

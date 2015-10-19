@@ -91,10 +91,15 @@ class ContentAreas extends phplistPlugin
 
         return array(
             'XSL extension installed' => extension_loaded('xsl'),
-            'Common plugin v3 installed' =>
+            'Common plugin v3.2.0 or later installed' =>
                 phpListPlugin::isEnabled('CommonPlugin')
                 && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
-                && version_compare($matches[0], '3') > 0,
+                && version_compare($matches[0], '3.2.0') >= 0,
+            'View in Browser plugin v2.2.0 or later installed' =>
+                (phpListPlugin::isEnabled('ViewBrowserPlugin')
+                    && version_compare($plugins['ViewBrowserPlugin']->version, '2.2.0') >= 0
+                )
+                || !phpListPlugin::isEnabled('ViewBrowserPlugin'),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
         );
     }
@@ -203,7 +208,7 @@ END;
     public function processPrecachedCampaign($messageId, array &$message)
     {
         if ($message['template']
-            && ($merged = TemplateModel::mergeIfTemplate($message['template'], $messageId))){
+            && ($merged = TemplateModel::mergeIfTemplate($message['template'], $messageId))) {
             $message['content'] = str_ireplace('[CONTENT]', $message['content'], $merged);
             $message['template'] = '';
             $message['htmlformatted'] = true;

@@ -21,8 +21,8 @@ abstract class EditorProvider
         $this->plugin = $plugin;
     }
 
-    abstract function addEditor($name, $content, $rows);
-    abstract function createImageBrowser($function);
+    abstract public function addEditor($name, $content, $rows);
+    abstract public function createImageBrowser($function);
 
     public static function createEditorProvider()
     {
@@ -44,7 +44,6 @@ abstract class EditorProvider
             default:
                 throw new UnknownEditorException($editorplugin);
         }
-
     }
 }
 
@@ -92,7 +91,7 @@ $function = function(callback) {
 }
 </script>
 END;
-    return $html;
+        return $html;
     }
 }
 

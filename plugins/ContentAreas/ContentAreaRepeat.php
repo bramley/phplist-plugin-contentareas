@@ -63,10 +63,14 @@ END
         );
     }
 
-/*
- *  For each repeat instance create a copy of the repeat node and populate
- *  with the repeat instance data
- */ 
+    /**
+     * For each repeat instance create a copy of the repeat node and populate
+     * with the repeat instance data
+     *
+     * @access  public
+     * @param   array $messageArea  set of repeat instances
+     * @return  void
+     */
     public function merge($messageArea)
     {
         if (is_null($messageArea)) {

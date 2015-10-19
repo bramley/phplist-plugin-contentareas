@@ -39,7 +39,7 @@ header('Content-Type: text/html; charset=UTF-8');
 echo $creator->createContent(
     $_GET['m'],
     $uid,
-    function($templateBody, $message) {
+    function ($templateBody, $message) {
         return phpList\plugin\ContentAreas\TemplateModel::mergeTemplate($templateBody, $_GET['m']);
     }
 );

@@ -1,7 +1,7 @@
 <?php
 
 namespace phpList\plugin\ContentAreas;
- 
+
 use phpList\plugin\Common;
 
 /**
@@ -42,7 +42,7 @@ class ControllerFactory extends Common\ControllerFactoryBase
      *
      * @param string $pi the plugin
      * @param array $params further parameters from the URL
-	 *
+     *
      * @return Common\Controller 
      * @access public
      */
@@ -52,5 +52,5 @@ class ControllerFactory extends Common\ControllerFactoryBase
         $page = preg_replace('/_page$/', '', $page);
         $class = 'phpList\plugin\\' . $pi . '\\' . ucfirst($page) . 'Controller';
         return new $class();
-	}
+    }
 }
