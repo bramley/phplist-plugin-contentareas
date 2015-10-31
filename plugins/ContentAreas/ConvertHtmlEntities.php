@@ -265,7 +265,7 @@ class ConvertHtmlEntities
             'uuml' => '&#252;',
             'yacute' => '&#253;',
             'thorn' => '&#254;',
-            'yuml' => '&#255;'
+            'yuml' => '&#255;',
         );
 
         return preg_replace_callback(

@@ -16,6 +16,7 @@ class MessageController extends Controller
         $row = $this->dao->messageById($_GET['id']);
         $mm = new MessageModel($_GET['id'], $this->dao);
         $tm = new TemplateModel($this->dao->templateBody($row['template']));
+
         return $tm->merge($mm->messageAreas(), $edit);
     }
 
@@ -82,7 +83,7 @@ END;
                 }
                 array_splice($messageAreas[$ref->repeat], $ref->instance + 1, 0, array(array()));
                 $mm->replaceMessageAreas($messageAreas);
-                $idRef->instance +=1;
+                $idRef->instance += 1;
                 break;
             case 'delete':
                 if (isset($messageAreas[$ref->repeat][$ref->instance])) {
@@ -128,7 +129,7 @@ END;
     }
 
     /**
-     * Constructor
+     * Constructor.
      */
     public function __construct()
     {
@@ -137,11 +138,9 @@ END;
     }
 
     /**
-     * Setter to allow injecting a dao
+     * Setter to allow injecting a dao.
      * 
      * @param phpList\plugin\ContentAreas\DAO $dao
-     * 
-     * @return void
      */
     public function setDao(DAO $dao)
     {

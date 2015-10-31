@@ -4,12 +4,10 @@ namespace phpList\plugin\ContentAreas;
 
 use phpList\plugin\Common;
 use DOMComment;
-use DOMXPath;
 use CHtml;
 
 /**
- * Subclass to generate HTML for a repeat area
- * 
+ * Subclass to generate HTML for a repeat area.
  */
 class ContentAreaRepeat extends ContentAreaBase
 {
@@ -18,7 +16,7 @@ class ContentAreaRepeat extends ContentAreaBase
         $reference = new Reference($this->name, $i);
         $url = new Common\PageURL(
             null,
-            array('field' => (string)$reference) + $_GET
+            array('field' => (string) $reference) + $_GET
         );
         $addButton = CHtml::htmlButton(
             new Common\ImageTag('add.png', 'Add repeat'),
@@ -65,11 +63,10 @@ END
 
     /**
      * For each repeat instance create a copy of the repeatable node and merge
-     * the instance's content areas
+     * the instance's content areas.
      *
-     * @param   array   $contentArea the content areas for the current level
-     * @param   Merger  $merger object to do the merging
-     * @return  void
+     * @param array  $contentArea the content areas for the current level
+     * @param Merger $merger      object to do the merging
      */
     public function merge($contentArea, Merger $merger = null)
     {

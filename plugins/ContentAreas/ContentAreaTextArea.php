@@ -3,10 +3,8 @@
 namespace phpList\plugin\ContentAreas;
 
 /**
- * Subclass to generate HTML for a textarea field content type
- * 
+ * Subclass to generate HTML for a textarea field content type.
  */
-
 class ContentAreaTextArea extends ContentAreaBase
 {
     protected function toHTML($field, $value)
@@ -15,6 +13,7 @@ class ContentAreaTextArea extends ContentAreaBase
         $value = htmlspecialchars($value);
         $rows = 6;
         $cols = 60;
+
         return <<<END
 <textarea name="content" rows="$rows" cols="$cols">$value</textarea>
 END;

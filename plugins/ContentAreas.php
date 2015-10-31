@@ -24,31 +24,31 @@ class ContentAreas extends phplistPlugin
     public $authors = 'Duncan Cameron';
     public $description = 'Provides multiple content areas for campaigns';
     public $settings = array(
-        'contentareas_inline_css' => array (
+        'contentareas_inline_css' => array(
             'value' => true,
             'description' => 'Automatically inline css',
             'type' => 'boolean',
             'allowempty' => 1,
-            'category'=> 'Content Areas',
+            'category' => 'Content Areas',
         ),
-        'contentareas_iframe_height' => array (
+        'contentareas_iframe_height' => array(
             'value' => 800,
             'min' => 500,
             'max' => 1000,
             'description' => 'Height in px of the iframe',
             'type' => 'integer',
             'allowempty' => false,
-            'category'=> 'Content Areas',
+            'category' => 'Content Areas',
         ),
-        'contentareas_iframe_width' => array (
+        'contentareas_iframe_width' => array(
             'value' => 660,
             'min' => 500,
             'max' => 800,
             'description' => 'Width in px of the iframe',
             'type' => 'integer',
             'allowempty' => false,
-            'category'=> 'Content Areas',
-        )
+            'category' => 'Content Areas',
+        ),
     );
     public $publicPages = array(self::VIEW_PAGE);
 
@@ -66,6 +66,7 @@ class ContentAreas extends phplistPlugin
         }
 
         $url = sprintf('%s://%s%s/', $public_scheme, getConfig('website'), $pageroot);
+
         return $url . '?' . http_build_query($params, '', '&');
     }
 
@@ -93,12 +94,10 @@ class ContentAreas extends phplistPlugin
 
         return array(
             'XSL extension installed' => extension_loaded('xsl'),
-            'Common plugin v3.2.0 or later installed' =>
-                phpListPlugin::isEnabled('CommonPlugin')
+            'Common plugin v3.2.0 or later installed' => phpListPlugin::isEnabled('CommonPlugin')
                 && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
                 && version_compare($matches[0], '3.2.0') >= 0,
-            'View in Browser plugin v2.2.0 or later installed' =>
-                (phpListPlugin::isEnabled('ViewBrowserPlugin')
+            'View in Browser plugin v2.2.0 or later installed' => (phpListPlugin::isEnabled('ViewBrowserPlugin')
                     && version_compare($plugins['ViewBrowserPlugin']->version, '2.2.0') >= 0
                 )
                 || !phpListPlugin::isEnabled('ViewBrowserPlugin'),
@@ -112,9 +111,7 @@ class ContentAreas extends phplistPlugin
     }
 
     /**
-     * Use this hook to create the dao
-     * 
-     * @return null
+     * Use this hook to create the dao.
      */
     public function sendFormats()
     {
@@ -122,14 +119,15 @@ class ContentAreas extends phplistPlugin
 
         require_once $plugins['CommonPlugin']->coderoot . 'Autoloader.php';
         $this->dao = new DAO(new DB());
-        return null;
+
+        return;
     }
 
     /**
-     * Create the content for the Send Campaign tab
+     * Create the content for the Send Campaign tab.
      * 
-     * @param int $messageId the message id
-     * @param array $data the message data
+     * @param int   $messageId the message id
+     * @param array $data      the message data
      * 
      * @return string
      */
@@ -153,6 +151,7 @@ class ContentAreas extends phplistPlugin
         );
         error_reporting($level);
         $iframe = $this->iframe('display', $messageId);
+
         return <<<END
 $preview
 $iframe
@@ -165,13 +164,13 @@ END;
     }
 
     /**
-     * Create the content, an iframe, for the view message page
+     * Create the content, an iframe, for the view message page.
      * 
-     * @param int $messageId the message id
-     * @param array $data the message data
+     * @param int   $messageId the message id
+     * @param array $data      the message data
      * 
      * @return array|false the caption and content or false if the message
-     *  does not use content areas
+     *                     does not use content areas
      */
     public function viewMessage($messageId, array $data)
     {
@@ -184,16 +183,17 @@ END;
             return false;
         }
         $iframe = $this->iframe('preview', $messageId);
+
         return array('Message', $iframe);
     }
 
     /**
-     * Replace placeholders
+     * Replace placeholders.
      * 
-     * @param int $messageid the message id
-     * @param string $content the message content
+     * @param int    $messageid   the message id
+     * @param string $content     the message content
      * @param string $destination the destination email address
-     * @param array $userdata the user data
+     * @param array  $userdata    the user data
      * 
      * @return string
      */
@@ -209,12 +209,12 @@ END;
     }
 
     /**
-     * Replace placeholders
+     * Replace placeholders.
      * 
-     * @param int $messageid the message id
-     * @param string $content the message content
+     * @param int    $messageid   the message id
+     * @param string $content     the message content
      * @param string $destination the destination email address
-     * @param array $userdata the user data
+     * @param array  $userdata    the user data
      * 
      * @return string
      */
@@ -232,10 +232,8 @@ END;
     /**
      * Merge the template with content areas. This is done just once for the campaign.
      * 
-     * @param int $messageId the message id
-     * @param array &$message the message data
-     * 
-     * @return void
+     * @param int   $messageId the message id
+     * @param array &$message  the message data
      */
     public function processPrecachedCampaign($messageId, array &$message)
     {
@@ -253,10 +251,10 @@ END;
     }
 
     /**
-     * Create an iframe element that will display the campaign
+     * Create an iframe element that will display the campaign.
      * 
-     * @param string $action value for the action query parameter
-     * @param int $messageId the message id
+     * @param string $action    value for the action query parameter
+     * @param int    $messageId the message id
      * 
      * @return string
      */
@@ -267,6 +265,7 @@ END;
         ));
         $width = getConfig('contentareas_iframe_width');
         $height = getConfig('contentareas_iframe_height');
+
         return <<<END
 <iframe src="$url" width="$width" height="$height">
 </iframe>
@@ -274,11 +273,9 @@ END;
     }
 
     /**
-     * Setter to allow injecting a dao
+     * Setter to allow injecting a dao.
      * 
      * @param phpList\plugin\ContentAreas\DAO $dao
-     * 
-     * @return void
      */
     public function setDao(DAO $dao)
     {

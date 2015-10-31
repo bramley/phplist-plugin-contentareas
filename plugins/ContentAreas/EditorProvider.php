@@ -30,7 +30,7 @@ abstract class EditorProvider
         global $plugins;
 
         if (empty($editorplugin)) {
-            return null;
+            return;
         }
         $plugin = $plugins[$editorplugin];
 
@@ -66,7 +66,7 @@ class EditorProviderFck extends EditorProvider
     {
         include_once $this->plugin->coderoot . '/fckeditor/fckeditor.php';
 
-        $oFCKeditor = new FCKeditor($name) ;
+        $oFCKeditor = new FCKeditor($name);
         $fckPath = getConfig('fckeditor_path');
         $oFCKeditor->BasePath = $fckPath;
         $oFCKeditor->Value = $content;
@@ -91,6 +91,7 @@ $function = function(callback) {
 }
 </script>
 END;
+
         return $html;
     }
 }
@@ -107,4 +108,3 @@ class EditorProviderTiny extends EditorProvider
         return $this->plugin->createImageBrowser($function);
     }
 }
-

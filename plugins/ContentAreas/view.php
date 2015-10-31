@@ -1,4 +1,5 @@
 <?php
+
 use phpList\plugin\Common\DB;
 use phpList\plugin\ContentAreas\TemplateModel;
 use phpList\plugin\ContentAreas\MessageModel;
@@ -36,7 +37,7 @@ if (getConfig('viewbrowser_anonymous')) {
 
 error_reporting(-1);
 require 'admin/sendemaillib.php';
-$creator = new \phpList\plugin\ViewBrowserPlugin\ContentCreator;
+$creator = new \phpList\plugin\ViewBrowserPlugin\ContentCreator();
 
 ob_end_clean();
 header('Content-Type: text/html; charset=UTF-8');
@@ -45,7 +46,8 @@ echo $creator->createContent(
     $uid,
     function ($templateBody, $message) {
         $tm = new TemplateModel($templateBody);
-        $mm = new MessageModel($_GET['m'], new DAO(new DB));
+        $mm = new MessageModel($_GET['m'], new DAO(new DB()));
+
         return $tm->merge($mm->messageAreas());
     }
 );

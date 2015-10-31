@@ -7,8 +7,7 @@ use phpList\plugin\Common\PageURL;
 use DOMNode;
 
 /**
- * Base class for all content area types
- * 
+ * Base class for all content area types.
  */
 abstract class ContentAreaBase
 {
@@ -63,7 +62,7 @@ END
         );
         $this->addClass('editable');
     }
-    
+
     protected function replaceChildren($htmlContent)
     {
         try {
@@ -89,6 +88,7 @@ END
         foreach ($this->node->childNodes as $child) {
             $value .= $this->ownerDocument->saveHTML($child);
         }
+
         return $value;
     }
 
@@ -127,6 +127,7 @@ END
         } else {
             throw new \Exception('Unable to create content area for element ' . $node->ownerDocument->saveHTML($node));
         }
+
         return $area;
     }
 
@@ -138,6 +139,7 @@ END
             $value = isset($messageAreas[$ref->name]) ? $messageAreas[$ref->name] : null;
         }
         $html = $this->toHTML($ref, $value);
+
         return <<<END
 <form method="POST">
     <input type="hidden" name="field" value="$ref" />

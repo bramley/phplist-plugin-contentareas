@@ -3,8 +3,7 @@
 namespace phpList\plugin\ContentAreas;
 
 /**
- * Subclass to generate HTML for an image content type
- * 
+ * Subclass to generate HTML for an image content type.
  */
 class ContentAreaImage extends ContentAreaBase
 {

@@ -3,8 +3,7 @@
 namespace phpList\plugin\ContentAreas;
 
 /**
- * Class to provide a reference for a content area
- *
+ * Class to provide a reference for a content area.
  */
 class Reference
 {
@@ -21,11 +20,11 @@ class Reference
      * Assign object properties. The method has three signatures:
      *  assign($name)
      *  assign($repeat, $instance)
-     *  assign($repeat, $instance, $name)
+     *  assign($repeat, $instance, $name).
      *
-     * @access  private
      * @param   mixed
-     * @return  none
+     *
+     * @return none
      */
     private function assign()
     {
@@ -33,6 +32,7 @@ class Reference
 
         if (count($args) == 1) {
             $this->name = $args[0];
+
             return;
         }
         $this->repeat = $args[0];
@@ -51,27 +51,28 @@ class Reference
     }
 
     /**
-     * Serialise the reference
+     * Serialise the reference.
      *
-     * @access  public
      * @param   none
-     * @return  string  Either the name or the concatenation of repeat, instance and name
+     *
+     * @return string Either the name or the concatenation of repeat, instance and name
      */
     public function __toString()
     {
         $r = $this->repeat
             ? "$this->repeat,$this->instance,$this->name"
             : $this->name;
+
         return $r;
     }
 
     /**
      * Convert the reference to a value to be used as an html id by removing invalid
-     * characters
+     * characters.
      *
-     * @access  public
      * @param   none
-     * @return  string  id value
+     *
+     * @return string id value
      */
     public function toId()
     {
@@ -79,16 +80,17 @@ class Reference
     }
 
     /**
-     * Deserialise the reference
+     * Deserialise the reference.
      *
-     * @access  public
-     * @param   string  $p  The stringified reference
-     * @return  Reference
+     * @param string $p The stringified reference
+     *
+     * @return Reference
      */
     public static function decode($p)
     {
-        $ref = new self;
+        $ref = new self();
         call_user_func_array(array($ref, 'assign'), explode(',', $p));
+
         return $ref;
     }
 }

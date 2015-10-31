@@ -4,7 +4,6 @@ namespace phpList\plugin\ContentAreas;
 
 use phpList\plugin\Common\DB;
 use DOMDocument;
-use DOMNode;
 use DOMXPath;
 use XSLTProcessor;
 
@@ -32,7 +31,7 @@ class TemplateModel
      */
     private function createToc()
     {
-        $nl = $this->xpath->query("//@data-toc");
+        $nl = $this->xpath->query('//@data-toc');
 
         if ($nl->length == 0) {
             return;
@@ -42,7 +41,7 @@ class TemplateModel
         if ($tocEntry == '') {
             return;
         }
-        $xsl = new DOMDocument;
+        $xsl = new DOMDocument();
         $ss = <<<END
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
 
@@ -83,7 +82,7 @@ class TemplateModel
 </xsl:stylesheet>
 END;
         $xsl->loadXML($ss);
-        $proc = new XSLTProcessor;
+        $proc = new XSLTProcessor();
         $proc->importStylesheet($xsl);
         $this->dom = $proc->transformToDoc($this->dom);
     }
@@ -107,14 +106,15 @@ END;
 </xsl:stylesheet>
 END;
         $xsl->loadXML($ss);
-        $proc = new XSLTProcessor;
+        $proc = new XSLTProcessor();
         $proc->importStylesheet($xsl);
+
         return $proc->transformToDoc($doc);
     }
 
     private function saveAsHtml(DOMDocument $doc)
     {
-        $xsl = new DOMDocument;
+        $xsl = new DOMDocument();
         $ss = <<<END
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
      <xsl:output method="html" indent="yes" encoding="UTF-8"/>
@@ -135,14 +135,16 @@ END;
 </xsl:stylesheet>
 END;
         $xsl->loadXML($ss);
-        $proc = new XSLTProcessor;
+        $proc = new XSLTProcessor();
         $proc->importStylesheet($xsl);
+
         return $proc->transformToXML($doc);
     }
 
     private function replaceEncodedBrackets($html)
     {
         $html = preg_replace("/\r\n|\n|\r/", "\r\n", $html);
+
         return preg_replace('/href="%5B(\w+)%5D"/', 'href="[$1]"', $html);
     }
 
@@ -173,7 +175,7 @@ END;
 
     public function loadHtml($html)
     {
-        $this->dom = new DOMDocument;
+        $this->dom = new DOMDocument();
         $this->dom->loadHTML($html);
         $this->dom->formatOutput = true;
         $this->xpath = new DOMXPath($this->dom);
@@ -193,12 +195,12 @@ END;
      * Merge the template with the content areas
      * The first level is processed here, further levels will be processed
      * recursively
-     * Optionally inline css
+     * Optionally inline css.
      *
-     * @access  public
-     * @param   array   $contentAreas the content areas
-     * @param   boolean $edit whether the merge should include edit buttons
-     * @return  string  the generated HTML
+     * @param array $contentAreas the content areas
+     * @param bool  $edit         whether the merge should include edit buttons
+     *
+     * @return string the generated HTML
      */
     public function merge(array $contentAreas, $edit = false)
     {
@@ -214,24 +216,28 @@ END;
             $e = new \Pelago\Emogrifier($html);
             $html = $e->emogrify();
         }
+
         return $this->replaceEncodedBrackets($html);
     }
 
     public function namedNode($name)
     {
         $nodeList = $this->xpath->query(sprintf(self::XPATH_SINGLE, $name));
+
         return $nodeList->item(0);
     }
 
     public function isTemplate()
     {
         $nodes = $this->xpath->query(self::XPATH_ANY_EDIT);
+
         return $nodes->length > 0;
     }
 
     public static function isTemplateBody($body)
     {
         $tm = new self($body);
+
         return $tm->isTemplate();
     }
 
@@ -248,6 +254,7 @@ END;
             }
 
             $mm = new MessageModel($messageId, $dao);
+
             return $tm->merge($mm->messageAreas());
         } else {
             return false;
@@ -272,6 +279,7 @@ END;
         } else {
             $result = false;
         }
+
         return $result;
     }
 }

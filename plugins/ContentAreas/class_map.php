@@ -1,4 +1,5 @@
 <?php
+
 return array(
     'phpList\plugin\ContentAreas\ContentAreaBase' => $base . '/ContentAreas/ContentAreaBase.php',
     'phpList\plugin\ContentAreas\ContentAreaEditor' => $base . '/ContentAreas/ContentAreaEditor.php',

@@ -3,19 +3,17 @@
 namespace phpList\plugin\ContentAreas;
 
 use DOMComment;
-use DOMXPath;
 use phpList\plugin\Common;
 
 /**
- * Subclass to generate HTML for a hideable area
- * 
+ * Subclass to generate HTML for a hideable area.
  */
 class ContentAreaHideable extends ContentAreaBase
 {
     private function addHideButton($isHidden)
     {
         $url = htmlspecialchars(
-            new Common\PageURL(null, array('field' => (string)$this->reference) + $_GET)
+            new Common\PageURL(null, array('field' => (string) $this->reference) + $_GET)
         );
         $text = $isHidden ?  'Unhide' : 'Hide';
         $value = $isHidden ? 'unhide' : 'hide';
@@ -30,12 +28,10 @@ END
 
     /**
      * If area is hidden and not editing then remove the area
-     * Otherwise merge the content area
+     * Otherwise merge the content area.
      *
-     * @access  public
-     * @param   array   $contentArea the content areas for the current level
-     * @param   Merger  $merger object to do the merging
-     * @return  void
+     * @param array  $contentArea the content areas for the current level
+     * @param Merger $merger      object to do the merging
      */
     public function merge($contentArea, Merger $merger = null)
     {
@@ -48,6 +44,7 @@ END
 
         if ($isHidden && !$this->edit) {
             $this->node->parentNode->removeChild($this->node);
+
             return;
         }
 
@@ -56,7 +53,7 @@ END
         );
         $merger->mergeOneLevel($this->node, $contentArea, !$isHidden && $this->edit, $this->name, 0);
         $this->node->parentNode->insertBefore(
-            new DOMComment("End of hideable area"), $this->node->nextSibling
+            new DOMComment('End of hideable area'), $this->node->nextSibling
         );
 
         if ($this->edit) {
