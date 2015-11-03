@@ -12,7 +12,8 @@ class ContentAreaImage extends ContentAreaBase
         $value = $value ?: $this->node->getAttribute('src');
         $value = htmlspecialchars($value);
         $name = htmlspecialchars($this->name);
-        $imgName = $name . '_img';
+        $inputId = $name . '_input';
+        $imgId = $name . '_img';
         $provider = EditorProvider::createEditorProvider();
         $function = 'openFileManager';
         $browser = $provider->createImageBrowser($function);
@@ -22,14 +23,14 @@ class ContentAreaImage extends ContentAreaBase
 <script type='text/javascript'>
 window.$name = {};
 window.$name.callBack = function(url) {
-    document.getElementById('$name').value = url;
-    document.getElementById('$imgName').src = url;
+    document.getElementById('$inputId').value = url;
+    document.getElementById('$imgId').src = url;
 };
 </script>
 $browser
 <button class="button" onclick="javascript:$function(window.$name.callBack); return false;">Browse</button>
-<input type="text" id="$name" name="content" value="$value" size="$size"/>
-<img class="block" id="$imgName" src="$value" width="150"/>
+<input type="text" id="$inputId" name="content" value="$value" size="$size"/>
+<img class="block" id="$imgId" src="$value" width="150"/>
 END;
     }
 
