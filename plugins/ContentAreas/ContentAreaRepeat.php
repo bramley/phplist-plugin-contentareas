@@ -11,47 +11,39 @@ use CHtml;
  */
 class ContentAreaRepeat extends ContentAreaBase
 {
+    private function htmlButton($image, $value)
+    {
+        return CHtml::htmlButton(
+            new Common\ImageTag($image, ''),
+            array('name' => 'submit', 'value' => $value, 'type' => 'submit', 'class' => 'repeat')
+        );
+    }
+
+    /**
+     * Create form with repeat buttons.
+     * Add is always displayed, delete displayed when > 1 instances.
+     * Up displayed for all instances except the first.
+     * Down displayed for all instances except the last.
+     *
+     * @param DOMNode $node the current node
+     * @param int     $i    index of the current instance
+     * @param int     $size the number of instances
+     */
     private function addRepeatButtons($node, $i, $size)
     {
+        $addButton = $this->htmlButton('add.png', 'add');
+        $deleteButton = ($size > 1) ? $this->htmlButton('delete.png', 'delete') : '';
+        $upButton = ($i > 0) ? $this->htmlButton('up.png', 'up') : '';
+        $downButton = ($i < $size - 1) ? $this->htmlButton('down.png', 'down') : '';
         $reference = new Reference($this->name, $i);
-        $url = new Common\PageURL(
+        $url = htmlspecialchars(new Common\PageURL(
             null,
             array('field' => (string) $reference) + $_GET
-        );
-        $addButton = CHtml::htmlButton(
-            new Common\ImageTag('add.png', 'Add repeat'),
-            array('formaction' => $url, 'name' => 'submit', 'value' => 'add', 'type' => 'submit')
-        );
+        ));
 
-        if ($size > 1) {
-            $deleteButton = CHtml::htmlButton(
-                new Common\ImageTag('delete.png', 'Delete repeat'),
-                array('formaction' => $url, 'name' => 'submit', 'value' => 'delete', 'type' => 'submit')
-            );
-        } else {
-            $deleteButton = '';
-        }
-
-        if ($i > 0) {
-            $upButton = CHtml::htmlButton(
-                new Common\ImageTag('up.png', 'Move up'),
-                array('formaction' => $url, 'name' => 'submit', 'value' => 'up', 'type' => 'submit')
-            );
-        } else {
-            $upButton = '';
-        }
-
-        if ($i < $size - 1) {
-            $downButton = CHtml::htmlButton(
-                new Common\ImageTag('down.png', 'Move down'),
-                array('formaction' => $url, 'name' => 'submit', 'value' => 'down', 'type' => 'submit')
-            );
-        } else {
-            $downButton = '';
-        }
         $id = htmlspecialchars($reference->toId());
         $this->addButtonHtml($node, <<<END
-<form method="post" id="$id">
+<form method="post" action="$url" id="$id">
     $addButton
     $deleteButton
     $upButton

@@ -1,3 +1,10 @@
+version 1.3.0+20151113
+      Added test cases, refactoring
+      Restructuring to support nesting
+      Further cs-fixer changes
+      Ensure id attributes are unique
+      Improve display of repeat buttons
+
 version 1.2.2+20151023
       Update dependencies
       Coding standards changes
