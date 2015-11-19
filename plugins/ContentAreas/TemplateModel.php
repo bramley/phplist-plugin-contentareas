@@ -246,6 +246,9 @@ END;
  */
     public static function mergeIfTemplate($templateBody, $messageId, DAO $dao = null)
     {
+        if (!$templateBody) {
+            return false;
+        }
         $tm = new self($templateBody);
 
         if ($tm->isTemplate()) {
