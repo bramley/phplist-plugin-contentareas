@@ -18,7 +18,7 @@ Requires phplist release 3.0.12 or release 3.2.0 or later.
 
 Requires the Common Plugin version 3 to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
-Requires version 2.2.0 or later of the View in Browser plugin if you want to use that plugin to create a link that displays the
+Requires version 2.4.0 or later of the View in Browser plugin if you want to use that plugin to create a link that displays the
 campaign in a browser. You should install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-viewbrowser>.
 
 
@@ -78,6 +78,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.4.0+20151119  Changes to work with the latest View in Browser plugin
     1.3.0+20151113  Improve display of repeat buttons
     1.2.2+20151023  Internal changes
     1.2.1+20151018  Internal change to work with the latest View in Browser plugin

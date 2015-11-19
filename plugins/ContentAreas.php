@@ -1,7 +1,6 @@
 <?php
 
 use phpList\plugin\ContentAreas\DAO;
-use phpList\plugin\ContentAreas\MessageModel;
 use phpList\plugin\ContentAreas\TemplateModel;
 use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageLink;
@@ -52,32 +51,6 @@ class ContentAreas extends phplistPlugin
     );
     public $publicPages = array(self::VIEW_PAGE);
 
-    /*
-     * Private functions
-     */
-    private function viewUrl($messageid, $uid)
-    {
-        global $public_scheme, $pageroot;
-
-        $params = array('p' => self::VIEW_PAGE, 'pi' => self::PLUGIN, 'm' => $messageid);
-
-        if ($uid) {
-            $params['uid'] = $uid;
-        }
-
-        $url = sprintf('%s://%s%s/', $public_scheme, getConfig('website'), $pageroot);
-
-        return $url . '?' . http_build_query($params, '', '&');
-    }
-
-    private function link($linkText, $url)
-    {
-        return sprintf('<a href="%s">%s</a>', htmlspecialchars($url), htmlspecialchars($linkText));
-    }
-
-    /*
-     * Public functions
-     */
     public function __construct()
     {
         $this->coderoot = dirname(__FILE__) . '/' . __CLASS__ . '/';
@@ -97,8 +70,8 @@ class ContentAreas extends phplistPlugin
             'Common plugin v3.2.0 or later installed' => phpListPlugin::isEnabled('CommonPlugin')
                 && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
                 && version_compare($matches[0], '3.2.0') >= 0,
-            'View in Browser plugin v2.2.0 or later installed' => (phpListPlugin::isEnabled('ViewBrowserPlugin')
-                    && version_compare($plugins['ViewBrowserPlugin']->version, '2.2.0') >= 0
+            'View in Browser plugin v2.4.0 or later installed' => (phpListPlugin::isEnabled('ViewBrowserPlugin')
+                    && version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
                 )
                 || !phpListPlugin::isEnabled('ViewBrowserPlugin'),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
@@ -188,48 +161,6 @@ END;
     }
 
     /**
-     * Replace placeholders.
-     * 
-     * @param int    $messageid   the message id
-     * @param string $content     the message content
-     * @param string $destination the destination email address
-     * @param array  $userdata    the user data
-     * 
-     * @return string
-     */
-    public function parseOutgoingHTMLMessage($messageid, $content, $destination, $userdata = null)
-    {
-        $url = $this->viewUrl($messageid, $userdata['uniqid']);
-
-        return str_ireplace(
-            array('[CAVIEWBROWSER]', '[CAVIEWBROWSERURL]'),
-            array($this->link($this->linkText, $url), htmlspecialchars($url)),
-            $content
-        );
-    }
-
-    /**
-     * Replace placeholders.
-     * 
-     * @param int    $messageid   the message id
-     * @param string $content     the message content
-     * @param string $destination the destination email address
-     * @param array  $userdata    the user data
-     * 
-     * @return string
-     */
-    public function parseOutgoingTextMessage($messageid, $content, $destination, $userdata = null)
-    {
-        $url = $this->viewUrl($messageid, $userdata['uniqid']);
-
-        return str_ireplace(
-            array('[CAVIEWBROWSER]', '[CAVIEWBROWSERURL]'),
-            array("$this->linkText $url", $url),
-            $content
-        );
-    }
-
-    /**
      * Merge the template with content areas. This is done just once for the campaign.
      * 
      * @param int   $messageId the message id
@@ -237,16 +168,10 @@ END;
      */
     public function processPrecachedCampaign($messageId, array &$message)
     {
-        if ($message['template']) {
-            $tm = new TemplateModel($message['template']);
-
-            if ($tm->isTemplate()) {
-                $mm = new MessageModel($messageId, $this->dao);
-                $merged = $tm->merge($mm->messageAreas());
-                $message['content'] = str_ireplace('[CONTENT]', $message['content'], $merged);
-                $message['template'] = '';
-                $message['htmlformatted'] = true;
-            }
+        if ($merged = TemplateModel::mergeIfTemplate($message['template'], $messageId)) {
+            $message['content'] = str_ireplace('[CONTENT]', $message['content'], $merged);
+            $message['template'] = '';
+            $message['htmlformatted'] = true;
         }
     }
 
@@ -280,5 +205,22 @@ END;
     public function setDao(DAO $dao)
     {
         $this->dao = $dao;
+    }
+
+    /**
+     * Called by ViewBrowser plugin to manipulate template and message.
+     * Sets the message content to the merged template and message areas.
+     * 
+     * @param string &$templateBody the body of the template
+     * @param array  &$messageData  the message data
+     */
+    public function viewBrowserHook(&$templateBody, array &$messageData)
+    {
+        if ($merged = TemplateModel::mergeIfTemplate($templateBody, $messageData['id'])) {
+            $messageData['message'] = str_ireplace('[CONTENT]', $messageData['message'], $merged);
+            $messageData['template'] = 0;
+            $messageData['htmlformatted'] = true;
+            $templateBody = '';
+        }
     }
 }
