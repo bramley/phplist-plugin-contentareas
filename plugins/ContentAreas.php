@@ -12,7 +12,6 @@ class ContentAreas extends phplistPlugin
     const VIEW_PAGE = 'view';
     const PLUGIN = 'ContentAreas';
 
-    private $linkText;
     private $dao;
 
     /*
@@ -22,6 +21,7 @@ class ContentAreas extends phplistPlugin
     public $enabled = true;
     public $authors = 'Duncan Cameron';
     public $description = 'Provides multiple content areas for campaigns';
+    public $documentationUrl = 'https://resources.phplist.com/plugin/contentareas';
     public $settings = array(
         'contentareas_inline_css' => array(
             'value' => true,
@@ -54,11 +54,10 @@ class ContentAreas extends phplistPlugin
     public function __construct()
     {
         $this->coderoot = dirname(__FILE__) . '/' . __CLASS__ . '/';
+        parent::__construct();
         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
             ? file_get_contents($f)
             : '';
-        parent::__construct();
-        $this->linkText = getConfig('viewbrowser_link');
     }
 
     public function dependencyCheck()
@@ -67,13 +66,16 @@ class ContentAreas extends phplistPlugin
 
         return array(
             'XSL extension installed' => extension_loaded('xsl'),
-            'Common plugin v3.2.0 or later installed' => phpListPlugin::isEnabled('CommonPlugin')
+            'Common plugin v3.2.0 or later installed' => (
+                phpListPlugin::isEnabled('CommonPlugin')
                 && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
-                && version_compare($matches[0], '3.2.0') >= 0,
-            'View in Browser plugin v2.4.0 or later installed' => (phpListPlugin::isEnabled('ViewBrowserPlugin')
-                    && version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
-                )
-                || !phpListPlugin::isEnabled('ViewBrowserPlugin'),
+                && version_compare($matches[0], '3.2.0') >= 0
+            ),
+            'View in Browser plugin v2.4.0 or later installed' => (
+                phpListPlugin::isEnabled('ViewBrowserPlugin')
+                && version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
+                || !phpListPlugin::isEnabled('ViewBrowserPlugin')
+            ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
         );
     }
@@ -133,7 +135,12 @@ END;
 
     public function sendMessageTabTitle($messageid = 0)
     {
-        return s('Edit Areas');
+        return 'Edit Areas';
+    }
+
+    public function sendMessageTabInsertBefore()
+    {
+        return 'Format';
     }
 
     /**
