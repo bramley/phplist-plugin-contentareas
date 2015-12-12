@@ -2,9 +2,11 @@
 
 namespace phpList\plugin\ContentAreas;
 
+use Pelago\Emogrifier;
 use phpList\plugin\Common\DB;
 use DOMDocument;
 use DOMXPath;
+use Exception;
 use XSLTProcessor;
 
 class TemplateModel
@@ -213,8 +215,20 @@ END;
         $html = $this->saveAsHtml($this->removeAttributes($this->dom));
 
         if (getConfig('contentareas_inline_css') && !$edit) {
-            $e = new \Pelago\Emogrifier($html);
-            $html = $e->emogrify();
+            try {
+                $e = new Emogrifier($html);
+                $html = $e->emogrify();
+            } catch (Exception $exception) {
+                echo $exception->getMessage();
+
+                if ($exception->getMessage() == 'DOMXPath::query(): Invalid expression') {
+                    $trace = $exception->getTrace();
+
+                    if (isset($trace[1]['args'][0])) {
+                        echo ' ', $trace[1]['args'][0];
+                    }
+                }
+            }
         }
 
         return $this->replaceEncodedBrackets($html);
