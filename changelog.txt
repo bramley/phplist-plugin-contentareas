@@ -1,3 +1,8 @@
+version 1.4.2+20151214
+      Handle exceptions thrown in Emogrifier
+      Improve test of whether template contains attributes
+      Fix problem with encoded brackets on img element
+
 version 1.4.1+20151211
       Position "Edit areas" tab
 

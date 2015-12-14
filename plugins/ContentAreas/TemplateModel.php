@@ -147,7 +147,7 @@ END;
     {
         $html = preg_replace("/\r\n|\n|\r/", "\r\n", $html);
 
-        return preg_replace('/href="%5B(\w+)%5D"/', 'href="[$1]"', $html);
+        return preg_replace('/(href|src)="%5B(\w+)%5D"/i', '$1="[$2]"', $html);
     }
 
     private function addStyles()

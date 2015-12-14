@@ -78,6 +78,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.4.2+20151214  Few minor bug fixes
     1.4.1+20151211  Position the Edit Areas tab before Format tab
     1.4.0+20151119  Changes to work with the latest View in Browser plugin
     1.3.0+20151113  Improve display of repeat buttons
