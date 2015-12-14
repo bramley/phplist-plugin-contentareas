@@ -17,8 +17,8 @@ class TemplateModel
             and count(ancestor::*[@data-repeatable|@data-hideable]) = %d
             ]';
     const XPATH_CHILD_EDIT = './/*[@data-edit]';
-    const XPATH_ANY_EDIT = 'descendant::*[@data-edit][1]';
-    const XPATH_SINGLE = "//*[@data-edit='%1\$s' or @data-repeatable='%1\$s' or @data-hideable='%1\$s']";
+    const XPATH_IDENTIFY_TEMPLATE = 'descendant::*[@data-edit | @data-repeatable | @data-hideable | @data-toc][1]';
+    const XPATH_NAMED = "//*[@data-edit='%1\$s' or @data-repeatable='%1\$s' or @data-hideable='%1\$s']";
     const XPATH_ALL_ATTRIBUTES = '@data-edit | @data-type | @data-repeatable | @data-hideable | @data-toc';
     const EDIT_ATTRIBUTE = 'data-edit';
     const TYPE_ATTRIBUTE = 'data-type';
@@ -236,14 +236,14 @@ END;
 
     public function namedNode($name)
     {
-        $nodeList = $this->xpath->query(sprintf(self::XPATH_SINGLE, $name));
+        $nodeList = $this->xpath->query(sprintf(self::XPATH_NAMED, $name));
 
         return $nodeList->item(0);
     }
 
     public function isTemplate()
     {
-        $nodes = $this->xpath->query(self::XPATH_ANY_EDIT);
+        $nodes = $this->xpath->query(self::XPATH_IDENTIFY_TEMPLATE);
 
         return $nodes->length > 0;
     }
