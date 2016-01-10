@@ -215,6 +215,47 @@ END;
         $html = $this->saveAsHtml($this->removeAttributes($this->dom));
 
         if (getConfig('contentareas_inline_css') && !$edit) {
+            $factory = new CssInlinerFactory();
+            $inliner = $factory->createCssInliner();
+            $html = $inliner->inlineCss($html);
+        }
+
+        return $this->replaceEncodedBrackets($html);
+    }
+
+    public function merge1(array $contentAreas, $edit = false)
+    {
+        if ($edit) {
+            $this->addStyles();
+        }
+        $merger = new Merger($this->xpath);
+        $merger->mergeOneLevel($this->dom->documentElement, $contentAreas, $edit);
+        $this->createToc();
+        $html = $this->saveAsHtml($this->removeAttributes($this->dom));
+
+        if (getConfig('contentareas_inline_css') && !$edit) {
+            try {
+                $preMailer = new \Crossjoin\PreMailer\HtmlString($html);
+                $preMailer->setOption($preMailer::OPTION_HTML_COMMENTS, $preMailer::OPTION_HTML_COMMENTS_KEEP);
+                $html = $preMailer->getHtml();
+            } catch (Exception $exception) {
+                echo $exception->getMessage();
+            }
+        }
+
+        return $this->replaceEncodedBrackets($html);
+    }
+    public function merge2(array $contentAreas, $edit = false)
+    {
+        if ($edit) {
+            $this->addStyles();
+        }
+        $merger = new Merger($this->xpath);
+        $merger->mergeOneLevel($this->dom->documentElement, $contentAreas, $edit);
+        $this->createToc();
+        $html = $this->saveAsHtml($this->removeAttributes($this->dom));
+
+        if (getConfig('contentareas_inline_css') && !$edit) {
             try {
                 $e = new Emogrifier($html);
                 $html = $e->emogrify();

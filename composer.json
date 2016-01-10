@@ -1,0 +1,9 @@
+{
+    "config": {
+        "vendor-dir": "plugins/ContentAreas/vendor"
+    },
+    "require": {
+        "crossjoin/pre-mailer": "1.0.*",
+        "pelago/emogrifier": "V1.0.0"
+    }
+}

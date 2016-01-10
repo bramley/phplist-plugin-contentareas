@@ -1,3 +1,7 @@
+version 1.5.0+20160110
+      Redundant files due to increase in minimum version of phplist required
+      Use Composer for pre-mailer and emogrifier
+
 version 1.4.2+20151214
       Handle exceptions thrown in Emogrifier
       Improve test of whether template contains attributes

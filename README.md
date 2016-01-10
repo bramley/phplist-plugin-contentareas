@@ -14,9 +14,9 @@ content of each area. Each content area is identified and can be edited, with th
 
 Requires php version 5.4.0 or later. Please check your php version before installing the plugin, otherwise phplist will fail (probably a white page).
 
-Requires phplist release 3.0.12 or release 3.2.0 or later.
+Requires phplist release 3.2.1 or later.
 
-Requires the Common Plugin version 3 to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
+Requires the Common Plugin version 3.5.0 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 Requires version 2.4.0 or later of the View in Browser plugin if you want to use that plugin to create a link that displays the
 campaign in a browser. You should install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-viewbrowser>.
@@ -43,24 +43,6 @@ This should contain
 * the directory ContentAreas
 
 Then click the button to enable the plugin.
-### Replace phplist files ###
-
-**This step is needed only for phplist releases 3.0.12 and 3.2.0. It is not needed for 3.2.1 and later releases.**
-
-Either one or two phplist files need be replaced.
-One change is to allow the plugin to build the complete message when sending.
-The second is needed to allow the view message page to display the complete message, but required only for phplist release 3.0.12.
-
-The plugin's zip file has a directory `phplist` with subdirectories for each supported release containing the modified files.
-
-For phplist 3.2.0RC1 and 3.2.0 replace
-
-* admin/sendemaillib.php
-
-For phplist 3.0.12 replace
-
-* admin/message.php
-* admin/sendemaillib.php
 
 ##Usage##
 
@@ -78,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.5.0+20160110  Include CSS inline packages
     1.4.2+20151214  Few minor bug fixes
     1.4.1+20151211  Position the Edit Areas tab before Format tab
     1.4.0+20151119  Changes to work with the latest View in Browser plugin

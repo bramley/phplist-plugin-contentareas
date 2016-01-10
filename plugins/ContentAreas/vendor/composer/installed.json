@@ -1,0 +1,225 @@
+[
+    {
+        "name": "symfony/css-selector",
+        "version": "v2.8.1",
+        "version_normalized": "2.8.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/symfony/css-selector.git",
+            "reference": "eaa3320e32f09a01dc432c6efbe8051aee59cfef"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/symfony/css-selector/zipball/eaa3320e32f09a01dc432c6efbe8051aee59cfef",
+            "reference": "eaa3320e32f09a01dc432c6efbe8051aee59cfef",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.9"
+        },
+        "time": "2015-12-05 17:37:59",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.8-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Symfony\\Component\\CssSelector\\": ""
+            },
+            "exclude-from-classmap": [
+                "/Tests/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jean-François Simon",
+                "email": "jeanfrancois.simon@sensiolabs.com"
+            },
+            {
+                "name": "Fabien Potencier",
+                "email": "fabien@symfony.com"
+            },
+            {
+                "name": "Symfony Community",
+                "homepage": "https://symfony.com/contributors"
+            }
+        ],
+        "description": "Symfony CssSelector Component",
+        "homepage": "https://symfony.com"
+    },
+    {
+        "name": "crossjoin/css",
+        "version": "v1.0.3",
+        "version_normalized": "1.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/crossjoin/Css.git",
+            "reference": "7b50ca94c4bdad60d01cfa327f00b7a600d6f9f3"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/crossjoin/Css/zipball/7b50ca94c4bdad60d01cfa327f00b7a600d6f9f3",
+            "reference": "7b50ca94c4bdad60d01cfa327f00b7a600d6f9f3",
+            "shasum": ""
+        },
+        "require": {
+            "ext-dom": "*",
+            "ext-mbstring": "*",
+            "php": ">=5.4.0"
+        },
+        "time": "2015-09-29 15:38:43",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Crossjoin\\Css\\": "src/Crossjoin/Css/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Christoph Ziegenberg",
+                "email": "ziegenberg@crossjoin.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "CSS reader and writer with full CSS3 support, already supporting huge parts of the current CSS4 spec. It supports media queries, comments, value optimization and more... It offers full Unicode support and can handle also large CSS sources. Requires PHP 5.4+.",
+        "homepage": "https://github.com/crossjoin/Css",
+        "keywords": [
+            "css",
+            "css parser",
+            "css reader",
+            "css writer",
+            "php"
+        ]
+    },
+    {
+        "name": "crossjoin/pre-mailer",
+        "version": "v1.0.5",
+        "version_normalized": "1.0.5.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/crossjoin/PreMailer.git",
+            "reference": "e1fbd426a9f3ba2d5d00f6641b2509c72bf4f561"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/crossjoin/PreMailer/zipball/e1fbd426a9f3ba2d5d00f6641b2509c72bf4f561",
+            "reference": "e1fbd426a9f3ba2d5d00f6641b2509c72bf4f561",
+            "shasum": ""
+        },
+        "require": {
+            "crossjoin/css": "^1.0.3",
+            "ext-dom": "*",
+            "ext-mbstring": "*",
+            "php": ">=5.4.0",
+            "symfony/css-selector": "^2.7.1"
+        },
+        "time": "2015-12-26 15:44:38",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Crossjoin\\PreMailer\\": "src/Crossjoin/PreMailer/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Christoph Ziegenberg",
+                "email": "ziegenberg@crossjoin.com",
+                "role": "Developer"
+            }
+        ],
+        "description": "Crossjoin\\PreMailer converts CSS in a given HTML source to inline styles and optimizes it for sending it via e-mail. It also creates a text version of the HTML source. Requires PHP 5.4+.",
+        "homepage": "https://github.com/crossjoin/PreMailer",
+        "keywords": [
+            "css",
+            "e-mail",
+            "html",
+            "inline",
+            "mail",
+            "php",
+            "premailer",
+            "styles",
+            "text"
+        ]
+    },
+    {
+        "name": "pelago/emogrifier",
+        "version": "V1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/jjriv/emogrifier.git",
+            "reference": "1160bcbc523c7941d2d0dc2a9e59c51c66420b4b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/jjriv/emogrifier/zipball/1160bcbc523c7941d2d0dc2a9e59c51c66420b4b",
+            "reference": "1160bcbc523c7941d2d0dc2a9e59c51c66420b4b",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mbstring": "*",
+            "php": ">=5.4.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "4.8.11",
+            "squizlabs/php_codesniffer": "2.3.4",
+            "typo3-ci/typo3sniffpool": "2.1.1"
+        },
+        "time": "2015-10-14 22:22:15",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.1.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Pelago\\": "Classes/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "John Reeve",
+                "email": "jreeve@pelagodesign.com"
+            },
+            {
+                "name": "Cameron Brooks"
+            },
+            {
+                "name": "Jaime Prado"
+            },
+            {
+                "name": "Oliver Klee",
+                "email": "typo3-coding@oliverklee.de"
+            },
+            {
+                "name": "Roman Ožana",
+                "email": "ozana@omdesign.cz"
+            }
+        ],
+        "description": "Converts CSS styles into inline style attributes in your HTML code",
+        "homepage": "http://www.pelagodesign.com/sidecar/emogrifier/"
+    }
+]

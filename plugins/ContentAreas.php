@@ -66,10 +66,10 @@ class ContentAreas extends phplistPlugin
 
         return array(
             'XSL extension installed' => extension_loaded('xsl'),
-            'Common plugin v3.2.0 or later installed' => (
+            'Common plugin v3.5.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
                 && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
-                && version_compare($matches[0], '3.2.0') >= 0
+                && version_compare($matches[0], '3.5.0') >= 0
             ),
             'View in Browser plugin v2.4.0 or later installed' => (
                 phpListPlugin::isEnabled('ViewBrowserPlugin')
@@ -77,6 +77,7 @@ class ContentAreas extends phplistPlugin
                 || !phpListPlugin::isEnabled('ViewBrowserPlugin')
             ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
+            'phpList version 3.2.1 or later' => version_compare(VERSION, '3.2.1') >= 0,
         );
     }
 
