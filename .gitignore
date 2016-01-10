@@ -175,6 +175,7 @@ plugins/ContentAreas/vendor/crossjoin/pre-mailer/*
 
 plugins/ContentAreas/vendor/symfony/css-selector/*
 !plugins/ContentAreas/vendor/symfony/css-selector/CssSelector.php
+!plugins/ContentAreas/vendor/symfony/css-selector/CssSelectorConverter.php
 !plugins/ContentAreas/vendor/symfony/css-selector/LICENSE
 !plugins/ContentAreas/vendor/symfony/css-selector/Exception
 !plugins/ContentAreas/vendor/symfony/css-selector/Node
