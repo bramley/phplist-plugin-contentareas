@@ -24,6 +24,25 @@ abstract class ContentAreaBase
         $this->node->setAttribute('class', $class . $additionalClass);
     }
 
+    /**
+     * Adds the reference of this area as an id attribute so that it can be
+     * the target of a link.
+     * Adds to this node if it doesn't already have an id attribute.
+     * Otherwise inserts a span element.
+     */
+    protected function addId()
+    {
+        $id = $this->reference->toId();
+
+        if ($this->node->hasAttribute('id')) {
+            $el = $this->ownerDocument->createElement('span', '');
+            $el->setAttribute('id', $id);
+            $this->node->insertBefore($el, $this->node->firstChild);
+        } else {
+            $this->node->setAttribute('id', $id);
+        }
+    }
+
     protected function addButtonHtml($node, $html)
     {
         try {
@@ -55,12 +74,12 @@ abstract class ContentAreaBase
             new PageURL(null, array('field' => (string) $this->reference, 'action' => 'edit') + $_GET)
         );
         $image = new ImageTag('pencil.png', 'Edit');
-        $id = htmlspecialchars($this->reference->toId());
         $this->addButtonHtml($this->node, <<<END
-<a class="opendialog" href="$url" title="$this->reference" id="$id">$image</a>
+<a class="opendialog" href="$url" title="$this->reference">$image</a>
 END
         );
         $this->addClass('editable');
+        $this->addId();
     }
 
     protected function replaceChildren($htmlContent)

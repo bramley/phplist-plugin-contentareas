@@ -1,3 +1,7 @@
+version 1.5.1+20160218
+      Tidy-up redundant code
+      Place id at the beginning of a content area instead of at the edit button
+
 version 1.5.0+20160110
       Redundant files due to increase in minimum version of phplist required
       Use Composer for pre-mailer and emogrifier
