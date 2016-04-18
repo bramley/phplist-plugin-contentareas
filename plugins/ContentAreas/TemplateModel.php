@@ -141,6 +141,17 @@ END;
         return $proc->transformToXML($doc);
     }
 
+    /**
+     * The phplist placeholder terminators, the [ and ] characters, will have been
+     * encoded when they occur in a URL. This method decodes the encoded values so
+     * that placeholders will be correctly replaced in later processing of the message.
+     * 
+     * It also normalises line endings to \r\n
+     *
+     * @param string $html the html that might include encoded brackets
+     *
+     * @return string the transformed html
+     */
     private function replaceEncodedBrackets($html)
     {
         $html = preg_replace("/\r\n|\n|\r/", "\r\n", $html);
@@ -148,6 +159,13 @@ END;
         return preg_replace('/(href|src)="%5B(\w+)%5D"/i', '$1="[$2]"', $html);
     }
 
+    /**
+     * Decorates the html document when editing the message.
+     * 
+     * Adds the styles and javascript required when editing the message into the
+     * head element.
+     * Adds a div element used as the target for the edit pop-up.
+     */
     private function addStyles()
     {
         $html = file_get_contents(dirname(__FILE__) . '/styles.html')
@@ -221,6 +239,13 @@ END;
         return $this->replaceEncodedBrackets($html);
     }
 
+    /**
+     * Returns the value of an element identified by its content area name.
+     *
+     * @param string $name the name of the content area
+     *
+     * @return string the value of the element
+     */
     public function namedNode($name)
     {
         $nodeList = $this->xpath->query(sprintf(self::XPATH_NAMED, $name));
@@ -228,6 +253,11 @@ END;
         return $nodeList->item(0);
     }
 
+    /**
+     * Tests whether the template contains any content areas attributes.
+     *
+     * @return bool
+     */
     public function isTemplate()
     {
         $nodes = $this->xpath->query(self::XPATH_IDENTIFY_TEMPLATE);
@@ -235,6 +265,13 @@ END;
         return $nodes->length > 0;
     }
 
+    /**
+     * Convenience method to test whether a template contains any content areas.
+     *
+     * @param string $body the template body
+     *
+     * @return bool
+     */
     public static function isTemplateBody($body)
     {
         $tm = new self($body);
@@ -242,9 +279,16 @@ END;
         return $tm->isTemplate();
     }
 
-/*
- *  Called from sendemaillib.php
- */
+    /**
+     * Convenience method to merge if the message has a content areas template.
+     *
+     * @param string $templateBody the template body
+     * @param int    $messageId    the message id
+     * @param DAO    $dao          an instance of a DAO intended for unit testing
+     *
+     * @return string|false the generated HTML or false if the message does not have
+     *                      a content areas template
+     */
     public static function mergeIfTemplate($templateBody, $messageId, DAO $dao = null)
     {
         if (!$templateBody) {
@@ -252,38 +296,15 @@ END;
         }
         $tm = new self($templateBody);
 
-        if ($tm->isTemplate()) {
-            if ($dao === null) {
-                $dao = new DAO(new DB());
-            }
-
-            $mm = new MessageModel($messageId, $dao);
-
-            return $tm->merge($mm->messageAreas());
-        } else {
+        if (!$tm->isTemplate()) {
             return false;
         }
-    }
-
-/*
- *  Called from message.php for phplist <= 3.0.12
- */
-    public static function previewIfTemplate($templateId, $messageId, DAO $dao = null)
-    {
-        global $plugins;
 
         if ($dao === null) {
             $dao = new DAO(new DB());
         }
+        $mm = new MessageModel($messageId, $dao);
 
-        $templateBody = $dao->templateBody($templateId);
-
-        if (self::isTemplateBody($templateBody)) {
-            $result = $plugins['ContentAreas']->iframe('preview', $messageId);
-        } else {
-            $result = false;
-        }
-
-        return $result;
+        return $tm->merge($mm->messageAreas());
     }
 }

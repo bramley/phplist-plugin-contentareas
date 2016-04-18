@@ -128,8 +128,11 @@ END
         $tm->loadHtml($template);
         $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
         $expectedEdit =
-        '<a class="opendialog" href="./?page=message_page&amp;pi=ContentAreas&amp;field=article&amp;action=edit" title="article" id="article"><img src="./?page=image&amp;pi=CommonPlugin&amp;image=pencil.png" alt="Edit" title="Edit"></a>';
+        '<a class="opendialog" href="./?page=message_page&amp;pi=ContentAreas&amp;field=article&amp;action=edit" title="article"><img src="./?page=image&amp;pi=CommonPlugin&amp;image=pencil.png" alt="Edit" title="Edit"></a>';
         $this->assertContains($expectedEdit, $result);
+        $expectedId =
+        '<div class="editable" id="article">';
+        $this->assertContains($expectedId, $result);
     }
 
     /**
@@ -187,43 +190,5 @@ END
         $template = '<html><body><div></div></body></html>';
 
         $this->assertEquals(false, TemplateModel::mergeIfTemplate($template, 123, $daoStub));
-    }
-
-    /**
-     * @test
-     */
-    public function previewIfTemplate()
-    {
-        $daoStub = $this->getMockBuilder('phpList\plugin\ContentAreas\DAO')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $daoStub->method('messageData')
-             ->willReturn('SER:' . serialize(['article' => '<p>here is the article</p>']));
-        $daoStub->method('templateBody')
-             ->willReturn('<html><body><div data-edit="article"></div></body></html>');
-
-        $expected =
-            '<iframe src="./?page=message_page&amp;pi=ContentAreas&amp;action=preview&amp;id=123" width="600" height="800">'
-            . "\n"
-            . '</iframe>';
-        $this->assertEquals($expected, TemplateModel::previewIfTemplate(23, 123, $daoStub));
-    }
-
-    /**
-     * @test
-     */
-    public function doesNotPreviewIfNotTemplate()
-    {
-        $daoStub = $this->getMockBuilder('phpList\plugin\ContentAreas\DAO')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $daoStub->method('messageData')
-             ->willReturn('SER:' . serialize(['article' => '<p>here is the article</p>']));
-        $daoStub->method('templateBody')
-             ->willReturn('<html><body><div></div></body></html>');
-
-        $this->assertFalse(TemplateModel::previewIfTemplate(23, 123, $daoStub));
     }
 }

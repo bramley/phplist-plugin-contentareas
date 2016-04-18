@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.5.2+20160418  Internal changes
     1.5.1+20160218  Position at start of content area after editing
     1.5.0+20160110  Include CSS inline packages
     1.4.2+20151214  Few minor bug fixes
