@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "ad3e0e50ab5dc3495627f511ea036de0",
-    "content-hash": "6f00cbf6b86ab2cc17c155d451c2e208",
+    "hash": "59fdaae2eb8c1dab4b0cb60ca4c9c8e4",
+    "content-hash": "d77220ed5210c487a3fc2ecb67bf76be",
     "packages": [
         {
             "name": "crossjoin/css",

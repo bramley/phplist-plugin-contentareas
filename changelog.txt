@@ -1,3 +1,6 @@
+version 1.5.3+20160527
+      Regenerate composer autoloader
+
 version 1.5.2+20160418
       Remove redundant method
 

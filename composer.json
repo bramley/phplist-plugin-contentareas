@@ -1,9 +1,12 @@
 {
     "config": {
-        "vendor-dir": "plugins/ContentAreas/vendor"
+        "vendor-dir": "plugins/ContentAreas/vendor",
+        "prepend-autoloader": false
     },
     "require": {
-        "crossjoin/pre-mailer": "1.0.*",
+        "crossjoin/pre-mailer": "v1.0.5",
+        "crossjoin/css": "v1.0.3",
+        "symfony/css-selector": "v2.8.1",
         "pelago/emogrifier": "V1.0.0"
     }
 }
