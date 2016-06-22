@@ -157,7 +157,11 @@ END
         } else {
             $value = isset($messageAreas[$ref->name]) ? $messageAreas[$ref->name] : null;
         }
-        $html = $this->toHTML($ref, $value);
+        try {
+            $html = $this->toHTML($ref, $value);
+        } catch (\Exception $e) {
+            return $e->getMessage();
+        }
 
         return <<<END
 <form method="POST">

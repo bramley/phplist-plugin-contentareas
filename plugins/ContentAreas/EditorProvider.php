@@ -30,7 +30,7 @@ abstract class EditorProvider
         global $plugins;
 
         if (empty($editorplugin)) {
-            return;
+            throw new UnknownEditorException('An editor has not been selected');
         }
         $plugin = $plugins[$editorplugin];
 
