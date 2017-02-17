@@ -2,9 +2,6 @@
 
 namespace phpList\plugin\ContentAreas;
 
-/**
- * 
- */
 class ConvertHtmlEntities
 {
     /* Swap HTML named entity with its numeric equivalent. If the entity

@@ -101,10 +101,10 @@ class ContentAreas extends phplistPlugin
 
     /**
      * Create the content for the Send Campaign tab.
-     * 
+     *
      * @param int   $messageId the message id
      * @param array $data      the message data
-     * 
+     *
      * @return string
      */
     public function sendMessageTab($messageId = 0, $data = array())
@@ -146,10 +146,10 @@ END;
 
     /**
      * Create the content, an iframe, for the view message page.
-     * 
+     *
      * @param int   $messageId the message id
      * @param array $data      the message data
-     * 
+     *
      * @return array|false the caption and content or false if the message
      *                     does not use content areas
      */
@@ -170,7 +170,7 @@ END;
 
     /**
      * Merge the template with content areas. This is done just once for the campaign.
-     * 
+     *
      * @param int   $messageId the message id
      * @param array &$message  the message data
      */
@@ -185,10 +185,10 @@ END;
 
     /**
      * Create an iframe element that will display the campaign.
-     * 
+     *
      * @param string $action    value for the action query parameter
      * @param int    $messageId the message id
-     * 
+     *
      * @return string
      */
     public function iframe($action, $messageId)
@@ -207,7 +207,7 @@ END;
 
     /**
      * Setter to allow injecting a dao.
-     * 
+     *
      * @param phpList\plugin\ContentAreas\DAO $dao
      */
     public function setDao(DAO $dao)
@@ -218,7 +218,7 @@ END;
     /**
      * Called by ViewBrowser plugin to manipulate template and message.
      * Sets the message content to the merged template and message areas.
-     * 
+     *
      * @param string &$templateBody the body of the template
      * @param array  &$messageData  the message data
      */

@@ -6,7 +6,7 @@ use phpList\plugin\Common;
 
 /**
  * MessageStatisticsPlugin for phplist.
- * 
+ *
  * This file is a part of MessageStatisticsPlugin.
  *
  * This plugin is free software: you can redistribute it and/or modify
@@ -17,7 +17,7 @@ use phpList\plugin\Common;
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @category  phplist
  *
  * @author    Duncan Cameron
@@ -31,10 +31,9 @@ use phpList\plugin\Common;
 
 /**
  * This class is a concrete implementation of Common\ControllerFactoryBase.
- * 
+ *
  * @category  phplist
  */
-
 class ControllerFactory extends Common\ControllerFactoryBase
 {
     /**

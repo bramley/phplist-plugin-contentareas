@@ -15,7 +15,7 @@ class ContentAreaHideable extends ContentAreaBase
         $url = htmlspecialchars(
             new Common\PageURL(null, array('field' => (string) $this->reference) + $_GET)
         );
-        $text = $isHidden ?  'Unhide' : 'Hide';
+        $text = $isHidden ? 'Unhide' : 'Hide';
         $value = $isHidden ? 'unhide' : 'hide';
         $id = htmlspecialchars($this->reference->toId());
         $this->addButtonHtml($this->node, <<<END

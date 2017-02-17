@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.5.4+20170217  Add hook for copying a message
     1.5.3+20160527  Regenerate autoloader
     1.5.2+20160418  Internal changes
     1.5.1+20160218  Position at start of content area after editing

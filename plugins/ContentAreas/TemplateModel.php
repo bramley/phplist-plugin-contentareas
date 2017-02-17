@@ -115,7 +115,7 @@ END;
     private function saveAsHtml(DOMDocument $doc)
     {
         $xsl = new DOMDocument();
-        $ss = <<<END
+        $ss = <<<'END'
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
      <xsl:output method="html" indent="yes" encoding="UTF-8"/>
 
@@ -145,7 +145,7 @@ END;
      * The phplist placeholder terminators, the [ and ] characters, will have been
      * encoded when they occur in a URL. This method decodes the encoded values so
      * that placeholders will be correctly replaced in later processing of the message.
-     * 
+     *
      * It also normalises line endings to \r\n
      *
      * @param string $html the html that might include encoded brackets
@@ -161,7 +161,7 @@ END;
 
     /**
      * Decorates the html document when editing the message.
-     * 
+     *
      * Adds the styles and javascript required when editing the message into the
      * head element.
      * Adds a div element used as the target for the edit pop-up.

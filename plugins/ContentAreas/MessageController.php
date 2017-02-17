@@ -139,7 +139,7 @@ END;
 
     /**
      * Setter to allow injecting a dao.
-     * 
+     *
      * @param phpList\plugin\ContentAreas\DAO $dao
      */
     public function setDao(DAO $dao)

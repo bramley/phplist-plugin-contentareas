@@ -1,3 +1,8 @@
+version 1.5.4+20170217
+      Improve handling of no selected editor
+      Add hook for copying a message
+      Coding standards changes, mostly white space
+
 version 1.5.3+20160527
       Regenerate composer autoloader
 

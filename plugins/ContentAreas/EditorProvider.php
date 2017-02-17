@@ -22,6 +22,7 @@ abstract class EditorProvider
     }
 
     abstract public function addEditor($name, $content, $rows);
+
     abstract public function createImageBrowser($function);
 
     public static function createEditorProvider()
