@@ -191,4 +191,68 @@ END
 
         $this->assertEquals(false, TemplateModel::mergeIfTemplate($template, 123, $daoStub));
     }
+
+    /**
+     * @test
+     */
+    public function addsDialogDivWhenEditing()
+    {
+        $_GET = ['page' => 'message_page', 'pi' => 'ContentAreas', 'action' => 'display'];
+        $template = '<html><body><div data-edit="article"></div></body></html>';
+        $tm = new TemplateModel();
+        $tm->loadHtml($template);
+
+        $expected = '<div id="dialog"></div>';
+        $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
+
+        $this->assertContains($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function addsStylesWhenEditing()
+    {
+        $_GET = ['page' => 'message_page', 'pi' => 'ContentAreas', 'action' => 'display'];
+        $template = '<html><head></head><body><div data-edit="article"></div></body></html>';
+        $tm = new TemplateModel();
+        $tm->loadHtml($template);
+
+        $expected = '<style type="text/css">';
+        $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
+
+        $this->assertContains($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function doesNotAddStylesWhenNotEditing()
+    {
+        $_GET = ['page' => 'message_page', 'pi' => 'ContentAreas', 'action' => 'display'];
+        $template = '<html><head></head><body><div data-edit="article"></div></body></html>';
+        $tm = new TemplateModel();
+        $tm->loadHtml($template);
+
+        $expected = '<style type="text/css">';
+        $result = $tm->merge(['article' => '<p>here is the article</p>'], false);
+
+        $this->assertNotContains($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function addsHeadElementWhenEditing()
+    {
+        $_GET = ['page' => 'message_page', 'pi' => 'ContentAreas', 'action' => 'display'];
+        $template = '<html><body><div data-edit="article"></div></body></html>';
+        $tm = new TemplateModel();
+        $tm->loadHtml($template);
+
+        $expected = '<head>';
+        $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
+
+        $this->assertContains($expected, $result);
+    }
 }
