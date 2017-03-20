@@ -1,3 +1,6 @@
+version 1.5.5+20170320
+      Handle the template not having a head element. Fixes #6.
+
 version 1.5.4+20170217
       Improve handling of no selected editor
       Add hook for copying a message

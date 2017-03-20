@@ -172,13 +172,20 @@ END;
             . file_get_contents(dirname(__FILE__) . '/script.html');
         $fragment = $this->dom->createDocumentFragment();
         $fragment->appendXML($html);
-        $head = $this->dom->getElementsByTagName('head')->item(0);
+
+        $first = $this->dom->documentElement->firstChild;
+
+        if ($first->tagName == 'body') {
+            $head = $this->dom->documentElement->insertBefore($this->dom->createElement('head'), $first);
+            $body = $first;
+        } else {
+            $head = $first;
+            $body = $head->nextSibling;
+        }
         $head->appendChild($fragment);
 
-        $fragment = $this->dom->createDocumentFragment();
-        $fragment->appendXML('<div id="dialog"></div>');
-        $body = $this->dom->getElementsByTagName('body')->item(0);
-        $body->insertBefore($fragment, $body->firstChild);
+        $div = $body->insertBefore($this->dom->createElement('div'), $body->firstChild);
+        $div->setAttribute('id', 'dialog');
     }
 
     /*

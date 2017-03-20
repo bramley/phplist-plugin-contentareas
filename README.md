@@ -44,11 +44,11 @@ This should contain
 
 Then click the button to enable the plugin.
 
-##Usage##
+## Usage ##
 
 For guidance on usage see the plugin page within the phplist documentation site <https://resources.phplist.com/plugin/contentareas>
 
-##Support##
+## Support ##
 
 Please raise any questions or problems in the user forum <https://discuss.phplist.org/>.
 
@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.5.5+20170320  Handle the template not having a head element
     1.5.4+20170217  Add hook for copying a message
     1.5.3+20160527  Regenerate autoloader
     1.5.2+20160418  Internal changes
