@@ -15,7 +15,7 @@ class ContentAreaEditor extends ContentAreaBase
         return $provider->addEditor('content', $value, 20);
     }
 
-    public function merge($messageArea)
+    public function merge($messageArea, Merger $merger)
     {
         if (!is_null($messageArea)) {
             $this->replaceChildren($messageArea);

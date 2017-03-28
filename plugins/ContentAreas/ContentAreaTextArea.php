@@ -19,7 +19,7 @@ class ContentAreaTextArea extends ContentAreaBase
 END;
     }
 
-    public function merge($messageArea)
+    public function merge($messageArea, Merger $merger)
     {
         if (!is_null($messageArea)) {
             $this->replaceChildren($messageArea);

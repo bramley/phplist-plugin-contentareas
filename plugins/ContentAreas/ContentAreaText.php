@@ -18,7 +18,7 @@ class ContentAreaText extends ContentAreaBase
 END;
     }
 
-    public function merge($messageArea)
+    public function merge($messageArea, Merger $merger)
     {
         if (!is_null($messageArea)) {
             $this->node->nodeValue = htmlspecialchars($messageArea);

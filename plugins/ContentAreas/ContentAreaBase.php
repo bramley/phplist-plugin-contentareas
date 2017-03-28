@@ -119,7 +119,7 @@ END
         $this->reference = new Reference($this->name);
     }
 
-    abstract public function merge($messageArea);
+    abstract public function merge($messageArea, Merger $merger);
 
     public static function createContentArea(DOMNode $node)
     {
