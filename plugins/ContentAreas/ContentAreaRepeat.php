@@ -32,7 +32,7 @@ class ContentAreaRepeat extends ContentAreaBase
     private function addRepeatButtons($node, $i, $size)
     {
         $addButton = $this->htmlButton('add.png', 'add');
-        $deleteButton = ($size > 1) ? $this->htmlButton('delete.png', 'delete') : '';
+        $deleteButton = ($size > 0) ? $this->htmlButton('delete.png', 'delete') : '';
         $upButton = ($i > 0) ? $this->htmlButton('up.png', 'up') : '';
         $downButton = ($i < $size - 1) ? $this->htmlButton('down.png', 'down') : '';
         $reference = new Reference($this->name, $i);
