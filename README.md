@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.6.0+20170409  Able to edit additional attributes of an image
     1.5.5+20170320  Handle the template not having a head element
     1.5.4+20170217  Add hook for copying a message
     1.5.3+20160527  Regenerate autoloader

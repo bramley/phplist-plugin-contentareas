@@ -132,6 +132,8 @@ END
                         $area = new ContentAreaText($name, $node);
                     } elseif ($type == 'textarea') {
                         $area = new ContentAreaTextArea($name, $node);
+                    } elseif ($type == 'preheader') {
+                        $area = new ContentAreaPreheader($name, $node);
                     } else {
                         $area = new ContentAreaEditor($name, $node);
                     }

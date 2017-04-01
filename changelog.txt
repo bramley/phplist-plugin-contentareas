@@ -1,3 +1,9 @@
+version 1.6.0+20170409
+      Correct signature of merge() method
+      Allow width, height, alt and style attributes to be edited
+      Allow deletion when repeat has only one instance
+      Add preheader content type
+
 version 1.5.5+20170320
       Handle the template not having a head element. Fixes #6.
 
