@@ -75,10 +75,15 @@ END;
                 $value = array('src' => $value);
             }
 
-            foreach (['src', 'alt', 'width', 'height', 'style', 'border'] as $attr) {
+            foreach (['src', 'width', 'height', 'style', 'border'] as $attr) {
                 if ((isset($value[$attr]) && $value[$attr] != '')) {
                     $this->node->setAttribute($attr, $value[$attr]);
                 }
+            }
+
+            if (isset($value['alt']) && $value['alt'] != '') {
+                $this->node->setAttribute('alt', $value['alt']);
+                $this->node->setAttribute('title', $value['alt']);
             }
         }
 

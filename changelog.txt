@@ -1,3 +1,6 @@
+version 1.6.1+20171001
+      Use the alt attribute value of an image also for the the title attribute
+
 version 1.6.0+20170409
       Correct signature of merge() method
       Allow width, height, alt and style attributes to be edited
