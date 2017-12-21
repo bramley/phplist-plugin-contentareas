@@ -26,9 +26,49 @@ class TemplateModel
     private $dom;
     private $xpath;
 
-    /*
-     *  Private methods
+    /**
+     * Create a template model handling any DOM parsing exception that is thrown.
+     *
+     * @param string $body the template body
+     *
+     * @return TemplateModel|null
      */
+    private static function createTemplateModel($body)
+    {
+        try {
+            $tm = new self($body);
+        } catch (\Exception $e) {
+            logEvent($e->getMessage());
+
+            return null;
+        }
+
+        return $tm;
+    }
+
+    /**
+     * Inline CSS handling any exception thrown.
+     *
+     * @param string $html
+     *
+     * @return string the transformed html or original html if an exception was thrown
+     */
+    private function inlineCss($html)
+    {
+        $factory = new CssInlinerFactory();
+        $inliner = $factory->createCssInliner();
+
+        try {
+            $inlinedHtml = $inliner->inlineCss($html);
+        } catch (\Exception $e) {
+            logEvent($e->getMessage());
+
+            return $html;
+        }
+
+        return $inlinedHtml;
+    }
+
     private function createToc()
     {
         $nl = $this->xpath->query('//@data-toc');
@@ -188,9 +228,6 @@ END;
         $div->setAttribute('id', 'dialog');
     }
 
-    /*
-     *  Public methods
-     */
     public function __construct($html = null)
     {
         if ($html !== null) {
@@ -238,9 +275,7 @@ END;
         $html = $this->saveAsHtml($this->removeAttributes($this->dom));
 
         if (getConfig('contentareas_inline_css') && !$edit) {
-            $factory = new CssInlinerFactory();
-            $inliner = $factory->createCssInliner();
-            $html = $inliner->inlineCss($html);
+            $html = $this->inlineCss($html);
         }
 
         return $this->replaceEncodedBrackets($html);
@@ -281,9 +316,9 @@ END;
      */
     public static function isTemplateBody($body)
     {
-        $tm = new self($body);
+        $tm = self::createTemplateModel($body);
 
-        return $tm->isTemplate();
+        return $tm ? $tm->isTemplate() : false;
     }
 
     /**
@@ -301,9 +336,9 @@ END;
         if (!$templateBody) {
             return false;
         }
-        $tm = new self($templateBody);
+        $tm = self::createTemplateModel($templateBody);
 
-        if (!$tm->isTemplate()) {
+        if (!($tm && $tm->isTemplate())) {
             return false;
         }
 
