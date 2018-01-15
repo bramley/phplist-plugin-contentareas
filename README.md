@@ -14,7 +14,7 @@ content of each area. Each content area is identified and can be edited, with th
 
 Requires php version 5.4.0 or later. Please check your php version before installing the plugin, otherwise phplist will fail (probably a white page).
 
-Requires phplist release 3.2.1 or later.
+Requires phplist release 3.3.1 or later.
 
 Requires the Common Plugin version 3.5.0 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.7.0+20180115  Use a select list for the css inline package
     1.6.1+20171001  Use the alt attribute of an image also for the title attribute
     1.6.0+20170409  Able to edit additional attributes of an image
     1.5.5+20170320  Handle the template not having a head element

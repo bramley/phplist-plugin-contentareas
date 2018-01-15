@@ -4,13 +4,13 @@ namespace phpList\plugin\ContentAreas;
 
 class CssInlinerFactory
 {
-    public function createCssInliner()
+    public function createCssInliner($package)
     {
-        global $contentareasInlinerClass;
-
-        $class = (isset($contentareasInlinerClass) && class_exists(__NAMESPACE__ . '\\' . $contentareasInlinerClass, false))
-            ? $contentareasInlinerClass
-            : 'PreMailerCssInliner';
+        if ($package == \ContentAreas::CSS_INLINE_EMOGRIFIER) {
+            $class = 'EmogrifierCssInliner';
+        } else {
+            $class = 'PreMailerCssInliner';
+        }
         $class = __NAMESPACE__ . '\\' . $class;
 
         return new $class();

@@ -34,8 +34,8 @@ function getConfig($key) {
         case 'viewbrowser_link':
             return 'View in your browser';
             break;
-        case 'contentareas_inline_css':
-            return false;
+        case 'contentareas_inline_css_package':
+            return \ContentAreas::CSS_INLINE_NONE;
             break;
         case 'contentareas_iframe_height':
             return 800;

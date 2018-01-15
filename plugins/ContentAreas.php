@@ -11,6 +11,9 @@ class ContentAreas extends phplistPlugin
     const VERSION_FILE = 'version.txt';
     const VIEW_PAGE = 'view';
     const PLUGIN = 'ContentAreas';
+    const CSS_INLINE_NONE = 1;
+    const CSS_INLINE_PREMAILER = 2;
+    const CSS_INLINE_EMOGRIFIER = 3;
 
     private $dao;
 
@@ -23,11 +26,12 @@ class ContentAreas extends phplistPlugin
     public $description = 'Provides multiple content areas for campaigns';
     public $documentationUrl = 'https://resources.phplist.com/plugin/contentareas';
     public $settings = array(
-        'contentareas_inline_css' => array(
-            'value' => true,
-            'description' => 'Automatically inline css',
-            'type' => 'boolean',
-            'allowempty' => 1,
+        'contentareas_inline_css_package' => array(
+            'description' => 'The package to use to inline CSS',
+            'type' => 'select',
+            'value' => 1,
+            'values' => array(self::CSS_INLINE_NONE => 'None', self::CSS_INLINE_PREMAILER => 'PreMailer', self::CSS_INLINE_EMOGRIFIER => 'Emogrifier'),
+            'allowempty' => false,
             'category' => 'Content Areas',
         ),
         'contentareas_iframe_height' => array(
@@ -68,16 +72,14 @@ class ContentAreas extends phplistPlugin
             'XSL extension installed' => extension_loaded('xsl'),
             'Common plugin v3.5.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && preg_match('/\d+\.\d+\.\d+/', $plugins['CommonPlugin']->version, $matches)
-                && version_compare($matches[0], '3.5.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.5.0') >= 0
             ),
             'View in Browser plugin v2.4.0 or later installed' => (
-                phpListPlugin::isEnabled('ViewBrowserPlugin')
-                && version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
-                || !phpListPlugin::isEnabled('ViewBrowserPlugin')
+                !phpListPlugin::isEnabled('ViewBrowserPlugin')
+                || version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
             ),
             'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
-            'phpList version 3.2.1 or later' => version_compare(VERSION, '3.2.1') >= 0,
+            'phpList version 3.3.1 or later' => version_compare(VERSION, '3.3.1') >= 0,
         );
     }
 
