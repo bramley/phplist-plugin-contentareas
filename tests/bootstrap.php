@@ -22,6 +22,10 @@ class phplistPlugin
     {
     }
 }
+function logEvent($message)
+{
+    echo $message;
+}
 
 function getConfig($key) {
     switch ($key) {

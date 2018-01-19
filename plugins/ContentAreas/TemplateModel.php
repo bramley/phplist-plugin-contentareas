@@ -56,10 +56,6 @@ class TemplateModel
     private function inlineCss($html)
     {
         $package = getConfig('contentareas_inline_css_package');
-
-        if ($package == \ContentAreas::CSS_INLINE_NONE) {
-            return $html;
-        }
         $factory = new CssInlinerFactory();
         $inliner = $factory->createCssInliner($package);
 

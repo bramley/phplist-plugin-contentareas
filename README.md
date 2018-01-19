@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.7.1+20180119  Minor internal changes
     1.7.0+20180115  Use a select list for the css inline package
     1.6.1+20171001  Use the alt attribute of an image also for the title attribute
     1.6.0+20170409  Able to edit additional attributes of an image

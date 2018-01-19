@@ -6,14 +6,15 @@ class CssInlinerFactory
 {
     public function createCssInliner($package)
     {
-        if ($package == \ContentAreas::CSS_INLINE_EMOGRIFIER) {
-            $class = 'EmogrifierCssInliner';
-        } else {
-            $class = 'PreMailerCssInliner';
+        if ($package == \ContentAreas::CSS_INLINE_PREMAILER) {
+            return new PreMailerCssInliner();
         }
-        $class = __NAMESPACE__ . '\\' . $class;
 
-        return new $class();
+        if ($package == \ContentAreas::CSS_INLINE_EMOGRIFIER) {
+            return new EmogrifierCssInliner();
+        }
+
+        return new NullCssInliner();
     }
 }
 
@@ -50,5 +51,13 @@ class EmogrifierCssInliner
         }
 
         return $html;
+    }
+}
+
+class NullCssInliner
+{
+    public function inlineCss($source)
+    {
+        return $source;
     }
 }

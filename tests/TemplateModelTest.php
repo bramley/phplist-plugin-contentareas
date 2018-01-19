@@ -255,4 +255,17 @@ END
 
         $this->assertContains($expected, $result);
     }
+
+    /**
+     * @test
+     */
+    public function reportsInvalidHtml()
+    {
+        $template = '<html><body><div data-edit="article"><p><p></p></p></div></body></html>';
+        ob_start();
+        $tm = TemplateModel::isTemplateBody($template);
+        $message = ob_get_clean();
+        $this->assertFalse($tm);
+        $this->assertContains('Unexpected end tag : p in Entity', $message);
+    }
 }

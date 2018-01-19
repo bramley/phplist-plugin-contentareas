@@ -22,6 +22,7 @@ return array(
     'phpList\plugin\ContentAreas\MessageController' => $base . '/ContentAreas/MessageController.php',
     'phpList\plugin\ContentAreas\MessageModel' => $base . '/ContentAreas/MessageModel.php',
     'phpList\plugin\ContentAreas\MethodNotImplementedException' => $base . '/ContentAreas/EditorProvider.php',
+    'phpList\plugin\ContentAreas\NullCssInliner' => $base . '/ContentAreas/CssInlinerFactory.php',
     'phpList\plugin\ContentAreas\PreMailerCssInliner' => $base . '/ContentAreas/CssInlinerFactory.php',
     'phpList\plugin\ContentAreas\Reference' => $base . '/ContentAreas/Reference.php',
     'phpList\plugin\ContentAreas\TemplateModel' => $base . '/ContentAreas/TemplateModel.php',

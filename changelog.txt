@@ -1,3 +1,6 @@
+version 1.7.1+20180119
+      Refactor CssInLinerFactory, added tests
+
 version 1.7.0+20180115
       Write to the event log when catching an html parsing exception.
       Use a select list for the css inline package instead of config file entry.

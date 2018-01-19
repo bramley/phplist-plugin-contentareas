@@ -11,9 +11,9 @@ class ContentAreas extends phplistPlugin
     const VERSION_FILE = 'version.txt';
     const VIEW_PAGE = 'view';
     const PLUGIN = 'ContentAreas';
-    const CSS_INLINE_NONE = 1;
-    const CSS_INLINE_PREMAILER = 2;
-    const CSS_INLINE_EMOGRIFIER = 3;
+    const CSS_INLINE_NONE = 'None';
+    const CSS_INLINE_PREMAILER = 'PreMailer';
+    const CSS_INLINE_EMOGRIFIER = 'Emogrifier';
 
     private $dao;
 
@@ -29,8 +29,12 @@ class ContentAreas extends phplistPlugin
         'contentareas_inline_css_package' => array(
             'description' => 'The package to use to inline CSS',
             'type' => 'select',
-            'value' => 1,
-            'values' => array(self::CSS_INLINE_NONE => 'None', self::CSS_INLINE_PREMAILER => 'PreMailer', self::CSS_INLINE_EMOGRIFIER => 'Emogrifier'),
+            'value' => self::CSS_INLINE_PREMAILER,
+            'values' => array(
+                self::CSS_INLINE_NONE => self::CSS_INLINE_NONE,
+                self::CSS_INLINE_PREMAILER => self::CSS_INLINE_PREMAILER,
+                self::CSS_INLINE_EMOGRIFIER => self::CSS_INLINE_EMOGRIFIER,
+            ),
             'allowempty' => false,
             'category' => 'Content Areas',
         ),
