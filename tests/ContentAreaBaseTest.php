@@ -71,6 +71,21 @@ class ContentAreaBaseTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function createsLinkImageContentArea()
+    {
+        $html = '<html><body><div><a href="http://foo.com"><img data-edit="image1" src="http://foo.com/image.jpeg"/></a></div></body></html>';
+        $tm = new TemplateModel();
+        $tm->loadHtml($html);
+        $node = $tm->namedNode('image1');
+        $area = ContentAreaBase::createContentArea($node);
+        $this->assertInstanceOf('phpList\plugin\ContentAreas\ContentAreaLinkImage', $area);
+        $this->assertEquals('image1', $area->name);
+        $this->assertEquals('image1', $area->reference);
+    }
+
+    /**
+     * @test
+     */
     public function createsRepeatContentArea()
     {
         $html = <<<'END'

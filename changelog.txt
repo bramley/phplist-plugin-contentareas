@@ -1,3 +1,7 @@
+version 1.8.0+20180122
+      Add linkimage content area for an img element within an a element
+      Add basicimage type for image content area to allow only the src attribute to be edited.
+
 version 1.7.1+20180119
       Refactor CssInLinerFactory, added tests
 

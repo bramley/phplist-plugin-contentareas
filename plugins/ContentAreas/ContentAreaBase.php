@@ -11,7 +11,11 @@ use DOMNode;
  */
 abstract class ContentAreaBase
 {
+    private $ownerDocument;
+
     protected $node;
+    protected $type;
+
     public $name;
     public $reference;
     public $edit;
@@ -71,7 +75,7 @@ abstract class ContentAreaBase
     protected function addEditButton()
     {
         $url = htmlspecialchars(
-            new PageURL(null, array('field' => (string) $this->reference, 'action' => 'edit') + $_GET)
+            PageURL::createFromGet(['field' => (string) $this->reference, 'action' => 'edit'])
         );
         $image = new ImageTag('pencil.png', 'Edit');
         $this->addButtonHtml($this->node, <<<END
@@ -111,11 +115,12 @@ END
         return $value;
     }
 
-    protected function __construct($name, DOMNode $node)
+    protected function __construct($name, DOMNode $node, $type = null)
     {
-        $this->node = $node;
-        $this->ownerDocument = $this->node->ownerDocument;
         $this->name = $name;
+        $this->node = $node;
+        $this->type = $type;
+        $this->ownerDocument = $this->node->ownerDocument;
         $this->reference = new Reference($this->name);
     }
 
@@ -124,19 +129,21 @@ END
     public static function createContentArea(DOMNode $node)
     {
         if ($name = $node->getAttribute(TemplateModel::EDIT_ATTRIBUTE)) {
+            $type = $node->getAttribute(TemplateModel::TYPE_ATTRIBUTE);
+
             if ($node->tagName == 'img') {
-                $area = new ContentAreaImage($name, $node);
+                if ($node->parentNode->tagName == 'a') {
+                    $area = new ContentAreaLinkImage($name, $node, $type);
+                } else {
+                    $area = new ContentAreaImage($name, $node, $type);
+                }
             } else {
-                if ($type = $node->getAttribute(TemplateModel::TYPE_ATTRIBUTE)) {
-                    if ($type == 'text') {
-                        $area = new ContentAreaText($name, $node);
-                    } elseif ($type == 'textarea') {
-                        $area = new ContentAreaTextArea($name, $node);
-                    } elseif ($type == 'preheader') {
-                        $area = new ContentAreaPreheader($name, $node);
-                    } else {
-                        $area = new ContentAreaEditor($name, $node);
-                    }
+                if ($type == 'text') {
+                    $area = new ContentAreaText($name, $node);
+                } elseif ($type == 'textarea') {
+                    $area = new ContentAreaTextArea($name, $node);
+                } elseif ($type == 'preheader') {
+                    $area = new ContentAreaPreheader($name, $node);
                 } else {
                     $area = new ContentAreaEditor($name, $node);
                 }

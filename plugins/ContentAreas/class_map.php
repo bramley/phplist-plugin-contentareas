@@ -5,6 +5,7 @@ return array(
     'phpList\plugin\ContentAreas\ContentAreaEditor' => $base . '/ContentAreas/ContentAreaEditor.php',
     'phpList\plugin\ContentAreas\ContentAreaHideable' => $base . '/ContentAreas/ContentAreaHideable.php',
     'phpList\plugin\ContentAreas\ContentAreaImage' => $base . '/ContentAreas/ContentAreaImage.php',
+    'phpList\plugin\ContentAreas\ContentAreaLinkImage' => $base . '/ContentAreas/ContentAreaLinkImage.php',
     'phpList\plugin\ContentAreas\ContentAreaPreheader' => $base . '/ContentAreas/ContentAreaPreheader.php',
     'phpList\plugin\ContentAreas\ContentAreaRepeat' => $base . '/ContentAreas/ContentAreaRepeat.php',
     'phpList\plugin\ContentAreas\ContentAreaText' => $base . '/ContentAreas/ContentAreaText.php',

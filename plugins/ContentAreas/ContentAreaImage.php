@@ -48,6 +48,10 @@ $browser
 <button class="button" onclick="javascript:$function(window.$name.callBack); return false;">Browse</button>
 <input type="text" id="$inputId" name="content[src]" value="{$value['src']}" size="$size"/>
 <br><img class="block" id="$imgId" src="{$value['src']}" width="150"/>
+END;
+
+        if ($this->type != 'basicimage') {
+            $html .= <<<END
 <p><label>Image width&nbsp;<input type="text" name="content[width]" value="{$value['width']}" size="5"/></label>
 <label>Image height&nbsp;<input type="text" name="content[height]" value="{$value['height']}" size="5"/></label>
 <label>Image border&nbsp;<input type="text" name="content[border]" value="{$value['border']}" size="10"/></label>
@@ -57,6 +61,7 @@ $browser
 <p><label>Style&nbsp;<input type="text" name="content[style]" value="{$value['style']}" size="60"/></label>
 </p>
 END;
+        }
 
         return $html;
     }
