@@ -56,6 +56,7 @@ END
     /**
      * For each repeat instance create a copy of the repeatable node and merge
      * the instance's content areas.
+     * When editing and there are no repeat instances then simply display the repeatable node.
      *
      * @param array  $contentArea the content areas for the current level
      * @param Merger $merger      object to do the merging
@@ -67,7 +68,12 @@ END
         }
 
         if ($this->edit && count($contentArea) == 0) {
-            $contentArea = array(array());
+            $this->node->parentNode->insertBefore(new DOMComment('Start of disabled repeat'), $this->node);
+            $this->addRepeatButtons($this->node, 0, 0);
+            $this->node->parentNode->insertBefore(new DOMComment('End of disabled repeat'), $this->node->nextSibling);
+            $this->addClass('hidden');
+
+            return;
         }
 
         foreach ($contentArea as $i => $repeatInstance) {

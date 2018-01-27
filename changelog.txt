@@ -1,3 +1,6 @@
+version 1.8.1+20180129
+      Do not display edit buttons for a repeatable area that has no instances
+
 version 1.8.0+20180122
       Add linkimage content area for an img element within an a element
       Add basicimage type for image content area to allow only the src attribute to be edited.
