@@ -1,3 +1,6 @@
+version 1.8.2+20180228
+      Try to avoid whitespace text nodes
+
 version 1.8.1+20180129
       Do not display edit buttons for a repeatable area that has no instances
 

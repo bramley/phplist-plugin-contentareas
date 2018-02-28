@@ -239,7 +239,7 @@ END;
     public function loadHtml($html)
     {
         $this->dom = new DOMDocument();
-        $this->dom->loadHTML($html);
+        $this->dom->loadHTML($html, LIBXML_NOBLANKS);
         $this->dom->formatOutput = true;
         $this->xpath = new DOMXPath($this->dom);
     }
