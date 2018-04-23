@@ -1,3 +1,6 @@
+version 1.8.3+20180423
+      Reduce level of error reporting
+
 version 1.8.2+20180228
       Try to avoid whitespace text nodes
 

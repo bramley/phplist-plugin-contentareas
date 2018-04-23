@@ -16,6 +16,7 @@ class ContentAreas extends phplistPlugin
     const CSS_INLINE_EMOGRIFIER = 'Emogrifier';
 
     private $dao;
+    private $errorLevel = E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT;
 
     /*
      *  Inherited variables
@@ -115,8 +116,8 @@ class ContentAreas extends phplistPlugin
      */
     public function sendMessageTab($messageId = 0, $data = array())
     {
-        $level = error_reporting(E_ALL | E_STRICT);
-        set_error_handler('phpList\plugin\Common\Exception::errorHandler', E_ALL | E_STRICT);
+        $level = error_reporting($this->errorLevel);
+        set_error_handler('phpList\plugin\Common\Exception::errorHandler', $this->errorLevel);
 
         if ($data['template'] == 0) {
             return '';
