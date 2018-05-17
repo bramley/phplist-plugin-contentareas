@@ -16,7 +16,7 @@ class ContentAreas extends phplistPlugin
     const CSS_INLINE_EMOGRIFIER = 'Emogrifier';
 
     private $dao;
-    private $errorLevel = E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT;
+    private $errorLevel;
 
     /*
      *  Inherited variables
@@ -63,6 +63,8 @@ class ContentAreas extends phplistPlugin
     public function __construct()
     {
         $this->coderoot = dirname(__FILE__) . '/' . __CLASS__ . '/';
+        $this->errorLevel = E_ALL ^ E_NOTICE ^ E_DEPRECATED ^ E_STRICT;
+
         parent::__construct();
         $this->version = (is_file($f = $this->coderoot . self::VERSION_FILE))
             ? file_get_contents($f)

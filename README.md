@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.8.4+20180517  Avoid dependency on php 5.6
     1.8.3+20180423  Reduce level of error reporting
     1.8.2+20180228  Try to avoid whitespace text nodes
     1.8.1+20180129  Improve display of repeatable area
