@@ -12,11 +12,10 @@ content of each area. Each content area is identified and can be edited, with th
 
 ### Dependencies ###
 
-Requires php version 5.6.0 or later. Please check your php version before installing the plugin, otherwise phplist will fail (probably a white page).
+This plugin is for phplist release 3.3.2 or later and requires php version 5.6.0 or later.
+Please check your php version before installing the plugin, otherwise phplist will fail (probably a white page).
 
-Requires phplist release 3.3.1 or later.
-
-Requires the Common Plugin version 3.9.0 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
+Also requires Common Plugin version 3.9.0 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 Requires version 2.4.0 or later of the View in Browser plugin if you want to use that plugin to create a link that displays the
 campaign in a browser. You should install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-viewbrowser>.

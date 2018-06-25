@@ -93,7 +93,7 @@ class ContentAreas extends phplistPlugin
                 || version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
             ),
             'PHP version 5.6.0 or greater' => version_compare(PHP_VERSION, '5.6') > 0,
-            'phpList version 3.3.1 or later' => version_compare(VERSION, '3.3.1') >= 0,
+            'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
         );
     }
 
@@ -105,14 +105,10 @@ class ContentAreas extends phplistPlugin
     /**
      * Use this hook to create the dao.
      */
-    public function sendFormats()
+    public function activate()
     {
-        global $plugins;
-
-        require_once $plugins['CommonPlugin']->coderoot . 'Autoloader.php';
+        parent::activate();
         $this->dao = new DAO(new DB());
-
-        return;
     }
 
     /**
