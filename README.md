@@ -12,7 +12,7 @@ content of each area. Each content area is identified and can be edited, with th
 
 ### Dependencies ###
 
-Requires php version 5.4.0 or later. Please check your php version before installing the plugin, otherwise phplist will fail (probably a white page).
+Requires php version 5.6.0 or later. Please check your php version before installing the plugin, otherwise phplist will fail (probably a white page).
 
 Requires phplist release 3.3.1 or later.
 

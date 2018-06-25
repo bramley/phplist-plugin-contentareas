@@ -92,7 +92,7 @@ class ContentAreas extends phplistPlugin
                 !phpListPlugin::isEnabled('ViewBrowserPlugin')
                 || version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
             ),
-            'PHP version 5.4.0 or greater' => version_compare(PHP_VERSION, '5.4') > 0,
+            'PHP version 5.6.0 or greater' => version_compare(PHP_VERSION, '5.6') > 0,
             'phpList version 3.3.1 or later' => version_compare(VERSION, '3.3.1') >= 0,
         );
     }

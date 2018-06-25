@@ -26,10 +26,8 @@ class Reference
      *
      * @return none
      */
-    private function assign()
+    private function assign(...$args)
     {
-        $args = func_get_args();
-
         if (count($args) == 1) {
             $this->name = $args[0];
 
@@ -43,10 +41,10 @@ class Reference
         }
     }
 
-    public function __construct()
+    public function __construct(...$args)
     {
-        if (func_num_args() > 0) {
-            call_user_func_array(array($this, 'assign'), func_get_args());
+        if (count($args) > 0) {
+            $this->assign(...$args);
         }
     }
 
@@ -89,7 +87,8 @@ class Reference
     public static function decode($p)
     {
         $ref = new self();
-        call_user_func_array(array($ref, 'assign'), explode(',', $p));
+        $fields = explode(',', $p);
+        $ref->assign(...$fields);
 
         return $ref;
     }
