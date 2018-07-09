@@ -118,15 +118,27 @@ class ContentAreas extends phplistPlugin
      */
     public function sendMessageTab($messageId = 0, $data = array())
     {
-        $level = error_reporting($this->errorLevel);
-        set_error_handler('phpList\plugin\Common\Exception::errorHandler', $this->errorLevel);
-
         if ($data['template'] == 0) {
             return '';
         }
         $templateBody = $this->dao->templateBody($data['template']);
 
-        if (!($templateBody && TemplateModel::isTemplateBody($templateBody))) {
+        if (!$templateBody) {
+            return '';
+        }
+        $level = error_reporting($this->errorLevel);
+        set_error_handler('phpList\plugin\Common\Exception::errorHandler', $this->errorLevel);
+
+        try {
+            $isTemplate = TemplateModel::isTemplateBody($templateBody);
+        } catch (\Exception $e) {
+            $isTemplate = false;
+            printf('<p>Unable to parse template for content areas - %s</p>', nl2br(htmlspecialchars($e->getMessage())));
+        }
+        restore_error_handler();
+        error_reporting($level);
+
+        if (!$isTemplate) {
             return '';
         }
         $preview = new PageLink(
@@ -134,7 +146,6 @@ class ContentAreas extends phplistPlugin
             'Preview',
             array('class' => 'button', 'target' => 'preview')
         );
-        error_reporting($level);
         $iframe = $this->iframe('display', $messageId);
 
         return <<<END

@@ -1,3 +1,6 @@
+version 1.8.5+20180709
+      Correct problem of error handler not always being restored
+
 version 1.8.4+20180517
       Avoid dependency on php 5.6
 

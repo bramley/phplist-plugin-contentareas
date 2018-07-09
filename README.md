@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.8.5+20180709  Correct problem of error handler not always being restored
     1.8.4+20180517  Avoid dependency on php 5.6
     1.8.3+20180423  Reduce level of error reporting
     1.8.2+20180228  Try to avoid whitespace text nodes
