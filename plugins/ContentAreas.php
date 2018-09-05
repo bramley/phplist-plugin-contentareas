@@ -57,6 +57,13 @@ class ContentAreas extends phplistPlugin
             'allowempty' => false,
             'category' => 'Content Areas',
         ),
+        'contentareas_display_errors' => array(
+            'description' => 'Whether to display html errors in the template',
+            'type' => 'boolean',
+            'value' => true,
+            'allowempty' => true,
+            'category' => 'Content Areas',
+        ),
     );
     public $publicPages = array(self::VIEW_PAGE);
 
@@ -77,9 +84,9 @@ class ContentAreas extends phplistPlugin
 
         return array(
             'XSL extension installed' => extension_loaded('xsl'),
-            'Common plugin v3.5.0 or later installed' => (
+            'Common plugin v3.9.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.5.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.9.0') >= 0
             ),
             'View in Browser plugin v2.4.0 or later installed' => (
                 !phpListPlugin::isEnabled('ViewBrowserPlugin')
@@ -126,20 +133,18 @@ class ContentAreas extends phplistPlugin
         if (!$templateBody) {
             return '';
         }
-        $level = error_reporting($this->errorLevel);
-        set_error_handler('phpList\plugin\Common\Exception::errorHandler', $this->errorLevel);
 
-        try {
-            $isTemplate = TemplateModel::isTemplateBody($templateBody);
-        } catch (\Exception $e) {
-            $isTemplate = false;
-            printf('<p>Unable to parse template for content areas - %s</p>', nl2br(htmlspecialchars($e->getMessage())));
-        }
-        restore_error_handler();
-        error_reporting($level);
-
-        if (!$isTemplate) {
+        if (!($tm = TemplateModel::isTemplateBody($templateBody))) {
             return '';
+        }
+        $warning = '';
+
+        if (getConfig('contentareas_display_errors')) {
+            $errors = $tm->errors;
+
+            if (count($errors) > 0) {
+                $warning = $this->formatErrors($errors);
+            }
         }
         $preview = new PageLink(
             new PageURL('message_page', array('pi' => __CLASS__, 'action' => 'preview', 'id' => $messageId)),
@@ -149,6 +154,7 @@ class ContentAreas extends phplistPlugin
         $iframe = $this->iframe('display', $messageId);
 
         return <<<END
+$warning
 $preview
 $iframe
 END;
@@ -262,5 +268,28 @@ END;
     public function copyCampaignHook()
     {
         return array('ContentAreas');
+    }
+
+    private function formatErrors($errors)
+    {
+        $levels = array(
+            LIBXML_ERR_WARNING => 'Warning',
+            LIBXML_ERR_ERROR => 'Error',
+            LIBXML_ERR_FATAL => 'Fatal',
+        );
+        $formattedErrors = array_map(
+            function ($error) use ($levels) {
+                return sprintf(
+                    'Level %s, line %d, column %d: %s',
+                    $levels[$error->level],
+                    $error->line,
+                    $error->column,
+                    htmlspecialchars($error->message)
+                );
+            },
+            $errors
+        );
+
+        return sprintf('<div class="note">%s<br/>%s</div>', 'The template has some html errors.', implode('<br/>', $formattedErrors));
     }
 }

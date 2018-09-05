@@ -3,6 +3,8 @@
 namespace phpList\plugin\ContentAreas;
 
 use phpList\plugin\Common\DB;
+use phpList\plugin\Common\Logger;
+use phpList\plugin\Common\UniqueLogger;
 use DOMDocument;
 use DOMXPath;
 use XSLTProcessor;
@@ -26,25 +28,7 @@ class TemplateModel
     private $dom;
     private $xpath;
 
-    /**
-     * Create a template model handling any DOM parsing exception that is thrown.
-     *
-     * @param string $body the template body
-     *
-     * @return TemplateModel|null
-     */
-    private static function createTemplateModel($body)
-    {
-        try {
-            $tm = new self($body);
-        } catch (\Exception $e) {
-            logEvent($e->getMessage());
-
-            return null;
-        }
-
-        return $tm;
-    }
+    public $errors;
 
     /**
      * Inline CSS handling any exception thrown.
@@ -231,6 +215,12 @@ END;
 
     public function __construct($html = null)
     {
+        libxml_use_internal_errors(true);
+        $this->dom = new DOMDocument();
+        $this->dom->formatOutput = true;
+        $this->xpath = new DOMXPath($this->dom);
+        $this->logger = new UniqueLogger(Logger::instance());
+
         if ($html !== null) {
             $this->loadHtml($html);
         }
@@ -238,9 +228,13 @@ END;
 
     public function loadHtml($html)
     {
-        $this->dom = new DOMDocument();
+        libxml_clear_errors();
         $this->dom->loadHTML($html, LIBXML_NOBLANKS);
-        $this->dom->formatOutput = true;
+        $this->errors = libxml_get_errors();
+
+        if (count($this->errors) > 0) {
+            $this->logger->debug(print_r($this->errors, true));
+        }
         $this->xpath = new DOMXPath($this->dom);
     }
 
@@ -313,13 +307,14 @@ END;
      *
      * @param string $body the template body
      *
-     * @return bool
+     * @return TemplateModel|false the template model or false when the template
+     *                             does not have any content areas
      */
     public static function isTemplateBody($body)
     {
-        $tm = self::createTemplateModel($body);
+        $tm = new self($body);
 
-        return $tm ? $tm->isTemplate() : false;
+        return $tm->isTemplate() ? $tm : false;
     }
 
     /**
@@ -337,9 +332,9 @@ END;
         if (!$templateBody) {
             return false;
         }
-        $tm = self::createTemplateModel($templateBody);
+        $tm = new self($templateBody);
 
-        if (!($tm && $tm->isTemplate())) {
+        if (!$tm->isTemplate()) {
             return false;
         }
 
