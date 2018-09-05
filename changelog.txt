@@ -1,3 +1,7 @@
+version 1.9.0+20180905
+      Handle libxml parsing errors inline instead of as exceptions
+      Revise unit tests
+
 version 1.8.5+20180709
       Correct problem of error handler not always being restored
 

@@ -16,7 +16,7 @@ Requires php version 5.4.0 or later. Please check your php version before instal
 
 Requires phplist release 3.3.1 or later.
 
-Requires the Common Plugin version 3.5.0 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
+Requires the Common Plugin version 3.9.0 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 Requires version 2.4.0 or later of the View in Browser plugin if you want to use that plugin to create a link that displays the
 campaign in a browser. You should install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-viewbrowser>.
@@ -60,6 +60,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.9.0+20180905  Handle libxml parsing errors inline instead of as exceptions
     1.8.5+20180709  Correct problem of error handler not always being restored
     1.8.4+20180517  Avoid dependency on php 5.6
     1.8.3+20180423  Reduce level of error reporting
