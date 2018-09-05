@@ -47,6 +47,9 @@ function getConfig($key) {
         case 'contentareas_iframe_width':
             return 600;
             break;
+        case 'contentareas_display_errors':
+            return true;
+            break;
         default:
     }
 };

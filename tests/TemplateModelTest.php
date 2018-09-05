@@ -36,7 +36,16 @@ class TemplateModelTest extends PHPUnit_Framework_TestCase
     public function detectsTemplateBody()
     {
         $template = '<html><body><div data-edit="article"></div></body></html>';
-        $this->assertTrue(TemplateModel::isTemplateBody($template));
+        $this->assertInstanceOf('phpList\plugin\ContentAreas\TemplateModel', TemplateModel::isTemplateBody($template));
+    }
+
+    /**
+     * @test
+     */
+    public function detectsNotTemplateBody()
+    {
+        $template = '<html><body><div></div></body></html>';
+        $this->assertFalse(TemplateModel::isTemplateBody($template));
     }
 
     /**
@@ -259,13 +268,11 @@ END
     /**
      * @test
      */
-    public function reportsInvalidHtml()
+    public function reportsIncorrectHtml()
     {
         $template = '<html><body><div data-edit="article"><p><p></p></p></div></body></html>';
-        ob_start();
         $tm = TemplateModel::isTemplateBody($template);
-        $message = ob_get_clean();
-        $this->assertFalse($tm);
-        $this->assertContains('Unexpected end tag : p in Entity', $message);
+        $this->assertTrue(count($tm->errors) > 0);
+        $this->assertContains('Unexpected end tag : p', $tm->errors[0]->message);
     }
 }

@@ -27,7 +27,24 @@ class ContentAreasTest extends PHPUnit_Framework_TestCase
             . '<iframe src="./?page=message_page&amp;pi=ContentAreas&amp;action=display&amp;id=12" width="600" height="800">'
             . "\n"
             . '</iframe>';
-        $this->assertEquals($expected, $result);
+        $this->assertContains($expected, $result);
+    }
+
+    /**
+     * @test
+     */
+    public function createsMessageTabWithError()
+    {
+        $daoStub = $this->getMockBuilder('phpList\plugin\ContentAreas\DAO')
+            ->disableOriginalConstructor()
+            ->getMock();
+        $daoStub->method('templateBody')
+             ->willReturn('<html><body><div data-edit="article"><p><p></p></p></div></body></html>');
+
+        $pi = new ContentAreas();
+        $pi->setDao($daoStub);
+        $result = $pi->sendMessageTab(12, ['template' => 1]);
+        $this->assertContains('Unexpected end tag : p', $result);
     }
 
     /**
