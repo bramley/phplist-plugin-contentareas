@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.10.0+20181206 Several internal changes, now requires php 5.6 or later
     1.9.0+20180905  Handle libxml parsing errors inline instead of as exceptions
     1.8.5+20180709  Correct problem of error handler not always being restored
     1.8.4+20180517  Avoid dependency on php 5.6

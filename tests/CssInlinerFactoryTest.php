@@ -2,7 +2,7 @@
 
 use phpList\plugin\ContentAreas\CssInlinerFactory;
 
-class CssInlinerFactoryTest extends PHPUnit_Framework_TestCase
+class CssInlinerFactoryTest extends PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

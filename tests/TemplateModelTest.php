@@ -2,7 +2,7 @@
 use phpList\plugin\ContentAreas\TemplateModel;
 use phpList\plugin\ContentAreas\MessageModel;
 
-class TemplateModelTest extends PHPUnit_Framework_TestCase
+class TemplateModelTest extends PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

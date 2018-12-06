@@ -2,7 +2,7 @@
 
 use phpList\plugin\ContentAreas\MessageController;
 
-class MessageControllerTest extends PHPUnit_Framework_TestCase
+class MessageControllerTest extends PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

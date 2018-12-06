@@ -1,7 +1,7 @@
 <?php
 use phpList\plugin\ContentAreas\TemplateModel;
 
-class ContentAreasTest extends PHPUnit_Framework_TestCase
+class ContentAreasTest extends PHPUnit\Framework\TestCase
 {
     protected function setUp()
     {

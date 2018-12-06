@@ -1,8 +1,9 @@
 <?php
 use phpList\plugin\ContentAreas\ContentAreaBase;
 use phpList\plugin\ContentAreas\TemplateModel;
+use PHPUnit\Framework\TestCase;
 
-class ContentAreaBaseTest extends PHPUnit_Framework_TestCase
+class ContentAreaBaseTest extends TestCase
 {
     protected function setUp()
     {

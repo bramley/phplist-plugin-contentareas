@@ -1,3 +1,9 @@
+version 1.10.0+20181206
+      Use ... operator for variable arguments
+      Use activate() for initialisation
+      Update cs config file with resultant changes
+      Revise tests for latest phpunit
+
 version 1.9.0+20180905
       Handle libxml parsing errors inline instead of as exceptions
       Revise unit tests
