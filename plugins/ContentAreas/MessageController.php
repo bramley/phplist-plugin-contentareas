@@ -83,7 +83,7 @@ END;
                 }
                 array_splice($messageAreas[$ref->repeat], $ref->instance + 1, 0, array(array()));
                 $mm->replaceMessageAreas($messageAreas);
-                $idRef->instance += 1;
+                ++$idRef->instance;
                 break;
             case 'delete':
                 if (isset($messageAreas[$ref->repeat][$ref->instance])) {
@@ -99,7 +99,7 @@ END;
                     $messageAreas[$ref->repeat][$ref->instance - 1] = $messageAreas[$ref->repeat][$ref->instance];
                     $messageAreas[$ref->repeat][$ref->instance] = $temp;
                     $mm->replaceMessageAreas($messageAreas);
-                    $idRef->instance -= 1;
+                    --$idRef->instance;
                 }
                 break;
             case 'down':
@@ -108,7 +108,7 @@ END;
                     $messageAreas[$ref->repeat][$ref->instance + 1] = $messageAreas[$ref->repeat][$ref->instance];
                     $messageAreas[$ref->repeat][$ref->instance] = $temp;
                     $mm->replaceMessageAreas($messageAreas);
-                    $idRef->instance += 1;
+                    ++$idRef->instance;
                 }
                 break;
             case 'hide':
