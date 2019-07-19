@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.10.1+20190719 Improve placement of the preview button
     1.10.0+20181206 Several internal changes, now requires php 5.6 or later
     1.9.0+20180905  Handle libxml parsing errors inline instead of as exceptions
     1.8.5+20180709  Correct problem of error handler not always being restored
@@ -66,7 +67,7 @@ This plugin is free but if you install and find it useful then a donation to sup
     1.8.3+20180423  Reduce level of error reporting
     1.8.2+20180228  Try to avoid whitespace text nodes
     1.8.1+20180129  Improve display of repeatable area
-    1.8.0+20180122  Added linkimage content area 
+    1.8.0+20180122  Added linkimage content area
     1.7.1+20180119  Minor internal changes
     1.7.0+20180115  Use a select list for the css inline package
     1.6.1+20171001  Use the alt attribute of an image also for the title attribute

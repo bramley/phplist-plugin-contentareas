@@ -22,7 +22,7 @@ class ContentAreasTest extends PHPUnit\Framework\TestCase
         $pi->setDao($daoStub);
         $result = $pi->sendMessageTab(12, ['template' => 1]);
         $expected =
-            '<a class="button" target="preview" href="./?page=message_page&amp;pi=ContentAreas&amp;action=preview&amp;id=12">Preview</a>'
+            '<div><a class="button" target="preview" href="./?page=message_page&amp;pi=ContentAreas&amp;action=preview&amp;id=12">Preview</a></div>'
             . "\n"
             . '<iframe src="./?page=message_page&amp;pi=ContentAreas&amp;action=display&amp;id=12" width="600" height="800">'
             . "\n"

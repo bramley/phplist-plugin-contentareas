@@ -151,7 +151,7 @@ class ContentAreas extends phplistPlugin
 
         return <<<END
 $warning
-$preview
+<div>$preview</div>
 $iframe
 END;
     }

@@ -1,3 +1,6 @@
+version 1.10.1+20190719
+      Improve placement of the preview button
+
 version 1.10.0+20181206
       Use ... operator for variable arguments
       Use activate() for initialisation
