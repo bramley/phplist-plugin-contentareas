@@ -4,10 +4,6 @@ use phpList\plugin\ContentAreas\MessageModel;
 
 class TemplateModelTest extends PHPUnit\Framework\TestCase
 {
-    protected function setUp()
-    {
-    }
-
     /**
      * @test
      */
@@ -138,10 +134,10 @@ END
         $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
         $expectedEdit =
         '<a class="opendialog" href="./?page=message_page&amp;pi=ContentAreas&amp;field=article&amp;action=edit" title="article"><img src="./?page=image&amp;pi=CommonPlugin&amp;image=pencil.png" alt="Edit" title="Edit"></a>';
-        $this->assertContains($expectedEdit, $result);
+        $this->assertStringContainsString($expectedEdit, $result);
         $expectedId =
         '<div class="editable" id="article">';
-        $this->assertContains($expectedId, $result);
+        $this->assertStringContainsString($expectedId, $result);
     }
 
     /**
@@ -214,7 +210,7 @@ END
         $expected = '<div id="dialog"></div>';
         $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
 
-        $this->assertContains($expected, $result);
+        $this->assertStringContainsString($expected, $result);
     }
 
     /**
@@ -230,7 +226,7 @@ END
         $expected = '<style type="text/css">';
         $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
 
-        $this->assertContains($expected, $result);
+        $this->assertStringContainsString($expected, $result);
     }
 
     /**
@@ -246,7 +242,7 @@ END
         $expected = '<style type="text/css">';
         $result = $tm->merge(['article' => '<p>here is the article</p>'], false);
 
-        $this->assertNotContains($expected, $result);
+        $this->assertStringNotContainsString($expected, $result);
     }
 
     /**
@@ -262,7 +258,7 @@ END
         $expected = '<head>';
         $result = $tm->merge(['article' => '<p>here is the article</p>'], true);
 
-        $this->assertContains($expected, $result);
+        $this->assertStringContainsString($expected, $result);
     }
 
     /**
@@ -273,6 +269,6 @@ END
         $template = '<html><body><div data-edit="article"><p><p></p></p></div></body></html>';
         $tm = TemplateModel::isTemplateBody($template);
         $this->assertTrue(count($tm->errors) > 0);
-        $this->assertContains('Unexpected end tag : p', $tm->errors[0]->message);
+        $this->assertStringContainsString('Unexpected end tag : p', $tm->errors[0]->message);
     }
 }

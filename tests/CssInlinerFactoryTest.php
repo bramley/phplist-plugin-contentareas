@@ -4,7 +4,7 @@ use phpList\plugin\ContentAreas\CssInlinerFactory;
 
 class CssInlinerFactoryTest extends PHPUnit\Framework\TestCase
 {
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->factory = new CssInlinerFactory();
     }

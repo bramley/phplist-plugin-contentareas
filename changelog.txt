@@ -1,3 +1,10 @@
+version 1.10.2+20191001
+Duncan Cameron (1):
+      Improve display of preheader text by padding with non-breaking space. This stops later text in the email being
+      included in the preheader.
+      Update tests for phpunit 8.
+      Add extra phpunit cache file
+
 version 1.10.1+20190719
       Improve placement of the preview button
 

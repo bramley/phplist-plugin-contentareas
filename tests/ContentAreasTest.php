@@ -3,10 +3,6 @@ use phpList\plugin\ContentAreas\TemplateModel;
 
 class ContentAreasTest extends PHPUnit\Framework\TestCase
 {
-    protected function setUp()
-    {
-    }
-
     /**
      * @test
      */
@@ -27,7 +23,7 @@ class ContentAreasTest extends PHPUnit\Framework\TestCase
             . '<iframe src="./?page=message_page&amp;pi=ContentAreas&amp;action=display&amp;id=12" width="600" height="800">'
             . "\n"
             . '</iframe>';
-        $this->assertContains($expected, $result);
+        $this->assertStringContainsString($expected, $result);
     }
 
     /**
@@ -44,7 +40,7 @@ class ContentAreasTest extends PHPUnit\Framework\TestCase
         $pi = new ContentAreas();
         $pi->setDao($daoStub);
         $result = $pi->sendMessageTab(12, ['template' => 1]);
-        $this->assertContains('Unexpected end tag : p', $result);
+        $this->assertStringContainsString('Unexpected end tag : p', $result);
     }
 
     /**

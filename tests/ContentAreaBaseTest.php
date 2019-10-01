@@ -5,10 +5,6 @@ use PHPUnit\Framework\TestCase;
 
 class ContentAreaBaseTest extends TestCase
 {
-    protected function setUp()
-    {
-    }
-
     /**
      * @test
      */
