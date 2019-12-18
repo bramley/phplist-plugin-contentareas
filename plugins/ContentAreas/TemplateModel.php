@@ -187,28 +187,26 @@ END;
     /**
      * Decorates the html document when editing the message.
      *
-     * Adds the styles and javascript required when editing the message into the
-     * head element.
-     * Adds a div element used as the target for the edit pop-up.
+     * Creates a head element if it does not exist.
+     * Adds to the head element the styles and javascript required when editing the message.
+     * Adds to the body element a div element used as the target for the edit pop-up.
      */
     private function addStyles()
     {
-        $html = file_get_contents(dirname(__FILE__) . '/styles.html')
-            . file_get_contents(dirname(__FILE__) . '/script.html');
+        $html = file_get_contents(__DIR__ . '/styles.html')
+            . file_get_contents(__DIR__ . '/script.html');
         $fragment = $this->dom->createDocumentFragment();
         $fragment->appendXML($html);
 
-        $first = $this->dom->documentElement->firstChild;
+        $body = $this->dom->getElementsByTagName('body')->item(0);
+        $nl = $this->dom->getElementsByTagName('head');
 
-        if ($first->tagName == 'body') {
-            $head = $this->dom->documentElement->insertBefore($this->dom->createElement('head'), $first);
-            $body = $first;
+        if ($nl->length > 0) {
+            $head = $nl->item(0);
         } else {
-            $head = $first;
-            $body = $head->nextSibling;
+            $head = $this->dom->documentElement->insertBefore($this->dom->createElement('head'), $body);
         }
         $head->appendChild($fragment);
-
         $div = $body->insertBefore($this->dom->createElement('div'), $body->firstChild);
         $div->setAttribute('id', 'dialog');
     }

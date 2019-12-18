@@ -1,5 +1,7 @@
+version 1.10.3+20191218
+      Correct the logic to select the head and body elements when adding css and js.
+
 version 1.10.2+20191001
-Duncan Cameron (1):
       Improve display of preheader text by padding with non-breaking space. This stops later text in the email being
       included in the preheader.
       Update tests for phpunit 8.
