@@ -187,7 +187,6 @@ END;
     /**
      * Decorates the html document when editing the message.
      *
-     * Creates a head element if it does not exist.
      * Adds to the head element the styles and javascript required when editing the message.
      * Adds to the body element a div element used as the target for the edit pop-up.
      */
@@ -197,16 +196,10 @@ END;
             . file_get_contents(__DIR__ . '/script.html');
         $fragment = $this->dom->createDocumentFragment();
         $fragment->appendXML($html);
+        $head = $this->dom->getElementsByTagName('head')->item(0);
+        $head->appendChild($fragment);
 
         $body = $this->dom->getElementsByTagName('body')->item(0);
-        $nl = $this->dom->getElementsByTagName('head');
-
-        if ($nl->length > 0) {
-            $head = $nl->item(0);
-        } else {
-            $head = $this->dom->documentElement->insertBefore($this->dom->createElement('head'), $body);
-        }
-        $head->appendChild($fragment);
         $div = $body->insertBefore($this->dom->createElement('div'), $body->firstChild);
         $div->setAttribute('id', 'dialog');
     }
@@ -216,7 +209,6 @@ END;
         libxml_use_internal_errors(true);
         $this->dom = new DOMDocument();
         $this->dom->formatOutput = true;
-        $this->xpath = new DOMXPath($this->dom);
         $this->logger = new UniqueLogger(Logger::instance());
 
         if ($html !== null) {
@@ -227,18 +219,21 @@ END;
     public function loadHtml($html)
     {
         libxml_clear_errors();
-        $this->dom->loadHTML($html, LIBXML_NOBLANKS);
+        $this->dom->loadHTML('<?xml encoding="utf-8" ?>' . $html, LIBXML_NOBLANKS);
         $this->errors = libxml_get_errors();
 
         if (count($this->errors) > 0) {
             $this->logger->debug(print_r($this->errors, true));
         }
-        $this->xpath = new DOMXPath($this->dom);
-    }
+//      Ensure that there is a head element as it makes things simpler later
+        $nl = $this->dom->getElementsByTagName('head');
 
-    public function load($file)
-    {
-        $this->loadHtml(file_get_contents($file));
+        if ($nl->length == 0) {
+            $head = $this->dom->documentElement->insertBefore($this->dom->createElement('head'), $this->dom->documentElement->firstChild);
+            $meta = $head->insertBefore($this->dom->createElement('meta'));
+            $meta->setAttribute('charset', 'utf-8');
+        }
+        $this->xpath = new DOMXPath($this->dom);
     }
 
     public function __toString()

@@ -1,3 +1,6 @@
+version 1.10.4+20191223
+      Improve handling of template that does not have head element.
+
 version 1.10.3+20191218
       Correct the logic to select the head and body elements when adding css and js.
 

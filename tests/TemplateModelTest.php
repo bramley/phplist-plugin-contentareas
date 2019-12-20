@@ -58,17 +58,43 @@ class TemplateModelTest extends PHPUnit\Framework\TestCase
     /**
      * @test
      */
+    public function addsHeadElement()
+    {
+        $template = '<html><body><div data-edit="article"></div></body></html>';
+        $tm = new TemplateModel();
+        $tm->loadHtml($template);
+
+        $expected = str_replace("\n", "\r\n", <<<'END'
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+</head>
+<body><div><p>here is the article</p></div></body>
+</html>
+
+END
+        );
+        $result = $tm->merge(['article' => '<p>here is the article</p>'], false);
+
+        $this->assertEquals($expected, $result);
+    }
+
+    /**
+     * @test
+     */
     public function mergesTemplateWithMessage()
     {
         $template = '<html><body><div data-edit="article"></div></body></html>';
         $tm = new TemplateModel();
         $tm->loadHtml($template);
 
-        $expected =
-"<!DOCTYPE html>\r\n<html><body><div><p>here is the article</p></div></body></html>\r\n";
-        $result = $tm->merge(['article' => '<p>here is the article</p>'], false);
+        $content = '<p>here is the article</p>';
+        $expected = "<div>$content</div>";
+        $result = $tm->merge(['article' => $content], false);
 
-        $this->assertEquals($expected, $result);
+        $this->assertStringContainsString($expected, $result);
     }
 
     /**
@@ -99,8 +125,6 @@ END;
             false
         );
         $expected = str_replace("\n", "\r\n", <<<'END'
-<!DOCTYPE html>
-<html><body>
         <!--Start of repeat instance 0--><div>
             <h3>the first title</h3>
             <div><p>the first article</p></div>
@@ -114,11 +138,9 @@ END;
             <div><p>the third article</p></div>
         </div>
 <!--End of repeat instance 2-->
-    </body></html>
-
 END
         );
-        $this->assertEquals($expected, $result);
+        $this->assertStringContainsString($expected, $result);
     }
 
     /**
@@ -155,9 +177,18 @@ END
         $tm = new TemplateModel('<html><body><div data-edit="article"></div></body></html>');
         $mm = new MessageModel(123, $daoStub);
         $result = $tm->merge($mm->messageAreas());
-        $expected =
-"<!DOCTYPE html>\r\n<html><body><div><p>here is the article</p></div></body></html>\r\n";
+        $expected = str_replace("\n", "\r\n", <<<'END'
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="utf-8">
+</head>
+<body><div><p>here is the article</p></div></body>
+</html>
 
+END
+        );
         $this->assertEquals($expected, $result);
     }
 
@@ -174,10 +205,9 @@ END
              ->willReturn('SER:' . serialize(['article' => '<p>here is the article</p>']));
 
         $template = '<html><body><div data-edit="article"></div></body></html>';
-        $expected =
-"<!DOCTYPE html>\r\n<html><body><div><p>here is the article</p></div></body></html>\r\n";
+        $expected = '<body><div><p>here is the article</p></div></body>';
 
-        $this->assertEquals($expected, TemplateModel::mergeIfTemplate($template, 123, $daoStub));
+        $this->assertStringContainsString($expected, TemplateModel::mergeIfTemplate($template, 123, $daoStub));
     }
 
     /**
