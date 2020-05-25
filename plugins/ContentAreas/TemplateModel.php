@@ -26,33 +26,10 @@ class TemplateModel
     const HIDEABLE_ATTRIBUTE = 'data-hideable';
 
     private $dom;
+    private $logger;
     private $xpath;
 
     public $errors;
-
-    /**
-     * Inline CSS handling any exception thrown.
-     *
-     * @param string $html
-     *
-     * @return string the transformed html or original html if an exception was thrown
-     */
-    private function inlineCss($html)
-    {
-        $package = getConfig('contentareas_inline_css_package');
-        $factory = new CssInlinerFactory();
-        $inliner = $factory->createCssInliner($package);
-
-        try {
-            $inlinedHtml = $inliner->inlineCss($html);
-        } catch (\Exception $e) {
-            logEvent($e->getMessage());
-
-            return $html;
-        }
-
-        return $inlinedHtml;
-    }
 
     private function createToc()
     {
@@ -216,6 +193,11 @@ END;
         }
     }
 
+    public function __toString()
+    {
+        return $this->dom->saveHTML();
+    }
+
     public function loadHtml($html)
     {
         libxml_clear_errors();
@@ -234,11 +216,6 @@ END;
             $meta->setAttribute('charset', 'utf-8');
         }
         $this->xpath = new DOMXPath($this->dom);
-    }
-
-    public function __toString()
-    {
-        return $this->dom->saveHTML();
     }
 
     /**
@@ -261,10 +238,6 @@ END;
         $merger->mergeOneLevel($this->dom->documentElement, $contentAreas, $edit);
         $this->createToc();
         $html = $this->saveAsHtml($this->removeAttributes($this->dom));
-
-        if (!$edit) {
-            $html = $this->inlineCss($html);
-        }
 
         return $this->replaceEncodedBrackets($html);
     }

@@ -1,10 +1,12 @@
 <?php
 
+use phpList\plugin\ContentAreas\CssInlinerFactory;
 use phpList\plugin\ContentAreas\DAO;
 use phpList\plugin\ContentAreas\TemplateModel;
 use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class ContentAreas extends phplistPlugin
 {
@@ -167,6 +169,32 @@ END;
     }
 
     /**
+     * Use this hook to inline CSS in the final email body.
+     *
+     * @param PHPMailer $mail instance of PHPMailer
+     *
+     * @return array
+     */
+    public function messageHeaders($mail)
+    {
+        if ($mail->ContentType != PHPMailer::CONTENT_TYPE_TEXT_HTML) {
+            return [];
+        }
+        $package = getConfig('contentareas_inline_css_package');
+        $factory = new CssInlinerFactory();
+        $inliner = $factory->createCssInliner($package);
+
+        try {
+            $inlinedHtml = $inliner->inlineCss($mail->Body);
+            $mail->Body = $inlinedHtml;
+        } catch (\Exception $e) {
+            logEvent($e->getMessage());
+        }
+
+        return [];
+    }
+
+    /**
      * Create the content, an iframe, for the view message page.
      *
      * @param int   $messageId the message id
@@ -288,4 +316,26 @@ END;
 
         return sprintf('<div class="note">%s<br/>%s</div>', 'The template has some html errors.', implode('<br/>', $formattedErrors));
     }
+
+    /**
+     * Determine whether the message template has content areas.
+     *
+     * @param array $data the message data
+     *
+     * @return bool
+     */
+    private function isContentAreasTemplate($data)
+    {
+        if ($data['template'] == 0) {
+            return false;
+        }
+        $templateBody = $this->dao->templateBody($data['template']);
+
+        if (!$templateBody) {
+            return false;
+        }
+
+        return TemplateModel::isTemplateBody($templateBody);
+    }
+
 }
