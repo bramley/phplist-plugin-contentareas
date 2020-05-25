@@ -2,11 +2,11 @@
 
 namespace phpList\plugin\ContentAreas;
 
+use DOMDocument;
+use DOMXPath;
 use phpList\plugin\Common\DB;
 use phpList\plugin\Common\Logger;
 use phpList\plugin\Common\UniqueLogger;
-use DOMDocument;
-use DOMXPath;
 use XSLTProcessor;
 
 class TemplateModel

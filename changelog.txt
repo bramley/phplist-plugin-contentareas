@@ -1,3 +1,7 @@
+version 1.11.0+20200525
+      Perform the inlining of CSS on the final email content instead of on the merged template and content areas.
+      Update CS Fixer
+
 version 1.10.4+20191223
       Improve handling of template that does not have head element.
 

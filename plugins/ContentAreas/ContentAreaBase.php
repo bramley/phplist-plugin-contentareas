@@ -2,9 +2,9 @@
 
 namespace phpList\plugin\ContentAreas;
 
+use DOMNode;
 use phpList\plugin\Common\ImageTag;
 use phpList\plugin\Common\PageURL;
-use DOMNode;
 
 /**
  * Base class for all content area types.

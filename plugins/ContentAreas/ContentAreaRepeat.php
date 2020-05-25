@@ -2,9 +2,9 @@
 
 namespace phpList\plugin\ContentAreas;
 
-use phpList\plugin\Common;
-use DOMComment;
 use CHtml;
+use DOMComment;
+use phpList\plugin\Common;
 
 /**
  * Subclass to generate HTML for a repeat area.

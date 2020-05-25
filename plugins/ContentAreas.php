@@ -1,11 +1,11 @@
 <?php
 
-use phpList\plugin\ContentAreas\CssInlinerFactory;
-use phpList\plugin\ContentAreas\DAO;
-use phpList\plugin\ContentAreas\TemplateModel;
 use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
+use phpList\plugin\ContentAreas\CssInlinerFactory;
+use phpList\plugin\ContentAreas\DAO;
+use phpList\plugin\ContentAreas\TemplateModel;
 use PHPMailer\PHPMailer\PHPMailer;
 
 class ContentAreas extends phplistPlugin
@@ -337,5 +337,4 @@ END;
 
         return TemplateModel::isTemplateBody($templateBody);
     }
-
 }
