@@ -4,9 +4,11 @@
         "prepend-autoloader": false
     },
     "require": {
-        "crossjoin/pre-mailer": "v1.0.5",
-        "crossjoin/css": "v1.0.3",
-        "symfony/css-selector": "v2.8.1",
-        "pelago/emogrifier": "V1.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Crossjoin\\Css\\": "plugins/ContentAreas/vendor/crossjoin/css/src/Crossjoin/Css/",
+            "Crossjoin\\PreMailer\\": "plugins/ContentAreas/vendor/crossjoin/pre-mailer/src/Crossjoin/PreMailer/"
+        }
     }
 }

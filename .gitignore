@@ -21,4 +21,4 @@ plugins/ContentAreas/vendor/symfony/css-selector/*
 
 plugins/ContentAreas/vendor/pelago/emogrifier/*
 !plugins/ContentAreas/vendor/pelago/emogrifier/LICENSE
-!plugins/ContentAreas/vendor/pelago/emogrifier/Classes/
+!plugins/ContentAreas/vendor/pelago/emogrifier/src/

@@ -2,8 +2,8 @@
 
 $finder = PhpCsFixer\Finder::create()
     ->in(__DIR__)
-    ->exclude('phplist')
     ->exclude('tests')
+    ->exclude('plugins/ContentAreas/vendor')
 ;
 
 return PhpCsFixer\Config::create()

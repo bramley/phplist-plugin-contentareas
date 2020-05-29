@@ -6,8 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname(dirname(dirname($vendorDir)));
 
 return array(
-    'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
-    'Pelago\\' => array($vendorDir . '/pelago/emogrifier/Classes'),
     'Crossjoin\\PreMailer\\' => array($vendorDir . '/crossjoin/pre-mailer/src/Crossjoin/PreMailer'),
     'Crossjoin\\Css\\' => array($vendorDir . '/crossjoin/css/src/Crossjoin/Css'),
 );
