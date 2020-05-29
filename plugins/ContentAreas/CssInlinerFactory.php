@@ -2,6 +2,8 @@
 
 namespace phpList\plugin\ContentAreas;
 
+use Pelago\Emogrifier\CssInliner;
+
 class CssInlinerFactory
 {
     public function createCssInliner($package)
@@ -35,8 +37,7 @@ class EmogrifierCssInliner
     public function inlineCss($source)
     {
         try {
-            $e = new \Pelago\Emogrifier($source);
-            $html = $e->emogrify();
+            $html = CssInliner::fromHtml($source)->inlineCss()->render();
         } catch (\Exception $exception) {
             $html = $source;
             echo $exception->getMessage();

@@ -32,11 +32,11 @@ class ContentAreas extends phplistPlugin
         'contentareas_inline_css_package' => array(
             'description' => 'The package to use to inline CSS',
             'type' => 'select',
-            'value' => self::CSS_INLINE_PREMAILER,
+            'value' => self::CSS_INLINE_EMOGRIFIER,
             'values' => array(
                 self::CSS_INLINE_NONE => self::CSS_INLINE_NONE,
-                self::CSS_INLINE_PREMAILER => self::CSS_INLINE_PREMAILER,
                 self::CSS_INLINE_EMOGRIFIER => self::CSS_INLINE_EMOGRIFIER,
+                self::CSS_INLINE_PREMAILER => self::CSS_INLINE_PREMAILER,
             ),
             'allowempty' => false,
             'category' => 'Content Areas',
