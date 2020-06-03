@@ -1,3 +1,12 @@
+version 1.12.0+20200603
+      Remove emogrifier and symfony css-selector packages from composer because they are now in Common Plugin.
+      Remove Crossjoin packages from composer because they are abandoned, but leave the files to be autoloaded.
+      Apply the recommended way of using Emogrifier to inline css.
+      Make Emogrifier the default package to inline css because Premailer has been abandoned.
+      Update Premailer to be compatible with current version of symfony/css-selector
+      Revise dependencies
+      Avoid dependency on phpmailer 6
+
 version 1.11.0+20200525
       Perform the inlining of CSS on the final email content instead of on the merged template and content areas.
       Update CS Fixer

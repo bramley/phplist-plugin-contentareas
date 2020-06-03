@@ -6,7 +6,6 @@ use phpList\plugin\Common\PageURL;
 use phpList\plugin\ContentAreas\CssInlinerFactory;
 use phpList\plugin\ContentAreas\DAO;
 use phpList\plugin\ContentAreas\TemplateModel;
-use PHPMailer\PHPMailer\PHPMailer;
 
 class ContentAreas extends phplistPlugin
 {
@@ -86,13 +85,9 @@ class ContentAreas extends phplistPlugin
 
         return array(
             'XSL extension installed' => extension_loaded('xsl'),
-            'Common plugin v3.9.0 or later installed' => (
+            'Common plugin v3.13.0 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.9.0') >= 0
-            ),
-            'View in Browser plugin v2.4.0 or later installed' => (
-                !phpListPlugin::isEnabled('ViewBrowserPlugin')
-                || version_compare($plugins['ViewBrowserPlugin']->version, '2.4.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.13.0') >= 0
             ),
             'PHP version 5.6.0 or greater' => version_compare(PHP_VERSION, '5.6') > 0,
             'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
@@ -177,7 +172,7 @@ END;
      */
     public function messageHeaders($mail)
     {
-        if ($mail->ContentType != PHPMailer::CONTENT_TYPE_TEXT_HTML) {
+        if ($mail->ContentType != 'text/html') {
             return [];
         }
         $package = getConfig('contentareas_inline_css_package');

@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.12.0+20200603 Make Emogrifier the default package to inline css
     1.11.0+20200525 Perform the inlining of CSS on the final email content.
     1.10.4+20191223 Improve handling of template that does not have head element.
     1.10.3+20191218 Correct the logic to select the head and body elements when adding css and js
