@@ -9,7 +9,7 @@ use Crossjoin\Css\Format\Rule\Style\StyleRuleSet;
 use Crossjoin\Css\Format\Rule\Style\StyleSelector;
 use Crossjoin\Css\Reader\CssString;
 use Crossjoin\Css\Writer\WriterAbstract;
-use Symfony\Component\CssSelector\CssSelector;
+use Symfony\Component\CssSelector\CssSelectorConverter;
 
 abstract class PreMailerAbstract
 {
@@ -357,10 +357,12 @@ abstract class PreMailerAbstract
         }
 
         // Process all style declarations in the correct order
+        $cssSelectorConverter = new CssSelectorConverter();
+
         foreach ($specificityKeys as $specificityKey) {
             /** @var StyleDeclaration[] $declarations */
             foreach ($selectors[$specificityKey] as $selectorString => $declarations) {
-                $xpathQuery = CssSelector::toXPath($selectorString);
+                $xpathQuery = $cssSelectorConverter->toXPath($selectorString);
                 $elements = $xpath->query($xpathQuery);
                 /** @var \DOMElement $element */
                 foreach ($elements as $element) {
