@@ -1,24 +1,3 @@
 .php_cs.cache
 README.html
 .phpunit.result.cache
-
-## Composer ##
-plugins/ContentAreas/vendor/crossjoin/css/*
-!plugins/ContentAreas/vendor/crossjoin/css/LICENSE
-!plugins/ContentAreas/vendor/crossjoin/css/src/
-plugins/ContentAreas/vendor/crossjoin/pre-mailer/*
-!plugins/ContentAreas/vendor/crossjoin/pre-mailer/LICENSE
-!plugins/ContentAreas/vendor/crossjoin/pre-mailer/src/
-
-plugins/ContentAreas/vendor/symfony/css-selector/*
-!plugins/ContentAreas/vendor/symfony/css-selector/CssSelector.php
-!plugins/ContentAreas/vendor/symfony/css-selector/CssSelectorConverter.php
-!plugins/ContentAreas/vendor/symfony/css-selector/LICENSE
-!plugins/ContentAreas/vendor/symfony/css-selector/Exception
-!plugins/ContentAreas/vendor/symfony/css-selector/Node
-!plugins/ContentAreas/vendor/symfony/css-selector/Parser
-!plugins/ContentAreas/vendor/symfony/css-selector/XPath
-
-plugins/ContentAreas/vendor/pelago/emogrifier/*
-!plugins/ContentAreas/vendor/pelago/emogrifier/LICENSE
-!plugins/ContentAreas/vendor/pelago/emogrifier/src/
