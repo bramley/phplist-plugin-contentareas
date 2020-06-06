@@ -1,3 +1,7 @@
+version 1.12.1+20200606
+      Remove crossjoin packages because they have been moved to Common Plugin.
+      Remove css inlining which is now done by Common Plugin
+
 version 1.12.0+20200603
       Remove emogrifier and symfony css-selector packages from composer because they are now in Common Plugin.
       Remove Crossjoin packages from composer because they are abandoned, but leave the files to be autoloaded.

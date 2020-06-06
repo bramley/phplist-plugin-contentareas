@@ -15,7 +15,7 @@ content of each area. Each content area is identified and can be edited, with th
 This plugin is for phplist release 3.3.2 or later and requires php version 5.6.0 or later.
 Please check your php version before installing the plugin, otherwise phplist will fail (probably a white page).
 
-Also requires Common Plugin version 3.9.0 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
+Also requires Common Plugin version 3.13.1 or later to be installed. You must install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-common>
 
 Requires version 2.4.0 or later of the View in Browser plugin if you want to use that plugin to create a link that displays the
 campaign in a browser. You should install, or upgrade to, the latest version. See <https://github.com/bramley/phplist-plugin-viewbrowser>.
@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.12.1+20200606 Remove css inlining which is now done by Common Plugin
     1.12.0+20200603 Make Emogrifier the default package to inline css
     1.11.0+20200525 Perform the inlining of CSS on the final email content.
     1.10.4+20191223 Improve handling of template that does not have head element.

@@ -3,7 +3,6 @@
 use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
-use phpList\plugin\ContentAreas\CssInlinerFactory;
 use phpList\plugin\ContentAreas\DAO;
 use phpList\plugin\ContentAreas\TemplateModel;
 
@@ -12,9 +11,6 @@ class ContentAreas extends phplistPlugin
     const VERSION_FILE = 'version.txt';
     const VIEW_PAGE = 'view';
     const PLUGIN = 'ContentAreas';
-    const CSS_INLINE_NONE = 'None';
-    const CSS_INLINE_PREMAILER = 'PreMailer';
-    const CSS_INLINE_EMOGRIFIER = 'Emogrifier';
 
     private $dao;
     private $errorLevel;
@@ -28,18 +24,6 @@ class ContentAreas extends phplistPlugin
     public $description = 'Provides multiple content areas for campaigns';
     public $documentationUrl = 'https://resources.phplist.com/plugin/contentareas';
     public $settings = array(
-        'contentareas_inline_css_package' => array(
-            'description' => 'The package to use to inline CSS',
-            'type' => 'select',
-            'value' => self::CSS_INLINE_EMOGRIFIER,
-            'values' => array(
-                self::CSS_INLINE_NONE => self::CSS_INLINE_NONE,
-                self::CSS_INLINE_EMOGRIFIER => self::CSS_INLINE_EMOGRIFIER,
-                self::CSS_INLINE_PREMAILER => self::CSS_INLINE_PREMAILER,
-            ),
-            'allowempty' => false,
-            'category' => 'Content Areas',
-        ),
         'contentareas_iframe_height' => array(
             'value' => 800,
             'min' => 500,
@@ -85,9 +69,9 @@ class ContentAreas extends phplistPlugin
 
         return array(
             'XSL extension installed' => extension_loaded('xsl'),
-            'Common plugin v3.13.0 or later installed' => (
+            'Common plugin v3.13.1 or later installed' => (
                 phpListPlugin::isEnabled('CommonPlugin')
-                && version_compare($plugins['CommonPlugin']->version, '3.13.0') >= 0
+                && version_compare($plugins['CommonPlugin']->version, '3.13.1') >= 0
             ),
             'PHP version 5.6.0 or greater' => version_compare(PHP_VERSION, '5.6') > 0,
             'phpList version 3.3.2 or later' => version_compare(VERSION, '3.3.2') >= 0,
@@ -161,32 +145,6 @@ END;
     public function sendMessageTabInsertBefore()
     {
         return 'Format';
-    }
-
-    /**
-     * Use this hook to inline CSS in the final email body.
-     *
-     * @param PHPMailer $mail instance of PHPMailer
-     *
-     * @return array
-     */
-    public function messageHeaders($mail)
-    {
-        if ($mail->ContentType != 'text/html') {
-            return [];
-        }
-        $package = getConfig('contentareas_inline_css_package');
-        $factory = new CssInlinerFactory();
-        $inliner = $factory->createCssInliner($package);
-
-        try {
-            $inlinedHtml = $inliner->inlineCss($mail->Body);
-            $mail->Body = $inlinedHtml;
-        } catch (\Exception $e) {
-            logEvent($e->getMessage());
-        }
-
-        return [];
     }
 
     /**

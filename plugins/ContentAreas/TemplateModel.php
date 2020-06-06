@@ -221,8 +221,7 @@ END;
     /**
      * Merge the template with the content areas
      * The first level is processed here, further levels will be processed
-     * recursively
-     * Optionally inline css.
+     * recursively.
      *
      * @param array $contentAreas the content areas
      * @param bool  $edit         whether the merge should include edit buttons
