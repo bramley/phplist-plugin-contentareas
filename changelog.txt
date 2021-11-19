@@ -1,3 +1,7 @@
+version 1.12.2+20211119
+      Decode matching %5B and %5D sequences occurring anywhere in a URL
+      Add test for replacing %5B and %5D sequences
+
 version 1.12.1+20200606
       Remove crossjoin packages because they have been moved to Common Plugin.
       Remove css inlining which is now done by Common Plugin

@@ -301,4 +301,19 @@ END
         $this->assertTrue(count($tm->errors) > 0);
         $this->assertStringContainsString('Unexpected end tag : p', $tm->errors[0]->message);
     }
+
+    /**
+     * @test
+     */
+    public function replacesSquareBracketsInUrl()
+    {
+        $template = '<html><body><div data-edit="article"></div></body></html>';
+        $tm = new TemplateModel();
+        $tm->loadHtml($template);
+
+        $expected = 'https://mysite.com/[email]/[userid]';
+        $result = $tm->merge(['article' => '<p><a href="https://mysite.com/[email]/[userid]">a link</a></p>'], false);
+
+        $this->assertStringContainsString($expected, $result);
+    }
 }

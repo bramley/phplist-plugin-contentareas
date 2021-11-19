@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.12.2+20211119 Decode matching %5B and %5D sequences occurring anywhere in a URL
     1.12.1+20200606 Remove css inlining which is now done by Common Plugin
     1.12.0+20200603 Make Emogrifier the default package to inline css
     1.11.0+20200525 Perform the inlining of CSS on the final email content.
