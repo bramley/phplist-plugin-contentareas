@@ -158,7 +158,15 @@ END;
     {
         $html = preg_replace("/\r\n|\n|\r/", "\r\n", $html);
 
-        return preg_replace('/(href|src)="%5B(\w+)%5D"/i', '$1="[$2]"', $html);
+        return preg_replace_callback(
+            '/(href|src)="(.*?%5B.*?)"/i',
+            function ($matches) {
+                $decoded = preg_replace('/%5B(\w+)%5D/', '[$1]', $matches[2]);
+
+                return sprintf('%s="%s"', $matches[1], $decoded);
+            },
+            $html
+        );
     }
 
     /**
