@@ -9,7 +9,7 @@ class ContentAreaText extends ContentAreaBase
 {
     protected function toHTML($field, $value)
     {
-        $value = $value ?: $this->node->textContent;
+        $value = $value ?? $this->node->textContent;
         $value = htmlspecialchars($value);
         $size = 40;
 

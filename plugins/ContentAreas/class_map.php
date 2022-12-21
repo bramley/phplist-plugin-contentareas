@@ -1,6 +1,6 @@
 <?php
 
-return array(
+return [
     'phpList\plugin\ContentAreas\ContentAreaBase' => $base . '/ContentAreas/ContentAreaBase.php',
     'phpList\plugin\ContentAreas\ContentAreaEditor' => $base . '/ContentAreas/ContentAreaEditor.php',
     'phpList\plugin\ContentAreas\ContentAreaHideable' => $base . '/ContentAreas/ContentAreaHideable.php',
@@ -24,4 +24,4 @@ return array(
     'phpList\plugin\ContentAreas\Reference' => $base . '/ContentAreas/Reference.php',
     'phpList\plugin\ContentAreas\TemplateModel' => $base . '/ContentAreas/TemplateModel.php',
     'phpList\plugin\ContentAreas\UnknownEditorException' => $base . '/ContentAreas/EditorProvider.php',
-);
+];

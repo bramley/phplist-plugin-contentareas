@@ -20,7 +20,7 @@ class ContentAreaPreheader extends ContentAreaText
     public function merge($value, Merger $merger)
     {
         if (!is_null($value)) {
-            if (strlen($value) < 100) {
+            if (0 < strlen($value) && strlen($value) < 100) {
                 $value .= str_repeat(html_entity_decode('&nbsp;&zwnj;'), 100 - strlen($value));
             }
         }
