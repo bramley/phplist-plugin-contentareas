@@ -234,9 +234,9 @@ END;
      * @param array $contentAreas the content areas
      * @param bool  $edit         whether the merge should include edit buttons
      *
-     * @return string the generated HTML
+     * @return DOMDocument
      */
-    public function merge(array $contentAreas, $edit = false)
+    public function mergeAsDom(array $contentAreas, $edit = false)
     {
         if ($edit) {
             $this->addStyles();
@@ -244,7 +244,22 @@ END;
         $merger = new Merger($this->xpath);
         $merger->mergeOneLevel($this->dom->documentElement, $contentAreas, $edit);
         $this->createToc();
-        $html = $this->saveAsHtml($this->removeAttributes($this->dom));
+
+        return $this->removeAttributes($this->dom);
+    }
+
+    /**
+     * Merge but returning the generated HTML.
+     *
+     * @param array $contentAreas the content areas
+     * @param bool  $edit         whether the merge should include edit buttons
+     *
+     * @return string
+     */
+    public function merge(array $contentAreas, $edit = false)
+    {
+        $doc = $this->mergeAsDom($contentAreas, $edit);
+        $html = $this->saveAsHtml($doc);
 
         return $this->replaceEncodedBrackets($html);
     }

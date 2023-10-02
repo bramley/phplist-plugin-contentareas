@@ -4,6 +4,7 @@ use phpList\plugin\Common\DB;
 use phpList\plugin\Common\PageLink;
 use phpList\plugin\Common\PageURL;
 use phpList\plugin\ContentAreas\DAO;
+use phpList\plugin\ContentAreas\MessageModel;
 use phpList\plugin\ContentAreas\TemplateModel;
 
 class ContentAreas extends phplistPlugin
@@ -49,6 +50,13 @@ class ContentAreas extends phplistPlugin
             'allowempty' => true,
             'category' => 'Content Areas',
         ),
+        'contentareas_http_urls' => [
+            'description' => 'Whether to warn about insecure (http:) URLs',
+            'type' => 'boolean',
+            'value' => true,
+            'allowempty' => true,
+            'category' => 'Content Areas',
+        ],
     );
     public $publicPages = array(self::VIEW_PAGE);
 
@@ -102,16 +110,9 @@ class ContentAreas extends phplistPlugin
      */
     public function sendMessageTab($messageId = 0, $data = array())
     {
-        if ($data['template'] == 0) {
-            return '';
-        }
-        $templateBody = $this->dao->templateBody($data['template']);
+        $tm = $this->isContentAreasTemplate($data);
 
-        if (!$templateBody) {
-            return '';
-        }
-
-        if (!($tm = TemplateModel::isTemplateBody($templateBody))) {
+        if (!$tm) {
             return '';
         }
         $warning = '';
@@ -121,6 +122,18 @@ class ContentAreas extends phplistPlugin
 
             if (count($errors) > 0) {
                 $warning = $this->formatErrors($errors);
+            }
+        }
+
+        if (getConfig('contentareas_http_urls')) {
+            $httpUrls = $this->findHttpUrls($tm, $data['id']);
+
+            if (count($httpUrls) > 0) {
+                $warning .= sprintf(
+                    '<div class="note">%s<br/>%s</div>',
+                    'These URLs use http not https',
+                    implode('<br/>', $httpUrls)
+                );
             }
         }
         $preview = new PageLink(
@@ -158,12 +171,7 @@ END;
      */
     public function viewMessage($messageId, array $data)
     {
-        if ($data['template'] == 0) {
-            return false;
-        }
-        $templateBody = $this->dao->templateBody($data['template']);
-
-        if (!($templateBody && TemplateModel::isTemplateBody($templateBody))) {
+        if (!$this->isContentAreasTemplate($data)) {
             return false;
         }
         $iframe = $this->iframe('preview', $messageId);
@@ -275,7 +283,7 @@ END;
      *
      * @param array $data the message data
      *
-     * @return bool
+     * @return TemplateModel|false
      */
     private function isContentAreasTemplate($data)
     {
@@ -289,5 +297,31 @@ END;
         }
 
         return TemplateModel::isTemplateBody($templateBody);
+    }
+
+    /**
+     * Find any URLs that use http.
+     *
+     * @param TemplateModel $tm  template model
+     * @param int           $mid message id
+     *
+     * @return array
+     */
+    private function findHttpUrls($tm, $mid)
+    {
+        $mm = new MessageModel($mid, $this->dao);
+        $dom = $tm->mergeAsDom($mm->messageAreas());
+        $xpath = new DOMXPath($dom);
+        $httpUrls = [];
+
+        foreach ($xpath->query('//a/@href') as $domAttr) {
+            $href = $domAttr->value;
+
+            if (strpos($href, 'http:') === 0) {
+                $httpUrls[] = $href;
+            }
+        }
+
+        return $httpUrls;
     }
 }
