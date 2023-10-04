@@ -96,6 +96,33 @@ class ContentAreas extends phplistPlugin
      */
     public function activate()
     {
+        if (extension_loaded('tidy')) {
+            $this->settings['contentareas_use_tidy'] = [
+                'description' => 'Use tidy on the result html',
+                'type' => 'boolean',
+                'value' => false,
+                'allowempty' => true,
+                'category' => 'Content Areas',
+            ];
+
+            if (getConfig('contentareas_use_tidy')) {
+                $defaultTidyOptions = <<<'END'
+indent: auto
+indent-spaces : 2
+wrap: 300
+wrap-attributes: yes
+join-styles: no
+END;
+                $this->settings['contentareas_tidy_options'] = [
+                    'description' => 'tidy options',
+                    'type' => 'textarea',
+                    'value' => $defaultTidyOptions,
+                    'allowempty' => true,
+                    'category' => 'Content Areas',
+                ];
+            }
+        }
+
         parent::activate();
         $this->dao = new DAO(new DB());
     }

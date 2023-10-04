@@ -189,6 +189,40 @@ END;
         $div->setAttribute('id', 'dialog');
     }
 
+    /**
+     * Use tidy to format the result html.
+     *
+     * @param string $html the html
+     *
+     * @return string the tidied html
+     */
+    private function tidyHtml($html)
+    {
+        global $tmpdir;
+
+        $tmpfname = tempnam($tmpdir, 'tidy');
+        file_put_contents($tmpfname, getConfig('contentareas_tidy_options'));
+        $tidy = new \tidy();
+        $result = $html;
+
+        if ($tidy->parseString($html, $tmpfname, 'utf8')) {
+            if ($tidy->errorBuffer) {
+                $this->logger->debug('tidy error buffer', [$tidy->errorBuffer]);
+            }
+
+            if ($tidy->cleanRepair()) {
+                $result = (string) $tidy;
+            } else {
+                $this->logger->debug('tidy cleanRepair() failed');
+            }
+        } else {
+            $this->logger->debug('tidy parseString() failed');
+        }
+        unlink($tmpfname);
+
+        return $result;
+    }
+
     public function __construct($html = null)
     {
         libxml_use_internal_errors(true);
@@ -260,8 +294,13 @@ END;
     {
         $doc = $this->mergeAsDom($contentAreas, $edit);
         $html = $this->saveAsHtml($doc);
+        $html = $this->replaceEncodedBrackets($html);
 
-        return $this->replaceEncodedBrackets($html);
+        if (extension_loaded('tidy') && getConfig('contentareas_use_tidy')) {
+            $html = $this->tidyHtml($html);
+        }
+
+        return $html;
     }
 
     /**
