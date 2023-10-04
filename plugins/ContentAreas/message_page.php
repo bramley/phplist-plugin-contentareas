@@ -5,7 +5,7 @@ namespace phpList\plugin\ContentAreas;
 use phpList\plugin\Common;
 use phplistPlugin;
 
-if (!(phplistPlugin::isEnabled('CommonPlugin'))) {
+if (!phplistPlugin::isEnabled('CommonPlugin')) {
     echo 'phplist-plugin-common must be installed and enabled to use this plugin';
 
     return;

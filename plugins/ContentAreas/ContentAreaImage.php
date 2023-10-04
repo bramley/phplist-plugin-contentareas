@@ -81,7 +81,7 @@ END;
             }
 
             foreach (['src', 'width', 'height', 'style', 'border'] as $attr) {
-                if ((isset($value[$attr]) && $value[$attr] != '')) {
+                if (isset($value[$attr]) && $value[$attr] != '') {
                     $this->node->setAttribute($attr, $value[$attr]);
                 }
             }

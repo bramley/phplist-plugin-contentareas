@@ -215,7 +215,7 @@ END;
         if (count($this->errors) > 0) {
             $this->logger->debug(print_r($this->errors, true));
         }
-//      Ensure that there is a head element as it makes things simpler later
+        // Ensure that there is a head element as it makes things simpler later
         $nl = $this->dom->getElementsByTagName('head');
 
         if ($nl->length == 0) {

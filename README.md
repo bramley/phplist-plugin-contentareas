@@ -59,6 +59,7 @@ This plugin is free but if you install and find it useful then a donation to sup
 ## Version history ##
 
     version         Description
+    1.13.0+20231004 Show warning when a URL uses http not https
     1.12.3+20221231 Fix problems with setting preheader content area to an empty string
     1.12.2+20211119 Decode matching %5B and %5D sequences occurring anywhere in a URL
     1.12.1+20200606 Remove css inlining which is now done by Common Plugin
