@@ -13,7 +13,7 @@ class DAO extends Common\DAO\Message
             FROM {$this->tables['template']}
             WHERE id = $id";
 
-        return stripslashes($this->dbCommand->queryOne($sql, 'template'));
+        return stripslashes($this->dbCommand->queryOne($sql));
     }
 
     public function messageData($messageId, $name)
@@ -23,6 +23,6 @@ class DAO extends Common\DAO\Message
             FROM {$this->tables['messagedata']} m
             WHERE id = $messageId AND name = '$name'";
 
-        return $this->dbCommand->queryOne($sql, 'data');
+        return $this->dbCommand->queryOne($sql);
     }
 }
