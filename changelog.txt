@@ -1,3 +1,7 @@
+version 1.13.1+20240707
+      Remove unnecessary parameter to queryOne()
+      Add styling to hide the ckeditor warning message
+
 version 1.13.0+20231004
       Show warning when a URL uses http not https
       CS fixer changes
